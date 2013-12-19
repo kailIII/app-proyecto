@@ -1,8 +1,3 @@
-<%-- 
-     Fragmento com o formulario de preenchimento com os dados da mercadoria.
-     Utilizado pela pagina de inclusao e edicao de mercadoria.
-     O formulario de mercadorias utiliza o plugin Validation do JQuery, para validar os inputs.
---%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
