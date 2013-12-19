@@ -1,8 +1,3 @@
-<%-- 
-     Fragmento com o formulario de preenchimento com os dados da mercadoria.
-     Utilizado pela pagina de inclusao e edicao de mercadoria.
-     O formulario de mercadorias utiliza o plugin Validation do JQuery, para validar os inputs.
---%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,8 +6,8 @@
 	<spring:message code="button.cancelar" var="button_cancelar" htmlEscape="false" />
 	<spring:message code="button.excluir" var="button_excluir" htmlEscape="false" />
 
-	<spring:message code="label.clientes" var="label_clientes" htmlEscape="false" />
 	<spring:message code="label.listado" var="label_listado" htmlEscape="false" />
+	<spring:message code="label.clientes" var="label_clientes" htmlEscape="false" />
 	<spring:message code="label.cliente.nombre" var="label_cliente_nombre" htmlEscape="false" />
 	<spring:message code="label.cliente.apellido" var="label_cliente_apellido" htmlEscape="false" />
 	<spring:message code="label.cliente.ci" var="label_cliente_ci" htmlEscape="false" />
