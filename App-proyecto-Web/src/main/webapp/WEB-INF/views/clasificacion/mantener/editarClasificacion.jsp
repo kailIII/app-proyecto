@@ -1,7 +1,7 @@
-<%-- Pagina de edicao de mercadoria. --%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div>
 	<spring:message code="label.editar" var="label_editar" htmlEscape="false" />
 	<spring:message code="msg.erro.clasificacion.inexistente" var="clasificacion_inexistente" htmlEscape="false" />
