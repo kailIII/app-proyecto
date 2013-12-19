@@ -1,38 +1,11 @@
-<%-- Fragmento com trecho utilizado no menu de navegacao. --%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
-<!-- <div> -->
 	
 	<spring:message code="label.insumos" var="label_insumos" htmlEscape="false" />
 	<spring:message code="menu.lista" var="menu_lista" htmlEscape="false" />
 	<spring:message code="menu.incluir" var="menu_incluir" htmlEscape="false" />
 	<spring:message code="menu.sobre" var="menu_sobre" htmlEscape="false" />
-	
-<!-- 	<ul class="nav nav-list" style="padding-top: 15px;"> -->
-<!-- 		<li> -->
-<%-- 			<em>${label_insumos}</em> --%>
-<!-- 		</li> -->
-<!-- 		<li> -->
-<%-- 			<a href="/inputs/list">${menu_lista}</a> --%>
-<!-- 		</li> -->
-<!-- 		<li> -->
-<%-- 			<a href="/inputs/form">${menu_incluir}</a> --%>
-<!--         </li> -->
-<!-- 		<li class="divider"></li>  -->
-<!-- 		<li> -->
-<%-- 			<em>${label_insumos}</em> --%>
-<!-- 		</li> -->
-<!-- 		<li> -->
-<%-- 			<a href="/inputs/list">${menu_lista}</a> --%>
-<!-- 		</li> -->
-<!-- 		<li> -->
-<%-- 			<a href="/inputs/form">${menu_incluir}</a> --%>
-<!--         </li>  -->
-<!-- 	</ul>	 -->
 
 	<div class="row">
-<!--   	<div class="span3"> -->
-<!-- 	<div class="well"> -->
 	<ul class="nav nav-list">
 		<li>
 			<label class="tree-toggle nav-header">Movimientos</label>
