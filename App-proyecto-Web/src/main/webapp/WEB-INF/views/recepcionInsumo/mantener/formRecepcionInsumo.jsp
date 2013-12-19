@@ -1,8 +1,3 @@
-<%-- 
-     Fragmento com o formulario de preenchimento com os dados da mercadoria.
-     Utilizado pela pagina de inclusao e edicao de mercadoria.
-     O formulario de mercadorias utiliza o plugin Validation do JQuery, para validar os inputs.
---%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -55,32 +50,6 @@
    	</fieldset>	
 </form:form>
 
-<fieldset>
-		
-    <div class="control-group span6">
-    	<label>${label_insumo_codigo}</label>
-    	<form:input path="codigo" class="span12" />
-   		<label>${label_insumo_nombre}</label>
-   		<form:input path="nombre" class="span12" />
-   		<label>${label_insumo_umedida}</label>
-   		<form:input path="umedida" class="span12"/>
-   		<label>${label_insumo_cantidad}</label>
-   		<form:input path="cantidad" class="span12"/>
-    </div>	
-	
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>${label_insumo_codigo}</th>
-				<th>${label_insumo_nombre}</th>
-				<th>${label_insumo_umedida}</th>
-				<th>${label_insumo_cantidad}</th>
-			</tr>
-		</thead>
-	</table>
-
-</fieldset>
 <div class="control-group form-horizontal">
 	<div class="controls">
 		<button id="guardar" class="btn btn-success">${button_guardar}</button>

@@ -1,16 +1,14 @@
-<%-- Pagina principal da aplicacao, a listagem de mercadorias. --%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <div>
 	<spring:message code="label.recepciones" var="label_recepciones" htmlEscape="false" />
 	<spring:message code="label.listado" var="label_listado" htmlEscape="false" />
-	
 	<spring:message code="label.recepcion.fecha" var="label_recepcion_fecha" htmlEscape="false" />
 	<spring:message code="label.recepcion.proveedor" var="label_recepcion_proveedor" htmlEscape="false" />
 	<spring:message code="label.recepcion.empleado" var="label_recepcion_empleado" htmlEscape="false" />
-
 	<spring:message code="label.editar" var="label_editar" htmlEscape="false" />
 	<spring:message code="button.actualizar" var="button_actualizar" htmlEscape="false" />
 	
