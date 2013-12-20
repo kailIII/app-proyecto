@@ -3,6 +3,12 @@ package com.mycompany.proyecto.model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/**
+ * Clase de Entidad mapeado como modelo de la BD, especificamente
+ * de la tabla clasificaciones
+ * @author Rodrigo Garcete
+ * @since 20/12/2013
+ */
 @Entity
 @Table(name = "clasificaciones")
 public class Clasificacion extends NamedEntity {
