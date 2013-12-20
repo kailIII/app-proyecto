@@ -4,31 +4,28 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 /**
- * 
  * @author Rodrigo Garcete
  * @since 02/12/2013
- *
  */
-//Entity
-//@Table(name = "pedido_detalles")
+@Entity
+@Table(name = "pedido_detalles")
 public class PedidoDetalle extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@OneToMany
-	@JoinColumn(name = "pedido_id")
+	@ManyToOne
+	@JoinColumn(name = "pedido_id", insertable = false, updatable = false)
 	private Pedido pedido;
 
-	@OneToMany
-	@JoinColumn(name = "pd_insumo_id")
+	@ManyToOne
+	@JoinColumn(name = "pd_insumo_id", insertable = false, updatable = false)
 	private Insumo insumo;
 
-	@OneToMany
-	@JoinColumn(name = "pd_umedida_id")
+	@ManyToOne
+	@JoinColumn(name = "pd_umedida_id", insertable = false, updatable = false)
 	private UnidadMedida umedida;
 
 	private BigDecimal cantidad;
@@ -41,6 +38,7 @@ public class PedidoDetalle extends BaseEntity {
 
 	}
 
+	//Metodos de Obtencion y establicimiento
 	public BigDecimal getCantidad() {
 		return cantidad;
 	}

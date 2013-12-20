@@ -1,15 +1,19 @@
 package com.mycompany.proyecto.model;
 
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * Clase de Entidad mapeado por la tabla pedidos
+ * de la BD
+ * @author Rodrigo Garcete
+ * @since 20/12/2013
+ */
 @Entity
 @Table(name = "pedidos")
 public class Pedido extends BaseEntity {
@@ -18,6 +22,7 @@ public class Pedido extends BaseEntity {
 
 	private String estado;
 
+	//Se tendra en cuenta solo el dia, mes y ano.
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 
@@ -52,7 +57,5 @@ public class Pedido extends BaseEntity {
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
 	}
-	
-	
 
 }
