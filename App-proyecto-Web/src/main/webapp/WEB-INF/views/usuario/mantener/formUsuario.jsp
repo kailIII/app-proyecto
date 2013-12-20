@@ -50,14 +50,6 @@
     			<form:checkbox path="activo" value="1"/>
     		</div>
    		</div>
-   		
-<!--    		<div class="control-group"> -->
-<%--     		<label class="control-label">${label_usuario_repita}</label> --%>
-<!--     		<div class="controls"> -->
-<%--     			<form:input path="precio" class="input-small"/> --%>
-<%--     			<form:errors path="precio" cssClass="alert alert-error" /> --%>
-<!--     		</div> -->
-<!--    		</div> -->
    	</fieldset>
 </form:form>
 

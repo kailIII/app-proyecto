@@ -1,4 +1,3 @@
-<%-- Pagina principal da aplicacao, a listagem de mercadorias. --%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -32,7 +31,6 @@
 				<a href="${edit_url}" title="${label_editar} ${m.nombre}">${m.nombre}</a>
 			</td>
 			<td>${m.login}</td>
-<%-- 			<td><fmt:formatNumber value="${m.precio}" type="currency"/></td> --%>
 		</tr>
 		</c:forEach>
 	</table>
