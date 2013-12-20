@@ -6,6 +6,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Entidad Ciudad que hace referencia a la tabla ciudades en 
+ * el modelo de Base de Datos
+ * @author Rodrigo Garcete
+ * @since 20/12/2013
+ *
+ */
 @Entity
 @Table(name = "ciudades")
 public class Ciudad extends NamedEntity {
@@ -16,25 +23,25 @@ public class Ciudad extends NamedEntity {
 
 	private int activo;
 
-//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JoinColumn(name = "ciudad_id")
-//	private Proveedor proveedor;
-
-	@ManyToOne //(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="departamento_id")
 	@NotNull
 	private Departamento departamento;
 
-	@ManyToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne 
 	@JoinColumn(name="pais_id")
 	@NotNull
 	private Pais pais;
 
 	// Constructor por Defecto
 	public Ciudad() {
-
+		this.abreviatura = "";
+		this.activo = 1;
+		this.departamento = new Departamento();
+		this.pais = new Pais();
 	}
 	
+	//Metodos de Obtencion y establecimientos
 	public String getAbreviatura() {
 		return abreviatura;
 	}
