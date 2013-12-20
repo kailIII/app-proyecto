@@ -1,8 +1,8 @@
-<%-- Pagina principal da aplicacao, a listagem de mercadorias. --%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <div>
 	<spring:message code="label.sobre.proyecto" var="label_sobre_proyecto" htmlEscape="false" />
 	<spring:message code="label.sobre" var="label_sobre" htmlEscape="false" />
