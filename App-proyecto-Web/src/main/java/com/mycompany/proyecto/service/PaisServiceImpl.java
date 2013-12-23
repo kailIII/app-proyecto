@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mycompany.proyecto.config.SearchCriteria;
 import com.mycompany.proyecto.model.Pais;
 import com.mycompany.proyecto.repository.PaisRepository;
 
@@ -55,6 +57,13 @@ public class PaisServiceImpl implements PaisService {
 	public Boolean remove(Pais c) throws DataAccessException {
 		paisRepository.remove(c);
 		return true;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Pais> findPaises(SearchCriteria criteria)
+			throws DataAccessException {
+		return paisRepository.findPais(criteria);
 	}
 
 }

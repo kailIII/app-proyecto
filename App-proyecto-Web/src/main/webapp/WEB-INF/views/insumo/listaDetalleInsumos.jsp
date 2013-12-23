@@ -14,11 +14,12 @@
 	<spring:message code="label.insumo.precio" var="label_insumo_precio" htmlEscape="false" />
 	<spring:message code="label.insumo.subtotal" var="label_insumo_subtotal" htmlEscape="false" />
 	
-		<table class="table table-hover" id="tabla">
+	<div class="table-responsive">
+		<table class="table table-bordered" id="tabla" >
 			<thead>
 				<tr>
 					<th><input id="checkAll" onclick="checkTodos(this.id,'tabla');" type="checkbox" name="checkAll" title="Seleccionar Todos" value="1"/></th>
-					<th>${label_insumo_codigo}</th>
+<%-- 					<th>${label_insumo_codigo}</th> --%>
 					<th>${label_insumo_nombre}</th>
 					<th>${label_insumo_umedida}</th>
 					<th>${label_insumo_cantidad}</th>
@@ -26,18 +27,42 @@
 			</thead>
 			<c:forEach items="${insumos}" var="m">
 			<tr>
-				<td><input type="checkbox" name="seleccion" value="1"/></td>
-				<td>${m.codigo}</td>
+				<td><input id="${m.codigo}" type="checkbox" name="" value="${m.codigo}" onclick="habilitarCantidad(this.id);" onblur="habilitarCantidad();"/> </td>
+<%-- 				<td id="codigo">${m.codigo}</td> --%>
 				<td>${m.nombre}</td>
-				<td>${m.umedida.abreviatura}</td>
-				<td><input type="text" name="cantidad" title="cantidad de insumo para el pedido"></td>
+				<td id="umedida">${m.umedida.abreviatura}</td>
+				<td><input id="cantidad-${m.codigo}" disabled="disabled" type="text" name="" title="cantidad de insumo para el pedido"></td>
 			</tr>
 			</c:forEach>
 		</table>
+	</div>
 </div>
 
 <script>
+// 	$(document).ready(function () {
+		
+// 		$("#s").click(function(){
+// 		 	//$("#cantidad").removeAttr("disabled");
+// 		  	$("#cantidad").attr("disabled",false);
+// 		  	$("#cantidad").attr("name","cantidad[]");
+// 		 });
+		
+// 	});
+	
+	function habilitarCantidad(id){
+		$("#cantidad-"+id).attr("disabled",false);
+	  	$("#cantidad-"+id).attr("name","c");
+	}
+
 	function checkTodos (id,pID) {	 
 		$( "#" + pID + " :checkbox").attr('checked', $('#' + id).is(':checked')); 
 	}
+	
+	function recuperarCheck () {
+		
+		//var s = $('#seleccion:checked').val();
+		//var children = document.getElementById('seleccion').getElementsByTagName('td')[0].innerHTML;
+		//alert(children);
+	}
+	
 </script>

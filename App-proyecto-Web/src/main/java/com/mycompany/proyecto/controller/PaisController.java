@@ -1,6 +1,9 @@
 package com.mycompany.proyecto.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.mycompany.proyecto.config.SearchCriteria;
 import com.mycompany.proyecto.model.Pais;
 import com.mycompany.proyecto.service.PaisService;
 
@@ -57,6 +62,14 @@ public class PaisController {
 //				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
 //	}
 	
+	@RequestMapping(value = "/busqueda", method = RequestMethod.GET)
+	public String list(SearchCriteria criteria, Model model) {
+		List<Pais> paises = paisService.findPaises(criteria);
+		model.addAttribute("paises", paises);
+		model.addAttribute("searchCriteria", new SearchCriteria());
+		return "listaPaises";
+	}
+
 	/**
 	 * Ponto de entrada da aplicação ("/").
 	 * @param uiModel recebe a lista de mercadorias.

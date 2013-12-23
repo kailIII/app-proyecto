@@ -6,6 +6,7 @@ import org.springframework.dao.DataAccessException;
 
 import com.mycompany.proyecto.model.Insumo;
 import com.mycompany.proyecto.model.Pedido;
+import com.mycompany.proyecto.model.PedidoDetalle;
 
 
 /**
@@ -27,6 +28,8 @@ public interface PedidoRepository {
 	List<Insumo> getInsumos() throws DataAccessException;
 		
 	void save(Pedido pedidoInsumo) throws DataAccessException;
+	
+	void savePedido(Pedido pedido, List<PedidoDetalle> pDetalle ) throws DataAccessException;
 		
 	Boolean remove(Pedido pedidoInsumo) throws DataAccessException;
 	

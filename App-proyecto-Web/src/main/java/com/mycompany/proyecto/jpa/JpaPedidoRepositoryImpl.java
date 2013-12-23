@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.mycompany.proyecto.model.Insumo;
 import com.mycompany.proyecto.model.Pedido;
+import com.mycompany.proyecto.model.PedidoDetalle;
 import com.mycompany.proyecto.repository.BancoRepository;
 import com.mycompany.proyecto.repository.PedidoRepository;
 
@@ -36,8 +37,6 @@ public class JpaPedidoRepositoryImpl implements PedidoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Pedido> findByName(String nombre) throws DataAccessException {
-		// using 'join fetch' because a single query should load both owners and pets
-        // using 'left join fetch' because it might happen that an owner does not have pets yet
         Query query = this.em.createQuery("SELECT b FROM Pedido b WHERE b.nombre LIKE :nombre");
         query.setParameter("nombre", nombre + "%");
         return (List<Pedido>)query.getResultList();
@@ -70,9 +69,24 @@ public class JpaPedidoRepositoryImpl implements PedidoRepository {
 	@Override
 	public List<Insumo> getInsumos() throws DataAccessException {
 		Query query = this.em.createQuery("FROM Insumo");
-        //query.setParameter("nombre", nombre + "%");
-        //query.setMaxResults(pag);
         return (List<Insumo>)query.getResultList();
+	}
+
+	@Override
+	public void savePedido(Pedido pedido, List<PedidoDetalle> pDetalle) throws DataAccessException {
+		if(pedido.getCodigo() == null){
+			this.em.persist(pedido);
+		}else {
+			this.em.merge(pedido);
+		}
+		
+		
+		if (pDetalle != null && pDetalle.size() > 0) {
+			for (PedidoDetalle pd : pDetalle) {
+				this.em.persist(pd);
+			}
+		}
+		this.em.flush();
 	}
 
 }

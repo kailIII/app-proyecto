@@ -1,7 +1,10 @@
 package com.mycompany.proyecto.repository;
 
 import java.util.List;
+
 import org.springframework.dao.DataAccessException;
+
+import com.mycompany.proyecto.config.SearchCriteria;
 import com.mycompany.proyecto.model.Pais;
 
 /**
@@ -16,7 +19,9 @@ public interface PaisRepository {
 
 	Pais findById(Long codigo) throws DataAccessException;
 	
-	List<Pais> findByName(String nombre) throws DataAccessException; 
+	List<Pais> findByName(String nombre) throws DataAccessException;
+	
+	List<Pais> findPais(SearchCriteria palabra) throws DataAccessException;
 
 	List<Pais> getAll() throws DataAccessException;
 		

@@ -23,7 +23,7 @@
 	   	});
 		</script>
 	</c:if>
-	<c:if test="${!temRecepcionInsumo}">
+	<c:if test="${!temPedidoInsumo}">
 		<h3>${pedido_inexistente}</h3>
 	</c:if>
 	

@@ -16,6 +16,9 @@
      -->
 	<context:component-scan base-package="com.mycompany.proyecto.controller" />
 	
+	<!-- Import de JasperReport -->
+<!-- 	<import resource="/spring/jasper-views.xml"/>  -->
+	
 	<!-- Habilita el uso de anotaciones para Spring MVC. -->
 	<mvc:annotation-driven />
 	
@@ -49,21 +52,16 @@
 		id="messageSource" p:basenames="WEB-INF/i18n/messages" p:fallbackToSystemLocale="false" />
 
 	<!-- Configura a aplicacao com locale pt-BR por default. -->
-	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-       <property name="defaultLocale" value="es_ES" />
-    </bean>
+<!-- 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"> -->
+<!--        <property name="defaultLocale" value="es_ES" /> -->
+<!--     </bean> -->
     
     <!-- Bean para mapear os erros para pagina de excecao do aplicativo -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" p:defaultErrorView="errorPage" />
 
-<!--     <bean class="java.util.ArrayList" id="sobreApp"> -->
-<!--         <constructor-arg> -->
-<!--             <list> -->
-<!-- 	            <value>sobre.title</value> -->
-<!-- 				<value>sobre.built</value> -->
-<!-- 				<value>sobre.site</value> -->
-<!-- 				<value>sobre.build</value> -->
-<!--             </list> -->
-<!--         </constructor-arg> -->
+	<!--JasperReport -->
+<!-- 	<bean class="org.springframework.web.servlet.view.XmlViewResolver"> -->
+<!--         <property name="location" value="/spring/jasper-views.xml"/> -->
+<!--         <property name="order" value="0"/> -->
 <!--     </bean> -->
 </beans>
