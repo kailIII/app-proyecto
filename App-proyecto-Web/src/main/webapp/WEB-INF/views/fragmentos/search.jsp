@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 
 <%-- <c:url var="hotelsUrl" value="/hotels"/> get ${hotelsUrl}--%>
-<form:form id="searchForm" modelAttribute="searchCriteria" action="" method="" cssClass="inline ajaxForm">
+<form:form id="searchForm" modelAttribute="searchCriteria" action="get" method="">
     <span class="errors span-18">
     	<form:errors path="*"/>
     </span>
