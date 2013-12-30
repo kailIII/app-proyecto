@@ -52,11 +52,10 @@ public class JpaPedidoRepositoryImpl implements PedidoRepository {
 	public void save(Pedido c) throws DataAccessException {
 		if(c.getCodigo() == null){
 			this.em.persist(c);
-			this.em.flush();
 		}else {
-			this.em.merge(c);
-			this.em.flush();
+			this.em.merge(c);	
 		}
+		this.em.flush();
 	}
 
 	@Override
@@ -83,7 +82,8 @@ public class JpaPedidoRepositoryImpl implements PedidoRepository {
 		
 		if (pDetalle != null && pDetalle.size() > 0) {
 			for (PedidoDetalle pd : pDetalle) {
-				this.em.persist(pd);
+				//pd.setPedido(pedido.getCodigo());
+				this.em.merge(pd);
 			}
 		}
 		this.em.flush();

@@ -10,9 +10,9 @@ import com.mycompany.proyecto.model.UnidadMedida;
 import com.mycompany.proyecto.repository.UnidadMedidaRepository;
 
 /**
- * Implementacion de JPA de la interfaz {@link InusmoRepository}
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
+ * Implementacion de JPA de la interfaz {@link UnidadMedidaRepository}
+ * @author Rodrigo Garcete
+ * @since 21-11-2013
  */
 @Repository
 public class JpaUnidadMedidaRepositoryImpl implements UnidadMedidaRepository {
@@ -23,7 +23,6 @@ public class JpaUnidadMedidaRepositoryImpl implements UnidadMedidaRepository {
 	public UnidadMedida findById(Long codigo) throws DataAccessException {
         Query query = this.em.createQuery("SELECT i FROM UnidadMedida i WHERE i.codigo =:codigo");
         query.setParameter("codigo", codigo);
-        
         return (UnidadMedida) query.getSingleResult(); 
 	}
 
@@ -36,18 +35,17 @@ public class JpaUnidadMedidaRepositoryImpl implements UnidadMedidaRepository {
 	
 	@SuppressWarnings("unchecked")
 	public List<UnidadMedida> getAll() throws DataAccessException {
-		return (List<UnidadMedida>)em.createQuery("select i from UnidadMedida i order by i.codigo").getResultList();
+		return (List<UnidadMedida>)em.createQuery("SELECT i FROM UnidadMedida i ORDER BY i.codigo").getResultList();
 	}
 
 	@Override
 	public void save(UnidadMedida umedida) throws DataAccessException {
 		if(umedida.getCodigo() == null){
 			this.em.persist(umedida);
-			this.em.flush();
 		}else {
 			this.em.merge(umedida);
-			this.em.flush();
 		}
+		this.em.flush();
 	}
 
 	@Override

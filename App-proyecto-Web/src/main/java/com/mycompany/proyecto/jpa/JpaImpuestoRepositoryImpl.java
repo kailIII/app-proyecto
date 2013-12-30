@@ -32,8 +32,6 @@ public class JpaImpuestoRepositoryImpl implements ImpuestoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Impuesto> findByName(String nombre) throws DataAccessException {
-		// using 'join fetch' because a single query should load both owners and pets
-        // using 'left join fetch' because it might happen that an owner does not have pets yet
         Query query = this.em.createQuery("SELECT b FROM Impuesto b WHERE b.nombre LIKE :nombre");
         query.setParameter("nombre", nombre + "%");
         return (List<Impuesto>)query.getResultList();
@@ -49,11 +47,10 @@ public class JpaImpuestoRepositoryImpl implements ImpuestoRepository {
 	public void save(Impuesto c) throws DataAccessException {
 		if(c.getCodigo() == null){
 			this.em.persist(c);
-			this.em.flush();
 		}else {
 			this.em.merge(c);
-			this.em.flush();
 		}
+		this.em.flush();
 	}
 
 	@Override
