@@ -18,9 +18,9 @@
 		<h3>${label_paises} <small> ${label_listado}</small></h3>
 	</div>
 	
-	<c:import 
-	   		url="/WEB-INF/views/fragmentos/search.jsp">
-	</c:import>
+<%-- 	<c:import  --%>
+<%-- 	   		url="/WEB-INF/views/fragmentos/search.jsp"> --%>
+<%-- 	</c:import> --%>
 	
 	<table class="table table-hover">
 		<thead>

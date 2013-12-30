@@ -36,6 +36,5 @@
 		</tr>
 		</c:forEach>
 	</table>
-	<br/>
-    <a href='<spring:url value="/umedida/form/" htmlEscape="true"/>'>Registrar U. Medida</a>
+    <a href='<spring:url value="/umedida/form/" htmlEscape="true"/>'>Registrar Unidad de Medida</a>
 </div>

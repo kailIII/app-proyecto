@@ -37,6 +37,5 @@
 		</tr>
 		</c:forEach>
 	</table>
-	<br/>
     <a href='<spring:url value="/ciudad/form/" htmlEscape="true"/>'>Registrar Ciudad</a>
 </div>
