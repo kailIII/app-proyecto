@@ -1,17 +1,13 @@
 package com.mycompany.proyecto.model;
 
-import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 /**
- * 
- * @author rodrigo garcete Fecha 
- * Creacion:23/11/2013
+ * Entidad que representa una unidad de medida
+ * @author Rodrigo Garcete 
+ * @since 23/11/2013
  */
 @Entity
 @Table(name = "unidades_medidas")
@@ -19,20 +15,22 @@ public class UnidadMedida extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@Size(min = 3, max = 80)
 	@NotNull
+	@Size(min = 3, max = 80)
 	private String nombre;
 
 	@NotNull
+	@Size(min = 1, max = 3)
 	private String abreviatura;
 
 	private int activo;
 
 	//Constructor por defecto
 	public UnidadMedida() {
-
+		super();
 	}
 
+	//Metodos Getters and Setters
 	public String getNombre() {
 		return nombre;
 	}
@@ -57,17 +55,4 @@ public class UnidadMedida extends BaseEntity {
 		this.activo = activo;
 	}
 	
-//	@Override
-//    public String toString() {
-//        return new ToStringCreator(this)
-//
-//                .append("id", this.getCodigo())
-//                .append("new", this.isNew())
-//                .append("nombre", this.getNombre())
-//                .append("Abreviatura", this.abreviatura)
-//                .append("activo", this.activo)
-//                .toString();
-//    }
-
-
 }

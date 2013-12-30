@@ -1,7 +1,6 @@
 package com.mycompany.proyecto.model;
 
 import java.math.BigDecimal;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;

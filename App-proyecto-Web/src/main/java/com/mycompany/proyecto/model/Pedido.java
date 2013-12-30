@@ -30,6 +30,8 @@ public class Pedido extends BaseEntity {
 	@JoinColumn(name = "ped_proveedor_id")
 	private Proveedor proveedor;
 
+	//private List<PedidoDetalle> pDetalle;
+
 	public Pedido() {
 
 	}
