@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page import="com.mycompany.proyecto.model.PedidoDetalle" %>
+<%@ page import="java.util.ArrayList"%>
 
 <spring:message code="button.guardar" var="button_guardar" htmlEscape="false" />
 <spring:message code="button.cancelar" var="button_cancelar" htmlEscape="false" />
@@ -51,17 +52,11 @@
 			<a href="./pedido/listado"><button class="btn">Por Marca</button></a>
 		</div>
  
-	   	<c:import 
-	   		url="/WEB-INF/views/insumo/listaDetalleInsumos.jsp">
-	   	</c:import>
+	   	
    	
    	</fieldset>
    	
-   	
-</form:form>
-
-
-<div class="control-group form-horizontal">
+   	<div class="control-group form-horizontal">
 	<div class="controls">
 		<button id="guardar" class="btn btn-success">${button_guardar}</button>
 		<a href="/proyecto/pedido/listado"><button class="btn">${button_cancelar}</button></a>
@@ -69,9 +64,28 @@
 			<button id="excluir" class="btn btn-danger">${button_excluir}</button>
 		</c:if>
 	</div>
+	<table id="table_pedido" class="table table-hover">
+		<thead>
+			<th>#</th>
+			<th>Descripcion</th>
+			<th>Cantidad</th>
+		</thead>
+		<tbody>
+			
+		</tbody>
+	</table>
+	
 </div>
+</form:form>
+
+<%-- <c:import  --%>
+<%-- 	   		url="/WEB-INF/views/insumo/listaDetalleInsumos.jsp"> --%>
+<%-- </c:import> --%>
+
 
 <script>
+	var lista = [];
+	
 	$(document).ready(function () {
 	 	$("#frmPedidoInsumo").validate({
 	 		 	rules: {
@@ -141,7 +155,22 @@
 // 	       }
 // 	    });
 // 	});
-
+	function addProducto(idP, cantidadP, nombre){
+		var tr = '<tr>';
+		tr+='<td>'+idP+'</td>';
+		tr+='<td>'+nombre+'</td>';
+		tr+='<td>'+cantidadP+'</td>';
+		
+		lista.push({id:idP,cantidad:cantidadP});
+		
+		$('#table_pedido').append(tr);
+		//console.log(lista);
+		//alert(lista[0].id);
+		//alert(lista[0].cantidad)
+		
+	}
+	
+	
 	function ver() {
 		Alert(children);
 	}

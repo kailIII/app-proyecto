@@ -36,8 +36,7 @@
    		<div class="control-group">
     		<label class="control-label">${label_umedida_activo}</label>
     		<div class="controls">
-    			<form:checkbox path="activo" class="input-small" id="activo" value="0"/>
-<%--     			<form:errors path="activo" cssClass="alert alert-error" /> --%>
+    			<form:checkbox path="activo" class="input-small" id="activo" value="1"/>
     		</div>
    		</div>
    		
@@ -55,15 +54,18 @@
 </div>
 
 <script>
-$(document).ready(function () {
- 	$("#frmUmedida").validate({
- 		 	rules: {
- 	 		 	nombre: { required: true, minlength: 5 },
- 	 		 	abreviatura: { required: true, minlength: 1}
- 		 	}
- 	});
- 	
- 	$("#guardar").click(function () { $("#frmUmedida").submit(); });
- 	
-});
+	$(document).ready(function () {
+	 	$("#frmUmedida").validate({
+	 		rules: {
+	 	 		nombre:		{ required: true, minlength: 3 },
+	 	 		abreviatura:{ required: true, minlength: 1}
+	 		},
+			messages: {
+	           'nombre': 'El campo Nombre es obligatorio',
+	           'abreviatura': 'El campo Abreviatura es obligatorio'
+			}
+	 	});
+	 	
+	 	$("#guardar").click(function () { $("#frmUmedida").submit(); }); 	
+	});
 </script>

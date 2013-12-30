@@ -62,7 +62,6 @@
     		<label class="control-label">${label_proveedor_representante}</label>
     		<div class="controls">
     			<form:input path="representante" class="input-small" />
-    			<form:errors path="representante" cssClass="alert alert-error" />
     		</div>
    		</div>
    		
@@ -78,7 +77,6 @@
     		<label class="control-label">${label_proveedor_barrio}</label>
     		<div class="controls">
     			<form:input path="barrio" class="input-small"/>
-    			<form:errors path="barrio" cssClass="alert alert-error" />
     		</div>
    		</div>
    		
@@ -94,14 +92,13 @@
     		<label class="control-label">${label_proveedor_celular}</label>
     		<div class="controls">
     			<form:input path="celular" class="input-small"/>
-    			<form:errors path="celular" cssClass="alert alert-error" />
     		</div>
    		</div>
    		
    		<div class="control-group">
     		<label class="control-label">${label_proveedor_ciudad}</label>
     		<div class="controls">
-    			<form:input path="ciudad.codigo" class="input-small"/>
+    			<form:input path="ciudad.codigo" class="input-small" id="ciudad"/>
     			<form:errors path="ciudad.codigo" cssClass="alert alert-error" />
     		</div>
    		</div>
@@ -113,7 +110,7 @@
 <div class="control-group form-horizontal">
 	<div class="controls">
 		<button id="guardar" class="btn btn-success">${button_guardar}</button>
-		<a href="/"><button class="btn">${button_cancelar}</button></a>
+		<a href="/proyecto/proveedor/listado"><button class="btn">${button_cancelar}</button></a>
 		<c:if test="${not empty param.enableRemove}">
 			<button id="excluir" class="btn btn-danger">${button_excluir}</button>
 		</c:if>
@@ -125,8 +122,15 @@ $(document).ready(function () {
  	$("#frmProveedor").validate({
  		 	rules: {
  	 		 	nombre: { required: true, minlength: 5 },
- 	 		 	apellido: { required: true, minlength: 5 }
+ 	 		 	apellido: { required: true, minlength: 5 },
+ 	 		 	ciudad: {required: true }
+ 		 	},
+ 		 	messages: {
+ 		 		nombre:'El campo Nombre es obligatorio',
+ 		 		apellido:'El campo Apellido es obligatorio',
+ 		 		ciudad: 'El campo Ciudad es obligatorio'
  		 	}
+ 		
  	});
  	
   	$("#guardar").click(function () { $("#frmProveedor").submit(); });

@@ -71,6 +71,11 @@ $(document).ready(function () {
  	 		 	nombre: { required: true, minlength: 5 },
  	 		 	login: { required: true },
 				clave: { required: true, minlength: 5 }
+ 		 	}, 
+ 		 	messages: {
+ 		 		nombre: 'El campo Nombre es obligatorio',
+ 		 		login: 'El campo Login es obligatorio',
+ 		 		clave: 'El campo Clave es obligatorio'
  		 	}
  	});
  	

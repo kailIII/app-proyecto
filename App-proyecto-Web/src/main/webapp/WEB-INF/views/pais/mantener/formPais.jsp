@@ -58,6 +58,9 @@ $(document).ready(function () {
  	$("#frmPais").validate({
  		 	rules: {
  	 		 	nombre: { required: true, minlength: 5 }
+ 		 	}, 
+ 		 	messages :{
+ 		 		nombre: 'El campo Nombre es obligatorio'
  		 	}
  	});
  	

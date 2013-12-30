@@ -31,7 +31,6 @@
     		<label class="control-label">${label_ciudad_abreviatura}</label>
     		<div class="controls">
     			<form:input path="abreviatura" class="input-large"/>
-    			<form:errors path="abreviatura" cssClass="alert alert-error" />
     		</div>
    		</div>
    		
@@ -79,6 +78,11 @@ $(document).ready(function () {
  	 		 	nombre: { required: true, minlength: 5 },
  	 		 	dep	  : { required: true },
  	 		 	pais  : { required: true}
+ 		 	},
+ 		 	messages: {
+ 		 		nombre: 'El campo Nombre es obligatorio',
+ 		 		dep: 'El campo Departamento es obligatorio',
+ 		 		pais: 'El campo Pais es obligatorio'
  		 	}
  	});
  	
