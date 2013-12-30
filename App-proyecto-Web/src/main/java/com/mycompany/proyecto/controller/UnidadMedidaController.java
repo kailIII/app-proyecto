@@ -1,13 +1,21 @@
 package com.mycompany.proyecto.controller;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.mycompany.proyecto.model.UnidadMedida;
 import com.mycompany.proyecto.service.UnidadMedidaService;
 
@@ -19,19 +27,16 @@ import com.mycompany.proyecto.service.UnidadMedidaService;
  * El objeto Model simplemente es un mapa donde guardaremos los objetos 
  * que queremos pasar a la vista (es la M de MVC)
  * 
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
- */
-
-/**
  * Principal componente do framework <code>Spring MVC</code>, esse é o controller do cadastro de mercadorias. 
  * 
- * <p>Tem como responsabilidade: definir o mapeamento de navegação, acionar validadores e conversores de dados, 
+ * <p>Tem como responsabilidade: definir o mapeamento de navegação, acionar 
+ * validadores e conversores de dados, 
  * fornecer e receber os dados da camada de visão (<code>JSP</code>).</p>
  * 
- * <p>Os métodos de navegação, retornam a url definida no Tiles. Veja também o arquivo <code>views.xml</code>.</p>
+ * <p>Os métodos de navegação, retornam a url definida no Tiles. 
+ * Veja também o arquivo <code>views.xml</code>.</p>
  * 
- * @author YaW Tecnologia
+ * @author Rodrigo Garcete
  */
 @RequestMapping(value="/umedida")
 @Controller 
@@ -49,16 +54,11 @@ public class UnidadMedidaController {
 	/** Configura um conversor para double em pt-BR, usado no campo de preço.
 	* @param binder
 	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
-	
-//	@InitBinder
-//    public void setAllowedFields(WebDataBinder dataBinder) {
-//        dataBinder.setDisallowedFields("codigo");
-//    }
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(Double.class, 
+				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
+	}
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").
@@ -79,27 +79,23 @@ public class UnidadMedidaController {
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("umedida", new UnidadMedida() );
-		//uiModel.addAttribute("active", "incluir");
-		//log.debug("Listo para insertar Unidad Medida");
 		return "incluirUmedida";
 	}
 	
 	/**
-	 * Método ejecutado en la insercion de insumos.
+	 * Método ejecutado en la insercion.
 	 * @param instancia de insumo con los datos cargados en la pantalla
 	 * @param bindingResult componente utilizado para verificar problemas com validacion
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
-	public String crear(@Valid UnidadMedida um, BindingResult bindingResult) { //, Model uiModel
+	public String crear(@Valid UnidadMedida um, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
-            //uiModel.addAttribute("umedida", um);
-            //uiModel.addAttribute("active", "incluir");
+            uiModel.addAttribute("umedida", um);
             return "incluirUmedida";
         }else {
         	this.umService.save(um);
-        	//log.debug("Unidad Medida persistido: "+ um.getCodigo());
     		return "redirect:/umedida/listado";
         }
 	}

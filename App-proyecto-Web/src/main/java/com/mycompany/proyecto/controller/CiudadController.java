@@ -47,15 +47,6 @@ public class CiudadController {
 	public CiudadController(CiudadService is){
 		this.ciudadService = is;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").
@@ -76,7 +67,6 @@ public class CiudadController {
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("ciudad", new Ciudad());
-		//uiModel.addAttribute("active", "incluir");
 		return "incluirCiudad";
 	}
 	
@@ -91,10 +81,8 @@ public class CiudadController {
 	public String crear(@Valid Ciudad ciudad, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("ciudad", ciudad);
-            //uiModel.addAttribute("active", "incluir");
             return "incluirCiudad";
         }
-		
 		this.ciudadService.save(ciudad);
 		return "redirect:/ciudad/listado";
 	}
@@ -121,7 +109,7 @@ public class CiudadController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/editar/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Ciudad ciudad, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("ciudad", ciudad);
@@ -137,7 +125,7 @@ public class CiudadController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Ciudad m = ciudadService.findById(id);
 		if (m != null) {

@@ -48,15 +48,6 @@ public class ImpuestoController {
 	public ImpuestoController(ImpuestoService is){
 		this.impuestoService = is;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").
@@ -77,7 +68,6 @@ public class ImpuestoController {
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("impuesto", new Impuesto());
-		//uiModel.addAttribute("active", "incluir");
 		return "incluirImpuesto";
 	}
 	
@@ -92,8 +82,7 @@ public class ImpuestoController {
 	public String crear(@Valid Impuesto i, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("impuesto", i);
-            //uiModel.addAttribute("active", "incluir");
-            return "incluirImpuestoo";
+            return "incluirImpuesto";
         }
 		
 		this.impuestoService.save(i);
@@ -101,9 +90,9 @@ public class ImpuestoController {
 	}
 	
 	/**
-	 * Método ejecutado antes de cargar la pantalla de edicion de insumos.
-	 * @param id del insumo que va a ser editado.
-	 * @param uiModel almacena el objeto insumo que debe ser modificado.
+	 * Método ejecutado antes de cargar la pantalla de edicion de Impuestos
+	 * @param id del impuesto que va a ser editado.
+	 * @param uiModel almacena el objeto impuesto que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -116,13 +105,13 @@ public class ImpuestoController {
 	}
 	
 	/**
-	 * Método executado ao salvar a edição de mercadoria.
-	 * @param mercadoria objeto com os dados enviados pela tela.
+	 * Método ejecutado al actualizar el registro
+	 * @param impuesto objeto con los datos enviados por la pantalla
 	 * @param bindingResult componente usado para verificar problemas com validação.
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/editar/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Impuesto i, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("impuesto", i);
@@ -138,7 +127,7 @@ public class ImpuestoController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Impuesto i = impuestoService.findById(id);
 		if (i != null) {

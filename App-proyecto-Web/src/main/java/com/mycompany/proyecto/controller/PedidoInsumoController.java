@@ -1,6 +1,5 @@
 package com.mycompany.proyecto.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import com.mycompany.proyecto.model.Pedido;
 import com.mycompany.proyecto.service.PedidoInsumoService;
 
@@ -93,30 +91,13 @@ public class PedidoInsumoController {
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
 	@RequestMapping(value="/form", method = RequestMethod.POST) //, params = {"seleccion []"}
-	@ResponseBody
-	public String crear(HttpServletRequest request, @Valid Pedido pedidoInsumo, BindingResult bindingResult, Model uiModel //, 
-			//@RequestParam(value = "seleccion[]") String seleccion[]
-			) {
+	//@ResponseBody
+	public String crear(@Valid Pedido pedidoInsumo, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("pedido", pedidoInsumo);
-            //uiModel.addAttribute("active", "incluir");
             return "incluirPedidoInsumo";
         }
-				
-		String[] seleccion = request.getParameterValues("seleccion[]");
-		String[] cantidad = request.getParameterValues("cantidad[]");
-		
-		for (String s: seleccion) {
-			System.out.println(s);
-		}
-		
-		for (String c : cantidad) {
-			System.out.println(c);
-		}
-		
-		
 		pedidoInsumoService.save(pedidoInsumo);
-		//log.debug("Pedido Insumo persistido: "+ pedidoInsumo.getCodigo());
 		return "redirect:/pedido/listado";
 	}
 	

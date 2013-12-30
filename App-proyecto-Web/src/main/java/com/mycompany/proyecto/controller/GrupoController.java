@@ -47,15 +47,6 @@ public class GrupoController {
 	public GrupoController(GrupoService is){
 		this.grupoService = is;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").
@@ -76,7 +67,6 @@ public class GrupoController {
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("grupo", new Grupo());
-		//uiModel.addAttribute("active", "incluir");
 		return "incluirGrupo";
 	}
 	
@@ -91,7 +81,6 @@ public class GrupoController {
 	public String crear(@Valid Grupo g, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("grupo", g);
-            //uiModel.addAttribute("active", "incluir");
             return "incluirGrupo";
         }
 		
@@ -121,7 +110,7 @@ public class GrupoController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/editar/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Grupo g, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("grupo", g);
@@ -137,7 +126,7 @@ public class GrupoController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Grupo m = grupoService.findById(id);
 		if (m != null) {

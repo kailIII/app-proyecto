@@ -32,6 +32,7 @@ import com.mycompany.proyecto.service.MarcaService;
  * <p>Os métodos de navegação, retornam a url definida no Tiles. Veja também o arquivo <code>views.xml</code>.</p>
  * 
  * @author Rodrigo Garcete
+ * @since 29/12/2013
  */
 @RequestMapping(value="/marca")
 @Controller
@@ -47,15 +48,6 @@ public class MarcaController {
 	public MarcaController(MarcaService is){
 		this.marcaService = is;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").
@@ -69,20 +61,19 @@ public class MarcaController {
 	}
 	
 	/**
-	 * Método ejecutado antes de cargar la pantalla de insercion de insumos
+	 * Método ejecutado antes de cargar la pantalla de insercion
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("marca", new Marca());
-		//uiModel.addAttribute("active", "incluir");
 		return "incluirMarca";
 	}
 	
 	/**
-	 * Método ejecutado en la insercion de insumos.
-	 * @param instancia de insumo con los datos cargados en la pantalla
+	 * Método ejecutado en la insercion.
+	 * @param instancia de unidadMedida con los datos cargados en la pantalla
 	 * @param bindingResult componente utilizado para verificar problemas com validacion
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
@@ -91,7 +82,6 @@ public class MarcaController {
 	public String crear(@Valid Marca marca, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("marca", marca);
-            //uiModel.addAttribute("active", "incluir");
             return "incluirMarca";
         }
 		
@@ -100,8 +90,8 @@ public class MarcaController {
 	}
 	
 	/**
-	 * Método ejecutado antes de cargar la pantalla de edicion de insumos.
-	 * @param id del insumo que va a ser editado.
+	 * Método ejecutado antes de cargar la pantalla de edicion.
+	 * @param id de unidadMedida que va a ser editado.
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
@@ -115,13 +105,14 @@ public class MarcaController {
 	}
 	
 	/**
-	 * Método executado ao salvar a edição de mercadoria.
-	 * @param mercadoria objeto com os dados enviados pela tela.
-	 * @param bindingResult componente usado para verificar problemas com validação.
+	 * Método ejecutado al actualizar el registro.
+	 * @param marca objeto con los datos enviados de la pantalla.
+	 * @param bindingResult componente usado para verificar problemas de validacion
 	 * @param uiModel
-	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
+	 * @return a url para a listado, si algun error de validacion fue encontrado,
+	 * regresa a la pagina de edicion
 	 */
-	@RequestMapping(value = "/editar/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Marca marca, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("marca", marca);
@@ -132,12 +123,12 @@ public class MarcaController {
 	}
 	
 	/**
-	 * Método ejecutado para la eliminacion de insumos.
-	 * @param id de insumo que debe ser eliminado.
+	 * Método ejecutado para la eliminacion.
+	 * @param id de unidadMedida que debe ser eliminado.
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Marca m = marcaService.findById(id);
 		if (m != null) {

@@ -39,7 +39,7 @@ public class ClasificacionController {
 	
 	//private static final Logger log = LoggerFactory.getLogger(DepositoController.class);
 	
-	public static final int DEFAULT_CIUDAD_POR_PAGINA = 25;
+	public static final int DEFAULT_CLASIFICACION_POR_PAGINA = 25;
 
 	private final ClasificacionService clasificacionService;
 	
@@ -48,17 +48,8 @@ public class ClasificacionController {
 		this.clasificacionService = is;
 	}
 	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
-	
 	/**
-	 * Ponto de entrada da aplicação ("/").
+	 * Punto de entrada del controlador
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
@@ -91,7 +82,6 @@ public class ClasificacionController {
 	public String crear(@Valid Clasificacion c, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("clasificacion", c);
-            //uiModel.addAttribute("active", "incluir");
             return "incluirCiudad";
         }
 		
@@ -115,13 +105,13 @@ public class ClasificacionController {
 	}
 	
 	/**
-	 * Método executado ao salvar a edição de mercadoria.
+	 * Método ejecutado al actualizar
 	 * @param mercadoria objeto com os dados enviados pela tela.
 	 * @param bindingResult componente usado para verificar problemas com validação.
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/editar/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Clasificacion c, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("clasificacion", c);
@@ -132,12 +122,12 @@ public class ClasificacionController {
 	}
 	
 	/**
-	 * Método ejecutado para la eliminacion de insumos.
-	 * @param id de insumo que debe ser eliminado.
+	 * Método ejecutado para eliminacion
+	 * @param id de la clasificacion que debe ser eliminado.
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Clasificacion m = clasificacionService.findById(id);
 		if (m != null) {
