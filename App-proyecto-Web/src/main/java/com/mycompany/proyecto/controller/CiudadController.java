@@ -53,7 +53,7 @@ public class CiudadController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado",method = RequestMethod.GET)
+	@RequestMapping(value="/listado", method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("ciudades", ciudadService.getAll());
 		return "listaCiudades";
