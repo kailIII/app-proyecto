@@ -1,16 +1,18 @@
 package com.mycompany.proyecto.controller;
 
+import java.util.ArrayList;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.mycompany.proyecto.model.Pedido;
+import com.mycompany.proyecto.model.PedidoDetalle;
 import com.mycompany.proyecto.service.PedidoInsumoService;
-
 
 /**
  * Handles requests for the application home page.
@@ -32,7 +34,7 @@ import com.mycompany.proyecto.service.PedidoInsumoService;
  * 
  * <p>Os métodos de navegação, retornam a url definida no Tiles. Veja também o arquivo <code>views.xml</code>.</p>
  * 
- * @author YaW Tecnologia
+ * @author Rodrigo Garcete
  */
 @RequestMapping(value="/pedido") 
 @Controller
@@ -42,19 +44,51 @@ public class PedidoInsumoController {
 	
 	private final PedidoInsumoService pedidoInsumoService;
 	
+	private ArrayList<PedidoDetalle> listaItems = new ArrayList<PedidoDetalle>();
+	
 	@Autowired
 	public PedidoInsumoController(PedidoInsumoService is){
 		this.pedidoInsumoService = is;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
+	
+	/**
+	 * 
+	 * @param item
+	 * @param bindingResult
+	 */
+	@RequestMapping(value = "/addItem", method = RequestMethod.POST)
+	public void addItem(@ModelAttribute(value = "item") PedidoDetalle item, BindingResult bindingResult){
+		if (!bindingResult.hasErrors()) {
+			//El id lo pasamos al Id del Insumo
+			item.getInsumo().setCodigo(item.getId());
+			//cargamos el bean a la lista
+			listaItems.add(item); 
+		}
+	}
+	
+	@RequestMapping(value = "/quitarItem", method = RequestMethod.POST)
+	public void quitarItem(@ModelAttribute(value = "item") PedidoDetalle item, BindingResult bindingResult){
+		if (!bindingResult.hasErrors()) {
+			//El id lo pasamos al Id del Insumo
+			//item.getInsumo().setCodigo(item.getId());
+			for (int i = 0; i < listaItems.size(); i++) {
+				PedidoDetalle pd = listaItems.get(i);
+				
+				System.out.println("Item Id :" + item.getId());
+				System.out.println("Item Cantidad :" + item.getCantidad());
+				
+				//System.out.println();
+				
+				if (pd.getInsumo().getCodigo().equals(item.getId()) &&  
+						pd.getCantidad().equals(item.getCantidad())) {
+						System.out.println("paso para remover");
+						listaItems.remove(i); //remuevo de la lista por el indice
+					}
+			}
+		}
+	}
+	
+	
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").
@@ -65,6 +99,7 @@ public class PedidoInsumoController {
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("pedidos", pedidoInsumoService.getAll());
 		//log.debug("Consultando en la BD y mostrando todos los pedidos insumos");
+		listaItems.clear();
 		return "listaPedidoInsumos";
 	}
 	
@@ -76,10 +111,8 @@ public class PedidoInsumoController {
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("pedido", new Pedido());
-		
-		//Cargamos el listado de insumos
 		uiModel.addAttribute("insumos", pedidoInsumoService.getInsumos());
-		//log.debug("Listo para insertar pedido insumo");
+		listaItems.clear();
 		return "incluirPedidoInsumo";
 	}
 	
@@ -90,14 +123,14 @@ public class PedidoInsumoController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST) //, params = {"seleccion []"}
-	//@ResponseBody
-	public String crear(@Valid Pedido pedidoInsumo, BindingResult bindingResult, Model uiModel) {
+	@RequestMapping(value="/form", method = RequestMethod.POST)
+	public String crear(@Valid Pedido p, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
-            uiModel.addAttribute("pedido", pedidoInsumo);
+            uiModel.addAttribute("pedido", p);
             return "incluirPedidoInsumo";
         }
-		pedidoInsumoService.save(pedidoInsumo);
+		pedidoInsumoService.savePedido(p, listaItems);
+		listaItems.clear(); //remover todos los elementos de la lista
 		return "redirect:/pedido/listado";
 	}
 	
