@@ -18,41 +18,27 @@
 		<table class="table table-bordered" id="tabla" >
 			<thead>
 				<tr>
-					<th><input id="checkAll" onclick="checkTodos(this.id,'tabla');" type="checkbox" name="checkAll" title="Seleccionar Todos" value="1"/></th>
-<%-- 					<th>${label_insumo_codigo}</th> --%>
+					<th>${label_insumo_codigo}</th>
 					<th>${label_insumo_nombre}</th>
 					<th>${label_insumo_umedida}</th>
 					<th>${label_insumo_cantidad}</th>
+					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 			<c:forEach items="${insumos}" var="m">
 			<tr>
-				<td><input id="${m.codigo}" type="checkbox" name="" value="${m.codigo}" onclick="habilitarCantidad(this.id);" onblur="habilitarCantidad();"/> </td>
-<%-- 				<td id="codigo-">${m.codigo}</td> --%>
+				<td>
+					<input id="id" type="number" value="${m.codigo}"/> 
+<%-- 					_${m.codigo} _${m.codigo} --%>
+				</td>	
 				<td>${m.nombre}</td>
-				<td id="umedida">${m.umedida.abreviatura}</td>
-				<td><input id="cantidad-${m.codigo}" disabled="disabled" type="number" min="0" name="" title="cantidad de insumo para el pedido"></td>
-				<td><button class="btn"onclick="addProducto(${m.codigo},$('#cantidad-${m.codigo}').val(),'${m.nombre}')">Agregar</button></td>
-				<td><button class="btn btn-danger">Quitar</button></td>
+				<td>${m.umedida.abreviatura}</td>
+				<td><input id="cantidad" type="number" min="0"/></td>
+				<td><button class="btn btn-info"onclick="addItemAjaxPost()" title="Agregar Item al Pedido">Agregar</button></td>
+				<td><button class="btn btn-danger"onclick="quitarItemAjaxPost()" title="Quitar Item del Pedido">Quitar</button></td>
 			</tr>
 			</c:forEach>
 		</table>
-		
-		
 	</div>
 </div>
-
-<script>
-
-	
-	function habilitarCantidad(id){
-		$("#cantidad-"+id).attr("disabled",false);
-	  	$("#cantidad-"+id).attr("name","c");
-	}
-
-	function checkTodos (id,pID) {	 
-		$( "#" + pID + " :checkbox").attr('checked', $('#' + id).is(':checked')); 
-	}
-	
-	
-</script>
