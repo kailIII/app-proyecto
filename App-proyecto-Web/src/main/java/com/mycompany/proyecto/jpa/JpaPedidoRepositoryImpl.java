@@ -1,24 +1,20 @@
 package com.mycompany.proyecto.jpa;
 
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
-
 import com.mycompany.proyecto.model.Insumo;
 import com.mycompany.proyecto.model.Pedido;
 import com.mycompany.proyecto.model.PedidoDetalle;
-import com.mycompany.proyecto.repository.BancoRepository;
 import com.mycompany.proyecto.repository.PedidoRepository;
 
 /**
- * Implementacion de JPA de la interfaz {@link BancoRepository}
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
+ * Implementacion de JPA de la interfaz {@link PedidoRepository}
+ * @author Rodrigo Garcete
+ * @since 21-11-2013
  */
 @Repository
 public class JpaPedidoRepositoryImpl implements PedidoRepository {
@@ -72,7 +68,7 @@ public class JpaPedidoRepositoryImpl implements PedidoRepository {
 	}
 
 	@Override
-	public void savePedido(Pedido pedido, List<PedidoDetalle> pDetalle) throws DataAccessException {
+	public void savePedido(Pedido pedido, List<PedidoDetalle> listaItems) throws DataAccessException {
 		if(pedido.getCodigo() == null){
 			this.em.persist(pedido);
 		}else {
@@ -80,13 +76,17 @@ public class JpaPedidoRepositoryImpl implements PedidoRepository {
 		}
 		
 		
-		if (pDetalle != null && pDetalle.size() > 0) {
-			for (PedidoDetalle pd : pDetalle) {
-				//pd.setPedido(pedido.getCodigo());
-				this.em.merge(pd);
+		if (listaItems != null && listaItems.size() > 0) {
+			for (PedidoDetalle pd : listaItems) {
+				//Le pasamos el Id del pedido del objeto persistente
+				pd.getPedido().setCodigo(pedido.getCodigo());
+				//verificamos si la entidad esta administrado
+				this.em.persist(em.contains(pd) ? pd : em.merge(pd));
 			}
 		}
 		this.em.flush();
+		//limpiamos la lista
+		listaItems.clear(); 
 	}
 
 }
