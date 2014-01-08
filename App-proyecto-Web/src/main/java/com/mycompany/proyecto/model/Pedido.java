@@ -1,9 +1,14 @@
 package com.mycompany.proyecto.model;
 
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,12 +35,25 @@ public class Pedido extends BaseEntity {
 	@JoinColumn(name = "ped_proveedor_id")
 	private Proveedor proveedor;
 
-	//private List<PedidoDetalle> pDetalle;
+	/**
+	 * MappedBy: informamos el nombre de la variable de instancia,
+	 * que va a indicar a quien el One pertenece
+	 * TargetEntity: informa cual es la asociacion entre las entidades
+	 * FetchType.Lazy: Este tipo fue escogido por performance
+	 * cascade: ALL para permitir alteraciones en todos los relacionamientos
+	 */
+	@OneToMany(mappedBy = "pedido", targetEntity = PedidoDetalle.class, 
+			fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<PedidoDetalle> pDetalles;
 
+	//Constructor por Defecto
 	public Pedido() {
-
+		super();
+		this.proveedor = new Proveedor();
+		this.estado = "";
 	}
 
+	//Metodos Getters and Setters
 	public String getEstado() {
 		return estado;
 	}
@@ -58,6 +76,14 @@ public class Pedido extends BaseEntity {
 
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
+	}
+	
+	public void setpDetalles(List<PedidoDetalle> pDetalles) {
+		this.pDetalles = pDetalles;
+	}
+	
+	public List<PedidoDetalle> getpDetalles() {
+		return pDetalles;
 	}
 
 }
