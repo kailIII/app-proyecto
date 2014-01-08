@@ -4,44 +4,42 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
 	version="2.5">
   
-  <display-name>App-Proyecto-Web</display-name>
-  <description>SISTEMA DE GESTION EMPRESARIAL</description>
+  	<display-name>App-Proyecto-Web</display-name>
+  	<description>SISTEMA DE GESTION EMPRESARIAL</description>
   
-  <context-param>
-    <param-name>spring.profiles.active</param-name>
-    <param-value>default</param-value>
-  </context-param>
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:spring/business-config.xml</param-value>
-  </context-param>
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-  <servlet>
-    <servlet-name>app</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <init-param>
-      <param-name>contextConfigLocation</param-name>
-      <param-value>classpath:spring/dispatcher-servlet.xml</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>app</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>
-  <filter>
-    <filter-name>HttpMethodFilter</filter-name>
-    <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>HttpMethodFilter</filter-name>
-    <servlet-name>app</servlet-name>
-  </filter-mapping>
+  	<context-param>
+    	<param-name>contextConfigLocation</param-name>
+    	<param-value>classpath:spring/business-config.xml</param-value>
+  	</context-param>
+  	<listener>
+    	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  	</listener>
   
-  <web:welcome-file-list>
-  	<welcome-file>home.jsp</welcome-file>
-  </web:welcome-file-list>
+  	<servlet>
+    	<servlet-name>app</servlet-name>
+    	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    	<init-param>
+      		<param-name>contextConfigLocation</param-name>
+      		<param-value>classpath:spring/dispatcher-servlet.xml</param-value>
+    	</init-param>
+    	<load-on-startup>1</load-on-startup>
+  	</servlet>
+  
+  	<servlet-mapping>
+    	<servlet-name>app</servlet-name>
+    	<url-pattern>/</url-pattern>
+  	</servlet-mapping>
+  
+   <!-- used so we can use forms of method type 'PUT' and 'DELETE'
+	see here: http://static.springsource.org/spring/docs/current/spring-framework-reference/html/view.html#rest-method-conversion
+	-->
+  	<filter>
+    	<filter-name>HttpMethodFilter</filter-name>
+    	<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+  	</filter>
+  	<filter-mapping>
+    	<filter-name>HttpMethodFilter</filter-name>
+    	<servlet-name>app</servlet-name>
+  	</filter-mapping>
   
 </web-app>
