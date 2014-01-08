@@ -73,4 +73,10 @@ public class PedidoInsumoServiceImpl implements PedidoInsumoService {
 		pedidoRepository.savePedido(p, listaItems);
 	}
 
+	@Override
+	public List<PedidoDetalle> findPedidoDetalles(Long codigo)
+			throws DataAccessException {
+		return null;
+	}
+
 }

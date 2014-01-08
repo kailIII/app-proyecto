@@ -1,11 +1,14 @@
 package com.mycompany.proyecto.jpa;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+
 import com.mycompany.proyecto.model.Insumo;
 import com.mycompany.proyecto.model.Pedido;
 import com.mycompany.proyecto.model.PedidoDetalle;
@@ -87,6 +90,16 @@ public class JpaPedidoRepositoryImpl implements PedidoRepository {
 		this.em.flush();
 		//limpiamos la lista
 		listaItems.clear(); 
+	}
+
+	@Override
+	public List<PedidoDetalle> findPedidoDetalles(Long codigo)
+			throws DataAccessException {
+		
+		Query query = this.em.createQuery("SELECT i FROM PedidoDetalle i WHERE i.pedido =:codigo");
+        query.setParameter("codigo", codigo);
+		
+		return query.getResultList();
 	}
 
 }

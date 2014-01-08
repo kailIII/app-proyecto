@@ -20,6 +20,8 @@ public interface PedidoInsumoService {
 
 	Pedido findById(Long codigo) throws DataAccessException;
 	
+	List<PedidoDetalle> findPedidoDetalles(Long codigo) throws DataAccessException;
+	
 	List<Pedido> findByName(String nombre) throws DataAccessException; 
 
 	List<Pedido> getAll() throws DataAccessException;

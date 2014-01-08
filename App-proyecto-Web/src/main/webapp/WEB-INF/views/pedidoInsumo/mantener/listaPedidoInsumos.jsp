@@ -12,16 +12,20 @@
 	<spring:message code="label.editar" var="label_editar" htmlEscape="false" />
 	<spring:message code="button.actualizar" var="button_actualizar" htmlEscape="false" />
 	
+	<div>
+		<h3>${label_pedidos} <small> ${label_listado}</small></h3>	
+	</div>
+	
 	<div style="border-bottom: 1px solid #E5E5E5;">
-		<h3>${label_pedidos} <small> ${label_listado}</small></h3>
+		<a href='<spring:url value="/pedido/form/" htmlEscape="true"/>'>Registrar Pedido</a>
 	</div>
 	
 	<table class="table table-hover">
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>${label_pedido_fecha}</th>
 				<th>${label_pedido_proveedor}</th>
+				<th>${label_pedido_fecha}</th>
 			</tr>
 		</thead>
 		<c:forEach items="${pedidos}" var="m">
@@ -32,11 +36,8 @@
 				</spring:url>
 				<a href="${edit_url}" title="${label_editar} ${m.fecha}">${m.proveedor}</a>
 			</td>
-			<td>${m.fecha}</td>
-			<td>${m.proveedor}</td>
+			<td> <fmt:formatDate value="${m.fecha}" pattern="dd/MM/yyyy"/>  </td>
 		</tr>
 		</c:forEach>
 	</table>
-	<br/>
-    <a href='<spring:url value="/pedido/form/" htmlEscape="true"/>'>Registrar Pedido</a>
 </div>

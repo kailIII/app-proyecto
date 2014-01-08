@@ -10,16 +10,18 @@ import com.mycompany.proyecto.model.PedidoDetalle;
 
 
 /**
- * Contrato de Persistencia para la entidad <code>Insumo</code>
+ * Contrato de Persistencia para la entidad <code>Pedido</code>
  * Define las operaciones basicas de registro (CRUD), siguiendo el patron
  * de diseño <code>Data Access Object</code>
  *  
- * @author rodrigo garcete
+ * @author Rodrigo Garcete
  * Fecha Creacion:21-11-2013
  */
 public interface PedidoRepository {
 
 	Pedido findById(Long codigo) throws DataAccessException;
+	
+	List<PedidoDetalle> findPedidoDetalles(Long codigo) throws DataAccessException;
 	
 	List<Pedido> findByName(String nombre) throws DataAccessException; 
 
