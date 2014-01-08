@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mycompany.proyecto.model.Insumo;
 import com.mycompany.proyecto.model.Pedido;
+import com.mycompany.proyecto.model.PedidoDetalle;
 import com.mycompany.proyecto.repository.PedidoRepository;
 
 /**
@@ -53,14 +54,23 @@ public class PedidoInsumoServiceImpl implements PedidoInsumoService {
 	}
 
 	@Override
+	@Transactional
 	public Boolean remove(Pedido c) throws DataAccessException {
 		pedidoRepository.remove(c);
 		return true;
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Insumo> getInsumos() throws DataAccessException {
 		return pedidoRepository.getInsumos();
+	}
+
+	@Override
+	@Transactional
+	public void savePedido(Pedido p, List<PedidoDetalle> listaItems)
+			throws DataAccessException {
+		pedidoRepository.savePedido(p, listaItems);
 	}
 
 }

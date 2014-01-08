@@ -6,6 +6,7 @@ import org.springframework.dao.DataAccessException;
 
 import com.mycompany.proyecto.model.Insumo;
 import com.mycompany.proyecto.model.Pedido;
+import com.mycompany.proyecto.model.PedidoDetalle;
 
 /**
  * Contrato de Persistencia para la entidad <code>Insumo</code>
@@ -26,6 +27,8 @@ public interface PedidoInsumoService {
 	List<Insumo> getInsumos() throws DataAccessException;
 		
 	void save(Pedido pedidoInsumo) throws DataAccessException;
+	
+	void savePedido(Pedido p, List<PedidoDetalle> listaItems) throws DataAccessException;
 		
 	Boolean remove(Pedido pedidoInsumo) throws DataAccessException;
 	
