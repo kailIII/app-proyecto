@@ -47,6 +47,11 @@
     		<div class="controls">
     			<form:input path="pais.codigo" class="input-large" id="pais"/>
     			<form:errors path="pais.codigo" cssClass="alert alert-error" />
+    			
+<%--     			<form:select path="pais"> pendiente --%>
+<%--     				<form:option value="-">Seleccione Pais</form:option> --%>
+<%--     				<form:options items="${}" itemValue="pais.codigo" itemLabel="pais.nombre"/> --%>
+<%--     			</form:select> --%>
     		</div>
    		</div>
    		
