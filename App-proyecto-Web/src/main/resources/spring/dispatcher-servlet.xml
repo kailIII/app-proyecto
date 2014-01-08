@@ -11,8 +11,8 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- Considera a estrutura de pacote para percorrer classes com as anotacoes de 
-    	 injecao de dependencia do Spring como: @Component, @Repository e @Service.
+    <!-- Considera la estrutura de paquete para recorrer las clases con las anotaciones de 
+    	 injeccion de dependencia de Spring como: @Component, @Repository e @Service.
      -->
 	<context:component-scan base-package="com.mycompany.proyecto.controller" />
 	
@@ -51,10 +51,10 @@
 	<bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
 		id="messageSource" p:basenames="WEB-INF/i18n/messages" p:fallbackToSystemLocale="false" />
 
-	<!-- Configura a aplicacao com locale pt-BR por default. -->
-<!-- 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"> -->
-<!--        <property name="defaultLocale" value="es_ES" /> -->
-<!--     </bean> -->
+	<!-- Configura a aplicacao com locale es-ES por default. -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+       <property name="defaultLocale" value="es_ES" />
+    </bean>
     
     <!-- Bean para mapear os erros para pagina de excecao do aplicativo -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" p:defaultErrorView="errorPage" />
