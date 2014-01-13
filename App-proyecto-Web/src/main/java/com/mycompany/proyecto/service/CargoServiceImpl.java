@@ -42,7 +42,6 @@ public class CargoServiceImpl implements CargoService {
 	@Transactional
 	public void save(Cargo b) throws DataAccessException {
 		cargoRepository.save(b);
-		//return insumo;
 	}
 
 	@Override
@@ -52,6 +51,7 @@ public class CargoServiceImpl implements CargoService {
 	}
 
 	@Override
+	@Transactional
 	public Boolean remove(Cargo c) throws DataAccessException {
 		cargoRepository.remove(c);
 		return true;

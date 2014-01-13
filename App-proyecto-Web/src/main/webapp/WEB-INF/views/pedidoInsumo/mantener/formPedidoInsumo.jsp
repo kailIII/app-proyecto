@@ -3,10 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%@ page import="com.mycompany.proyecto.model.PedidoDetalle" %>
-<%@ page import="java.util.ArrayList"%>
-
-
 <spring:message code="button.guardar" var="button_guardar" htmlEscape="false" />
 <spring:message code="button.cancelar" var="button_cancelar" htmlEscape="false" />
 <spring:message code="button.excluir" var="button_excluir" htmlEscape="false" />
@@ -17,7 +13,7 @@
 <spring:message code="label.pedido.estado" var="label_pedido_estado" htmlEscape="false" />
 
 <form:form action="" method="${param.method}" modelAttribute="pedido" class="form-horizontal" id="frmPedidoInsumo">
-	<input type="hidden" name="codigo" value="${pedido.codigo}" />
+	<input type="hidden" id="codigo" name="codigo" value="${pedido.codigo}" />
 	
 	<fieldset>
    		<legend><h3>${label_pedido} <small> ${param.sublabel}</small></h3></legend>
@@ -39,20 +35,9 @@
     		<label class="control-label">${label_pedido_estado}</label>
     		<div class="controls">
     			<form:input path="estado" class="input-large" placeholder="Introduce el Estado"/>
-                <form:errors path="estado" cssClass="alert alert-error"/>
     		</div>
    		</div>
    	</fieldset>
-<!-- 		<table id="table_pedido" class="table table-hover"> -->
-<!-- 			<thead> -->
-<!-- 				<th>Codigo</th> -->
-<!-- 				<th>Descripcion</th> -->
-<!-- 				<th>Cantidad</th> -->
-<!-- 			</thead> -->
-<!-- 			<tbody> -->
-			
-<!-- 			</tbody> -->
-<!-- 		</table> -->
 </form:form>
 
 <div class="control-group form-horizontal">
@@ -84,14 +69,8 @@
 	 	});
 	 	
 	 	$("#guardar").click(function () { $("#frmPedidoInsumo").submit(); });
-	 	
-	 	$("#fecha").datepicker({ dateFormat: 'dd/mm/yy'});
 	});
-	
-	$(function () {
-	    $("#fecha").datepicker({ dateFormat: 'dd/mm/yy'});
-	});
-	
+		
 // 	var lista = []; //vector
 	
 // 	function addProducto(idP, nombre, cantidadP){
@@ -107,26 +86,26 @@
 	function addItemAjaxPost() {
    		// get the form values
 		var id = $('#id').val(); //_${m.codigo}
-   		var nombre = $('#nombre').val();
+   		//var nombre = $('#nombre').val();
 		var cantidad = $('#cantidad').val();
 		//var boton = '<button id="btnEliminar" title="Quitar Item del Pedido" class="btn btn-danger"onclick="quitarItemAjaxPost()">Quitar</button>';
 		
-		alert('Valor: ' + id);
-		alert('Valor: ' + nombre);
-		alert('Valor: ' + cantidad);
+		//alert('Valor: ' + id);
+		//alert('Valor: ' + nombre);
+		//alert('Valor: ' + cantidad);
 		
 		//carga la tabla
 		//addProducto(id, nombre, cantidad);
 		
 		$.ajax({
 			type: "POST",
-			url: "/pedido/addItem",
+			url: "/proyecto/pedido/addItem",
 			data: "id=" + id + "&cantidad=" + cantidad,
 			success: function(response){
 			// we have the response
 			//$('#info').html(response);
 			//$('#id').val('');
-		    $('#cantidad').val('');
+		    //$('#cantidad').val('');
 		 },
 	     error: function(e){
 		 	alert('Error: ' + e);
@@ -141,16 +120,16 @@
 		var cantidad = $('#cantidad').val();
 		//var boton = '<button id="btnEliminar" title="Quitar Item del Pedido" class="btn btn-danger"onclick="quitarItemAjaxPost()">Quitar</button>';
 		
-		alert('Valor: ' + id);
+		//alert('Valor: ' + id);
 // 		alert('Valor: ' + nombre);
- 		alert('Valor: ' + cantidad);
+ 		//alert('Valor: ' + cantidad);
 		
 		//eliminar de la tabla, PENDIENTE
 		//eliminarProducto(id, nombre, cantidad, boton);
 		
 		$.ajax({
 			type: "POST",
-			url: "/pedido/quitarItem",
+			url: "/proyecto/pedido/quitarItem",
 			data: "id=" + id + "&cantidad=" + cantidad,
 			success: function(response){
 			// we have the response
@@ -164,15 +143,29 @@
 		 });
 	}
 	
-	function eliminarProducto(idP, nombre, cantidadP, boton){
-		var tr = '<tr>';
-		tr+='<td>'+idP+'</td>';
-		tr+='<td>'+nombre+'</td>';
-		tr+='<td>'+cantidadP+'</td>';
-		tr+='<td>'+boton+'</td>';
+	function quitarItemPedidoAjaxPost() {
+   		// get the form values
+   		var pedidoId = $('#codigo').val();
+		var id = $('#id').val(); //_${m.codigo}
+		var cantidad = $('#cantidad').val(); 
+ 
+		alert('Valor: ' + pedidoId);
+		alert('Valor: ' + id);
+		alert('Valor: ' + cantidad);
 		
-		lista.push({id:idP, nombre:nombre, cantidad:cantidadP, boton:boton});
-		
-		$('#table_pedido').append(tr);	
+		$.ajax({
+			type: "POST",
+			url: "/proyecto/pedido/editItemPedido",
+			data: "id=" + id + "&pedidoId=" + pedidoId,
+			success: function(response){
+			// we have the response
+			//$('#info').html(response);
+			//$('#id').val('');
+		    //$('#cantidad').val('');
+		 },
+	     error: function(e){
+		 	alert('Error: ' + e);
+	     }
+		 });
 	}
 </script>
