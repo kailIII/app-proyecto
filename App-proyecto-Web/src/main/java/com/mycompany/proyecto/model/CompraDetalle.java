@@ -19,7 +19,7 @@ public class CompraDetalle extends BaseEntity {
 
 	@OneToMany
 	@JoinColumn(name = "cd_insumo_id")
-	private Insumo insumo;
+	private Producto producto;
 
 	@OneToMany
 	@JoinColumn(name = "cd_umedida_id")
@@ -49,20 +49,20 @@ public class CompraDetalle extends BaseEntity {
 		this.compra = compra;
 	}
 
-	public Insumo getInsumo() {
-		return insumo;
-	}
-
-	public void setInsumo(Insumo insumo) {
-		this.insumo = insumo;
-	}
-
 	public UnidadMedida getUmedida() {
 		return umedida;
 	}
 
 	public void setUmedida(UnidadMedida umedida) {
 		this.umedida = umedida;
+	}
+	
+	public Producto getProducto() {
+		return producto;
+	}
+	
+	public void setProducto(Producto producto) {
+		this.producto = producto;
 	}
 
 }
