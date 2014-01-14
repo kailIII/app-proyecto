@@ -22,10 +22,11 @@
 	<!-- Habilita el uso de anotaciones para Spring MVC. -->
 	<mvc:annotation-driven />
 	
-	<!-- Permite utilizar la barra ("/") como contenido principal mapeando por Spring MVC. -->
-	<mvc:default-servlet-handler />
-	
-<!--  	<mvc:view-controller path="/" view-name="home" />   -->
+	<!-- Allows for mapping the DispatcherServlet to "/" by forwarding static resource requests to the container's default Servlet -->
+    <mvc:default-servlet-handler/>
+    
+    <!-- selects a static view for rendering without the need for an explicit controller -->
+	<mvc:view-controller path="/inicio/index" view-name="index"/>
 	
 	<!-- Ativa o uso de anotacoes complementares ao contexto do Spring. -->
 	<context:annotation-config />
@@ -57,7 +58,8 @@
     </bean>
     
     <!-- Bean para mapear os erros para pagina de excecao do aplicativo -->
-    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" p:defaultErrorView="errorPage" />
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" 
+    p:defaultErrorView="errorPage" />
 
 	<!--JasperReport -->
 <!-- 	<bean class="org.springframework.web.servlet.view.XmlViewResolver"> -->
