@@ -18,12 +18,8 @@ import com.mycompany.proyecto.repository.CargoRepository;
 @Repository
 public class JpaCargoRepositoryImpl implements CargoRepository {
 	
-	private EntityManager em = null;
-
-    @PersistenceContext
-    public void setEntityManager(EntityManager em) {
-        this.em = em;
-    }
+	@PersistenceContext
+	private EntityManager em;
 
     @Override
 	public Cargo findById(Long codigo) throws DataAccessException {
@@ -35,8 +31,6 @@ public class JpaCargoRepositoryImpl implements CargoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Cargo> findByName(String nombre) throws DataAccessException {
-		// using 'join fetch' because a single query should load both owners and pets
-        // using 'left join fetch' because it might happen that an owner does not have pets yet
         Query query = this.em.createQuery("SELECT c FROM Cargo c WHERE c.nombre LIKE :nombre");
         query.setParameter("nombre", nombre + "%");
         return (List<Cargo>)query.getResultList();
@@ -55,11 +49,12 @@ public class JpaCargoRepositoryImpl implements CargoRepository {
 		}else {
 			this.em.merge(cargo);
 		}
+		this.em.flush();
 	}
 
 	@Override
 	public Boolean remove(Cargo cargo) throws DataAccessException {
-		this.em.remove(cargo);
+		this.em.remove(em.contains(cargo) ? cargo : em.merge(cargo));
 		return true;
 	}
 

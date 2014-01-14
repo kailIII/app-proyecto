@@ -18,12 +18,8 @@ import com.mycompany.proyecto.repository.EmpleadoRepository;
 @Repository
 public class JpaEmpleadoRepositoryImpl implements EmpleadoRepository {
 	
-	private EntityManager em = null;
-
-    @PersistenceContext
-    public void setEntityManager(EntityManager em) {
-        this.em = em;
-    }
+	@PersistenceContext
+	private EntityManager em;
 
     @Override
 	public Empleado findById(Long codigo) throws DataAccessException {
@@ -35,8 +31,6 @@ public class JpaEmpleadoRepositoryImpl implements EmpleadoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Empleado> findByName(String nombre) throws DataAccessException {
-		// using 'join fetch' because a single query should load both owners and pets
-        // using 'left join fetch' because it might happen that an owner does not have pets yet
         Query query = this.em.createQuery("SELECT c FROM Empleado c WHERE c.nombre LIKE :nombre");
         query.setParameter("nombre", nombre + "%");
         return (List<Empleado>)query.getResultList();
@@ -55,11 +49,12 @@ public class JpaEmpleadoRepositoryImpl implements EmpleadoRepository {
 		}else {
 			this.em.merge(c);
 		}
+		this.em.flush();
 	}
 
 	@Override
 	public Boolean remove(Empleado c) throws DataAccessException {
-		this.em.remove(c);
+		this.em.remove(em.contains(c) ? c : em.merge(c));
 		return true;
 	}
 
