@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mycompany.proyecto.model.Producto;
 import com.mycompany.proyecto.service.ProductoService;
 
+
 /**
  * Handles requests for the application home page.
  * Anotando una clase Java como @Controller se convierte en un controlador, 
@@ -36,16 +37,18 @@ import com.mycompany.proyecto.service.ProductoService;
  * @author Rodrigo Garcete
  */
 @RequestMapping(value="/producto")
-@Controller 
+@Controller
 public class ProductoController {
 	
 	private static final Logger log = LoggerFactory.getLogger(ProductoController.class);
 	
+	public static final int DEFAULT_INSUMOS_POR_PAGINA = 25;
+
 	private final ProductoService productoService;
 	
 	@Autowired
-	public ProductoController(ProductoService ps){
-		this.productoService = ps;
+	public ProductoController(ProductoService is){
+		this.productoService = is;
 	}
 	 
 	/** Configura um conversor para double em pt-BR, usado no campo de preço.
@@ -62,9 +65,10 @@ public class ProductoController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado", method = RequestMethod.GET)
+	@RequestMapping(value="/listado",method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("productos", productoService.getAll());
+		log.debug("Consultando en la BD y mostrando todos los insumos");
 		return "listaProductos";
 	}
 	
@@ -73,11 +77,11 @@ public class ProductoController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET) //@RequestMapping(params = "form", method = RequestMethod.GET)
+	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("producto", new Producto());
-		uiModel.addAttribute("active", "incluir");
-		log.debug("Listo para insertar producto");
+		//uiModel.addAttribute("active", "incluir");
+		//log.debug("Listo para insertar insumo");
 		return "incluirProducto";
 	}
 	
@@ -89,14 +93,15 @@ public class ProductoController {
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
 	@RequestMapping(value="/form", method = RequestMethod.POST)
-	public String crear(@Valid Producto producto, BindingResult bindingResult, Model uiModel) {
+	public String crear(@Valid Producto insumo, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
-            uiModel.addAttribute("producto", producto);
-            uiModel.addAttribute("active", "incluir");
+            uiModel.addAttribute("producto", insumo);
+            //uiModel.addAttribute("active", "incluir");
             return "incluirProducto";
         }
-		this.productoService.save(producto);
-		log.debug("Insumo persistido: "+ producto.getCodigo());
+		
+		this.productoService.save(insumo);
+		//log.debug("Producto persistido: "+ insumo.getCodigo());
 		return "redirect:/producto/listado";
 	}
 	
@@ -106,11 +111,11 @@ public class ProductoController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET) //RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
-		Producto p = productoService.findById(id);
-		if (p != null) {
-			uiModel.addAttribute("producto", p);
+		Producto m = productoService.findById(id);
+		if (m != null) {
+			uiModel.addAttribute("producto", m);
 			log.debug("Listo para editar Producto");
 		}
 		return "editarProducto";
@@ -124,14 +129,14 @@ public class ProductoController {
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
-	public String editar(@Valid Producto producto, BindingResult bindingResult, Model uiModel) {
+	public String editar(@Valid Producto insumo, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
-            uiModel.addAttribute("producto", producto);
+            uiModel.addAttribute("producto", insumo);
             return "editarProducto";
         }
-		productoService.save(producto);
-		log.debug("Producto actualizado: " + producto.getCodigo());
-		return "redirect:/producto/listado";
+		this.productoService.save(insumo);
+		log.debug("Producto actualizado: " + insumo.getCodigo());
+		return "redirect:/insumo/listado";
 	}
 	
 	/**
@@ -140,12 +145,12 @@ public class ProductoController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE) //@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
-		Producto p = productoService.findById(id);
-		if (p != null) {
-			this.productoService.remove(p); 
-			log.debug("Producto removido: "+ p.getCodigo());
+		Producto m = productoService.findById(id);
+		if (m != null) {
+			this.productoService.remove(m); 
+			//log.debug("Producto removido: "+m.getCodigo());
 		}
 		return "redirect:/producto/listado";
     }
