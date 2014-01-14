@@ -7,7 +7,10 @@
 <spring:message code="button.excluir" var="button_excluir" htmlEscape="false" />
 
 <spring:message code="label.produccion" var="label_produccion" htmlEscape="false" />
-<spring:message code="label.produccion.fecha" var="label_produccion_fecha" htmlEscape="false" />
+<spring:message code="label.produccion.fechaE" var="label_produccion_fechaE" htmlEscape="false" />
+<spring:message code="label.produccion.fechaP" var="label_produccion_fechaP" htmlEscape="false" />
+<spring:message code="label.produccion.emitido" var="label_produccion_emitido" htmlEscape="false" />
+<spring:message code="label.produccion.confirmado" var="label_produccion_confirmado" htmlEscape="false" />
 <spring:message code="label.produccion.formula" var="label_produccion_formula" htmlEscape="false" />
 
 
@@ -17,10 +20,10 @@
    		<legend><h3>${label_produccion} <small> ${param.sublabel}</small></h3></legend>
    		
    		<div class="control-group">
-    		<label class="control-label">${label_produccion_fecha}</label>
+    		<label class="control-label">${label_produccion_fechaE}</label>
     		<div class="controls">
-    			<form:input path="fecha" class="input-large" id="fecha"/>
-                <form:errors path="fecha" cssClass="alert alert-error"/>
+    			<form:input path="fechaEmision" class="input-large" id="fecha"/>
+                <form:errors path="fechaEmision" cssClass="alert alert-error"/>
     		</div>
    		</div>
    		
@@ -58,7 +61,7 @@ $(document).ready(function () {
  	$("#guardar").click(function () { $("#frmProduccion").submit(); });
 
 	$(function () {
-	    $("#fecha").datepicker({ dateFormat: 'dd/mm/yyyy'});
+	    $("#fecha").datepicker({ dateFormat: 'dd/mm/yy'});
 	});
 });
 </script>
