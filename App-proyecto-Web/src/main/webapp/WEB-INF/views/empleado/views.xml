@@ -8,7 +8,7 @@
     	Repare que em nossa aplicacao, o unico atributo sobreescrito pelas paginas eh o body.
     -->
     
-	<definition extends="default" name="listaFormulas">
+	<definition extends="default" name="listaEmpleados">
 		<put-attribute name="body" value="/WEB-INF/views/empleado/mantener/listaEmpleados.jsp" />
 	</definition>
 	

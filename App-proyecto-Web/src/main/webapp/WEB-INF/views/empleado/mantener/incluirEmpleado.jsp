@@ -4,8 +4,7 @@
 
 <div>
 	<spring:message code="label.incluir" var="label_incluir" htmlEscape="false" />
-
-	<c:import url="/WEB-INF/views/insumo/mantener/formInsumo.jsp">
+	<c:import url="/WEB-INF/views/empleado/mantener/formEmpleado.jsp">
 		<c:param name="method" value="POST" />
 		<c:param name="sublabel" value="${label_incluir}" />
 	</c:import>

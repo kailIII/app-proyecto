@@ -6,47 +6,98 @@
 <spring:message code="button.cancelar" var="button_cancelar" htmlEscape="false" />
 <spring:message code="button.excluir" var="button_excluir" htmlEscape="false" />
 
-<spring:message code="label.insumo" var="label_insumo" htmlEscape="false" />
-<spring:message code="label.insumo.nombre" var="label_insumo_nombre" htmlEscape="false" />
-<spring:message code="label.insumo.descripcion" var="label_insumo_descripcion" htmlEscape="false" />
-<spring:message code="label.insumo.cantidad" var="label_insumo_cantidad" htmlEscape="false" />
-<spring:message code="label.insumo.umedida" var="label_insumo_umedida" htmlEscape="false" />
-<spring:message code="label.insumo.activo" var="label_insumo_activo" htmlEscape="false" />
+<spring:message code="label.empleado" var="label_empleado" htmlEscape="false" />
+<spring:message code="label.empleado.ci" var="label_empleado_ci" htmlEscape="false" />
+<spring:message code="label.empleado.nombre" var="label_empleado_nombre" htmlEscape="false" />
+<spring:message code="label.empleado.apellido" var="label_empleado_apellido" htmlEscape="false" />
+<spring:message code="label.empleado.direccion" var="label_empleado_direccion" htmlEscape="false" />
+<spring:message code="label.empleado.barrio" var="label_empleado_barrio" htmlEscape="false" />
+<spring:message code="label.empleado.celular" var="label_empleado_celular" htmlEscape="false" />
+<spring:message code="label.empleado.telefono" var="label_empleado_telefono" htmlEscape="false" />
+<spring:message code="label.empleado.fechaIngreso" var="label_empleado_fechaIngreso" htmlEscape="false" />
+<spring:message code="label.empleado.fechaNacimiento" var="label_empleado_fechaNacimiento" htmlEscape="false" />
+<spring:message code="label.empleado.email" var="label_empleado_email" htmlEscape="false" />
+<spring:message code="label.empleado.obs" var="label_empleado_obs" htmlEscape="false" />
+<spring:message code="label.empleado.activo" var="label_empleado_activo" htmlEscape="false" />
 
-<form:form action="" method="${param.method}" modelAttribute="insumo" class="form-horizontal" id="frmInsumo">
-	<input type="hidden" name="id" value="${insumo.codigo}" />
+<form:form action="" method="${param.method}" modelAttribute="empleado" class="form-horizontal" id="frmEmpleado">
+	<input type="hidden" name="codigo" value="${empleado.codigo}" />
 	<fieldset>
-   		<legend><h3>${label_insumo} <small> ${param.sublabel}</small></h3></legend>
+   		<legend><h3>${label_empleado} <small> ${param.sublabel}</small></h3></legend>
    		<div class="control-group">
-    		<label class="control-label">${label_insumo_nombre}</label>
+    		<label class="control-label">${label_empleado_ci}</label>
+    		<div class="controls">
+    			<form:input path="ci" class="input-large" />
+    			<form:errors path="ci" cssClass="alert alert-error" />
+    		</div>
+   		</div>
+   		<div class="control-group">
+    		<label class="control-label">${label_empleado_nombre}</label>
     		<div class="controls">
     			<form:input path="nombre" class="input-large" />
     			<form:errors path="nombre" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
-    		<label class="control-label">${label_insumo_descripcion}</label>
+    		<label class="control-label">${label_empleado_apellido}</label>
     		<div class="controls">
-    			<form:input path="descripcion" class="input-large"/>
-    			<form:errors path="descripcion" cssClass="alert alert-error" />
+    			<form:input path="apellido" class="input-large"/>
+    			<form:errors path="apellido" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
-   		<div class="control-group">
-    		<label class="control-label">${label_insumo_umedida}</label>
+		<div class="control-group">
+    		<label class="control-label">${label_empleado_direccion}</label>
     		<div class="controls">
-    			<form:input path="umedidas.nombre" class="input-small"/>
-    			<form:errors path="umedidas.nombre" cssClass="alert alert-error" />
-    			<button id="popupUnidadMedida" class="btn btn-success">${button.buscar}</button>
+    			<form:input path="direccion" class="input-large" />
+    			<form:errors path="direccion" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
-    		<label class="control-label">${label_insumo_activo}</label>
+    		<label class="control-label">${label_empleado_barrio}</label>
     		<div class="controls">
-    			<form:checkbox path="activo" class="input-small"/>
-    			<form:errors path="activo" cssClass="alert alert-error" />
+    			<form:input path="barrio" class="input-large" />
+    			<form:errors path="barrio" cssClass="alert alert-error" />
+    		</div>
+   		</div>
+   		<div class="control-group">
+    		<label class="control-label">${label_empleado_celular}</label>
+    		<div class="controls">
+    			<form:input path="celular" class="input-large" />
+    			<form:errors path="celular" cssClass="alert alert-error" />
+    		</div>
+   		</div>
+   		<div class="control-group">
+    		<label class="control-label">${label_empleado_telefono}</label>
+    		<div class="controls">
+    			<form:input path="telefono" class="input-large" />
+    			<form:errors path="telefono" cssClass="alert alert-error" />
+    		</div>
+   		</div>
+   		<div class="control-group">
+    		<label class="control-label">${label_empleado_email}</label>
+    		<div class="controls">
+    			<form:input path="email" class="input-large" />
+    			<form:errors path="email" cssClass="alert alert-error" />
+    		</div>
+   		</div>
+   		<div class="control-group">
+    		<label class="control-label">${label_empleado_fechaNacimiento}</label>
+    		<div class="controls">
+    			<form:input path="fechaNacimiento" class="input-large" />
+    			<form:errors path="fechaNacimiento" cssClass="alert alert-error" />
+    		</div>
+   		</div>
+   		<div class="control-group">
+    		<label class="control-label">${label_empleado_fechaIngreso}</label>
+    		<div class="controls">
+    			<form:input path="fechaIngreso" class="input-large" />
+    			<form:errors path="fechaIngreso" cssClass="alert alert-error" />
+    		</div>
+   		</div>
+   		<div class="control-group">
+    		<label class="control-label">${label_empleado_activo}</label>
+    		<div class="controls">
+    			<form:checkbox path="activo" value="1"/>
     		</div>
    		</div>
    	</fieldset>
@@ -56,7 +107,7 @@
 <div class="control-group form-horizontal">
 	<div class="controls">
 		<button id="guardar" class="btn btn-success">${button_guardar}</button>
-		<a href="/inputs/list"><button class="btn">${button_cancelar}</button></a>
+		<a href="/proyecto/empleado/listado"><button class="btn">${button_cancelar}</button></a>
 		<c:if test="${not empty param.enableRemove}">
 			<button id="excluir" class="btn btn-danger">${button_excluir}</button>
 		</c:if>
@@ -65,19 +116,17 @@
 
 <script>
 $(document).ready(function () {
- 	$("#frmInsumo").validate({
+ 	$("#frmEmpleado").validate({
  		 	rules: {
- 	 		 	nombre: { required: true, minlength: 5 },
- 	 		 	cantidad: { required: true, number: true },
-				precio: { required: true, moneda: true }
+ 	 		 	nombre: { required: true},
+ 	 		 	apellido: { required: true}
+ 		 	},
+ 		 	messages: {
+ 		 		nombre:'El campo Nombre es obligatorio',
+ 		 		apellido:'El Campo Apellido es obligatorio'
  		 	}
  	});
  	
- 	$("#guardar").click(function () { $("#frmInsumo").submit(); });
-
-    $.validator.addMethod("moneda",
-    	function(value, element) {
-    		return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:.\d{3})+)?(?:\,\d+)?$/.test(value);
-    	}, 'Valor invalido para moneda');
+ 	$("#guardar").click(function () { $("#frmEmpleado").submit(); });
 });
 </script>

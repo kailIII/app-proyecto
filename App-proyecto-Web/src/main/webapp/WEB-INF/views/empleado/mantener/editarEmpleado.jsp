@@ -4,27 +4,27 @@
 
 <div>
 	<spring:message code="label.editar" var="label_editar" htmlEscape="false" />
-	<spring:message code="msg.erro.insumo.inexistente" var="insumo_inexistente" htmlEscape="false" />
+	<spring:message code="msg.erro.empleado.inexistente" var="empleado_inexistente" htmlEscape="false" />
 	
-	<c:if test="${insumo != null}" var="temInsumo">
-		<c:import url="/WEB-INF/views/insumo/mantener/formInsumo.jsp">
+	<c:if test="${empleado != null}" var="temEmpleado">
+		<c:import url="/WEB-INF/views/empleado/mantener/formEmpleado.jsp">
 			<c:param name="method" value="PUT" />
 			<c:param name="sublabel" value="${label_editar}" />
 			<c:param name="enableRemove" value="true" />
 		</c:import>
 		
-	   	<form:form id="deleteInsumo" action="" method="DELETE"></form:form>
+	   	<form:form id="deleteEmpleado" action="" method="DELETE"></form:form>
 	   	
 	   	<script>
 	   	$(document).ready(function () {
 	   		$("#excluir").click(function () {
-	   	   		$("#deleteInsumo").submit();
+	   	   		$("#deleteEmpleado").submit();
 	     	});
 	   	});
 		</script>
 	</c:if>
-	<c:if test="${!temInsumo}">
-		<h3>${insumo_inexistente}</h3>
+	<c:if test="${!temEmpleado}">
+		<h3>${empleado_inexistente}</h3>
 	</c:if>
 	
 </div>
