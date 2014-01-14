@@ -27,14 +27,21 @@ public class PedidoDetalle extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "pd_insumo_id") //, insertable= false, updatable=false
 	@NotNull
-	private Insumo itemId;
+	private Producto itemId;
 	
+	/**
+	 * Utilizado en la Vista, para el paso de parametros con la funcion
+	 * Ajax de JQuery, especificamente retorna el codigo del insumo
+	 */
 	@Transient
 	private Long id;
-
-//	@ManyToOne
-//	@JoinColumn(name = "pd_umedida_id", insertable = false, updatable = false)
-//	private UnidadMedida umedida;
+	
+	/**
+	 * Utilizado en la Vista, para pasar el codigo del Pedido mediante
+	 * Ajax, devuelve como parametro
+	 */
+	@Transient
+	private Long pedidoId;
 
 	@NotNull
 	private BigDecimal cantidad;
@@ -48,11 +55,11 @@ public class PedidoDetalle extends BaseEntity {
 		this.cantidad = BigDecimal.ZERO;
 		this.cantidadRecibido = BigDecimal.ZERO;
 		this.id = 0L;
-		this.itemId = new Insumo();
+		this.itemId = new Producto();
 		this.pedido = new Pedido();
 	}
 	
-	public PedidoDetalle(Insumo I, Pedido P){
+	public PedidoDetalle(Producto I, Pedido P){
 		super();
 		itemId = I;
 		pedido = P;
@@ -83,11 +90,11 @@ public class PedidoDetalle extends BaseEntity {
 		this.pedido = pedido;
 	}
 
-	public Insumo getInsumo() {
+	public Producto getProducto() {
 		return itemId;
 	}
 
-	public void setInsumo(Insumo itemId) {
+	public void setProducto(Producto itemId) {
 		this.itemId = itemId;
 	}
 	
@@ -97,6 +104,14 @@ public class PedidoDetalle extends BaseEntity {
 	
 	public Long getId() {
 		return id;
+	}
+	
+	public void setPedidoId(Long pedidoId) {
+		this.pedidoId = pedidoId;
+	}
+	
+	public Long getPedidoId() {
+		return pedidoId;
 	}
 
 }

@@ -51,6 +51,7 @@ public class ProduccionServiceImpl implements ProduccionService {
 	}
 
 	@Override
+	@Transactional
 	public Boolean remove(Produccion c) throws DataAccessException {
 		produccionRepository.remove(c);
 		return true;

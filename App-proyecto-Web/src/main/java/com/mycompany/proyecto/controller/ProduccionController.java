@@ -1,25 +1,17 @@
 package com.mycompany.proyecto.controller;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
 import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.mycompany.proyecto.model.Produccion;
 import com.mycompany.proyecto.service.ProduccionService;
-
 
 /**
  * Handles requests for the application home page.
@@ -29,11 +21,6 @@ import com.mycompany.proyecto.service.ProduccionService;
  * El objeto Model simplemente es un mapa donde guardaremos los objetos 
  * que queremos pasar a la vista (es la M de MVC)
  * 
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
- */
-
-/**
  * Principal componente do framework <code>Spring MVC</code>, esse é o controller do cadastro de mercadorias. 
  * 
  * <p>Tem como responsabilidade: definir o mapeamento de navegação, acionar validadores e conversores de dados, 
@@ -48,7 +35,7 @@ import com.mycompany.proyecto.service.ProduccionService;
 @Controller
 public class ProduccionController {
 	
-	private static final Logger log = LoggerFactory.getLogger(ProduccionController.class);
+	//private static final Logger log = LoggerFactory.getLogger(ProduccionController.class);
 	
 	private final ProduccionService produccionService;
 	
@@ -56,25 +43,16 @@ public class ProduccionController {
 	public ProduccionController(ProduccionService is){
 		this.produccionService = is;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
-	
+
 	/**
 	 * Ponto de entrada da aplicação ("/").
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/producciones",method = RequestMethod.GET)
+	@RequestMapping(value="/listado",method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("producciones", produccionService.getAll());
-		log.debug("Consultando en la BD y mostrando todas las producciones");
+		//log.debug("Consultando en la BD y mostrando todas las producciones");
 		return "listaProducciones";
 	}
 	
@@ -83,11 +61,11 @@ public class ProduccionController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/produccion/form", method = RequestMethod.GET)
+	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("produccion", new Produccion());
-		uiModel.addAttribute("active", "incluir");
-		log.debug("Listo para insertar produccion");
+		//uiModel.addAttribute("active", "incluir");
+		//log.debug("Listo para insertar produccion");
 		return "incluirProduccion";
 	}
 	
@@ -98,16 +76,16 @@ public class ProduccionController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/produccion/form", method = RequestMethod.POST)
+	@RequestMapping(value="/form", method = RequestMethod.POST)
 	public String crear(@Valid Produccion p, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("produccion", p);
-            uiModel.addAttribute("active", "incluir");
+            //uiModel.addAttribute("active", "incluir");
             return "incluirProduccion";
         }
 		this.produccionService.save(p);
-		log.debug("Produccion persistido: "+ p.getCodigo());
-		return "redirect:/producciones";
+		//log.debug("Produccion persistido: "+ p.getCodigo());
+		return "redirect:/produccion/listado";
 	}
 	
 	/**
@@ -116,12 +94,12 @@ public class ProduccionController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/produccion/form/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Produccion p = produccionService.findById(id);
 		if (p != null) {
 			uiModel.addAttribute("produccion", p);
-			log.debug("Listo para editar Produccion");
+			//log.debug("Listo para editar Produccion");
 		}
 		return "editarProduccion";
 	}
@@ -133,15 +111,15 @@ public class ProduccionController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/produccion/form/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Produccion p, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("produccion", p);
             return "editarProduccion";
         }
 		this.produccionService.save(p);
-		log.debug("Produccion actualizado: " + p.getCodigo());
-		return "redirect:/producciones";
+		//log.debug("Produccion actualizado: " + p.getCodigo());
+		return "redirect:/produccion/listado";
 	}
 	
 	/**
@@ -150,14 +128,14 @@ public class ProduccionController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/produccion/form/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Produccion p = produccionService.findById(id);
 		if (p != null) {
 			this.produccionService.remove(p); 
-			log.debug("Insumo removido: "+p.getCodigo());
+			//log.debug("Insumo removido: "+p.getCodigo());
 		}
-		return "redirect:/producciones";
+		return "redirect:/produccion/listado";
     }
 	
 }

@@ -18,12 +18,8 @@ import com.mycompany.proyecto.repository.ProduccionRepository;
 @Repository
 public class JpaProduccionRepositoryImpl implements ProduccionRepository {
 	
-	private EntityManager em = null;
-
-    @PersistenceContext
-    public void setEntityManager(EntityManager em) {
-        this.em = em;
-    }
+	@PersistenceContext
+	private EntityManager em;
 
     @Override
 	public Produccion findById(Long codigo) throws DataAccessException {
@@ -55,11 +51,12 @@ public class JpaProduccionRepositoryImpl implements ProduccionRepository {
 		}else {
 			this.em.merge(c);
 		}
+		this.em.flush();
 	}
 
 	@Override
 	public Boolean remove(Produccion c) throws DataAccessException {
-		this.em.remove(c);
+		this.em.remove(em.contains(c) ? c : em.merge(c));
 		return true;
 	}
 

@@ -1,17 +1,14 @@
 package com.mycompany.proyecto.jpa;
 
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
-
-import com.mycompany.proyecto.model.Insumo;
 import com.mycompany.proyecto.model.Pedido;
 import com.mycompany.proyecto.model.PedidoDetalle;
+import com.mycompany.proyecto.model.Producto;
 import com.mycompany.proyecto.repository.PedidoRepository;
 
 /**
@@ -65,9 +62,9 @@ public class JpaPedidoRepositoryImpl implements PedidoRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Insumo> getInsumos() throws DataAccessException {
+	public List<Producto> getInsumos() throws DataAccessException {
 		Query query = this.em.createQuery("FROM Insumo");
-        return (List<Insumo>)query.getResultList();
+        return (List<Producto>)query.getResultList();
 	}
 
 	@Override

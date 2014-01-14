@@ -1,12 +1,10 @@
 package com.mycompany.proyecto.service;
 
 import java.util.List;
-
 import org.springframework.dao.DataAccessException;
-
-import com.mycompany.proyecto.model.Insumo;
 import com.mycompany.proyecto.model.Pedido;
 import com.mycompany.proyecto.model.PedidoDetalle;
+import com.mycompany.proyecto.model.Producto;
 
 /**
  * Contrato de Persistencia para la entidad <code>Insumo</code>
@@ -26,7 +24,7 @@ public interface PedidoInsumoService {
 
 	List<Pedido> getAll() throws DataAccessException;
 	
-	List<Insumo> getInsumos() throws DataAccessException;
+	List<Producto> getProductos() throws DataAccessException;
 		
 	void save(Pedido pedidoInsumo) throws DataAccessException;
 	

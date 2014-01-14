@@ -17,7 +17,7 @@ public class Lote extends NamedEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "insumo_id")
-	private Insumo insumo;
+	private Producto producto;
 	
 	@Temporal(TemporalType.DATE)
 	private Date vencimiento;
@@ -28,12 +28,12 @@ public class Lote extends NamedEntity {
 
 	}
 	
-	public Insumo getInsumo() {
-		return insumo;
+	public Producto getInsumo() {
+		return producto;
 	}
 
-	public void setInsumo(Insumo insumo) {
-		this.insumo = insumo;
+	public void setInsumo(Producto p) {
+		this.producto = p;
 	}
 
 	public int getActivo() {

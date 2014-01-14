@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.mycompany.proyecto.model.Insumo;
 import com.mycompany.proyecto.model.Pedido;
 import com.mycompany.proyecto.model.PedidoDetalle;
+import com.mycompany.proyecto.model.Producto;
 import com.mycompany.proyecto.repository.PedidoRepository;
 
 /**
@@ -62,7 +61,7 @@ public class PedidoInsumoServiceImpl implements PedidoInsumoService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Insumo> getInsumos() throws DataAccessException {
+	public List<Producto> getProductos() throws DataAccessException {
 		return pedidoRepository.getInsumos();
 	}
 
