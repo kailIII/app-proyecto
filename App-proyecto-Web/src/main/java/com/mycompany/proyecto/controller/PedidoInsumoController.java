@@ -57,17 +57,18 @@ public class PedidoInsumoController {
 	 * @param bindingResult
 	 */
 	@RequestMapping(value = "/addItem", method = RequestMethod.POST)
-	public void addItem(@ModelAttribute(value = "item") PedidoDetalle item, BindingResult bindingResult){
+	public void addItemLista(@ModelAttribute(value = "item") PedidoDetalle item, BindingResult bindingResult){
 		if (!bindingResult.hasErrors()) {
 			//El id lo pasamos al Id del Insumo
-			item.getInsumo().setCodigo(item.getId());
+			item.getProducto().setCodigo(item.getId());
 			//cargamos el bean a la lista
+			System.out.println("paso x aqui add");
 			listaItems.add(item); 
 		}
 	}
 	
 	@RequestMapping(value = "/quitarItem", method = RequestMethod.POST)
-	public void quitarItem(@ModelAttribute(value = "item") PedidoDetalle item, BindingResult bindingResult){
+	public void quitarItemLista(@ModelAttribute(value = "item") PedidoDetalle item, BindingResult bindingResult){
 		if (!bindingResult.hasErrors()) {
 			//El id lo pasamos al Id del Insumo
 			//item.getInsumo().setCodigo(item.getId());
@@ -77,14 +78,13 @@ public class PedidoInsumoController {
 				System.out.println("Item Id :" + item.getId());
 				System.out.println("Item Cantidad :" + item.getCantidad());
 				
-				//System.out.println();
-				
-				if (pd.getInsumo().getCodigo().equals(item.getId()) &&  
+				if (pd.getProducto().getCodigo().equals(item.getId()) &&  
 						pd.getCantidad().equals(item.getCantidad())) {
 						System.out.println("paso para remover");
 						listaItems.remove(i); //remuevo de la lista por el indice
 					}
 			}
+			System.out.println("paso x aqui quitar");
 		}
 	}
 	
@@ -111,8 +111,7 @@ public class PedidoInsumoController {
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("pedido", new Pedido());
-		uiModel.addAttribute("insumos", pedidoInsumoService.getInsumos());
-		listaItems.clear();
+		uiModel.addAttribute("insumos", pedidoInsumoService.getProductos());
 		return "incluirPedidoInsumo";
 	}
 	
@@ -130,7 +129,6 @@ public class PedidoInsumoController {
             return "incluirPedidoInsumo";
         }
 		pedidoInsumoService.savePedido(p, listaItems);
-		listaItems.clear(); //remover todos los elementos de la lista
 		return "redirect:/pedido/listado";
 	}
 	
@@ -148,6 +146,24 @@ public class PedidoInsumoController {
 			//log.debug("Listo para editar Pedido Insumo");
 		}
 		return "editarPedidoInsumo";
+	}
+	
+	/**
+	 * 
+	 * @param item
+	 * @param bindingResult
+	 */
+	@RequestMapping(value = "/editItemPedido", method = RequestMethod.POST)
+	public void quitarItemPedido(@ModelAttribute(value = "item") PedidoDetalle item, BindingResult bindingResult){
+		if (!bindingResult.hasErrors()) {
+			//El id lo pasamos al Id del Insumo
+			//item.getInsumo().setCodigo(item.getId());
+			//cargamos el bean a la lista
+			//System.out.println("paso x aqui add");
+			
+			//listaItems.add(item); 
+			
+		}
 	}
 	
 	/**

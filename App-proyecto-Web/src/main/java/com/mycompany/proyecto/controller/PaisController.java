@@ -52,15 +52,6 @@ public class PaisController {
 	public PaisController(PaisService is){
 		this.paisService = is;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
 	
 	@RequestMapping(value = "/busqueda", method = RequestMethod.GET)
 	public String list(SearchCriteria criteria, Model model) {
@@ -75,7 +66,7 @@ public class PaisController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado",method = RequestMethod.GET)
+	@RequestMapping(value="/listado", method = RequestMethod.GET) //, params = "lista"
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("paises", paisService.getAll());
 		return "listaPaises";
@@ -86,10 +77,10 @@ public class PaisController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET)
+	@RequestMapping(value="/form", method = RequestMethod.GET) //, params = "form" 
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("pais", new Pais());
-		uiModel.addAttribute("active", "incluir");
+		//uiModel.addAttribute("active", "incluir");
 		return "incluirPais";
 	}
 	
@@ -100,11 +91,11 @@ public class PaisController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST)
+	@RequestMapping(value="/form", method = RequestMethod.POST) //value="/form", 
 	public String crear(@Valid Pais pais, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("pais", pais);
-            uiModel.addAttribute("active", "incluir");
+            //uiModel.addAttribute("active", "incluir");
             return "incluirPais";
         }
 		
@@ -118,7 +109,7 @@ public class PaisController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET) //value = "/edit/{id}", 
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Pais m = paisService.findById(id);
 		if (m != null) {
@@ -134,7 +125,7 @@ public class PaisController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "edit/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT) //value = "edit/{id}", 
 	public String editar(@Valid Pais pais, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("pais", pais);
@@ -150,7 +141,7 @@ public class PaisController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE) //value = "/edit/{id}", 
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Pais m = paisService.findById(id);
 		if (m != null) {

@@ -53,7 +53,7 @@ public class CiudadController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado", method = RequestMethod.GET)
+	@RequestMapping(value="/listado", method = RequestMethod.GET) // params = "listado" 
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("ciudades", ciudadService.getAll());
 		return "listaCiudades";
@@ -64,7 +64,7 @@ public class CiudadController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET)
+	@RequestMapping(value="/form", method = RequestMethod.GET) //, params = "form"
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("ciudad", new Ciudad());
 		return "incluirCiudad";
