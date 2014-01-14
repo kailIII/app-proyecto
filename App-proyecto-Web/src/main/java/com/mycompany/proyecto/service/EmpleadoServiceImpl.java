@@ -51,6 +51,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 	}
 
 	@Override
+	@Transactional
 	public Boolean remove(Empleado c) throws DataAccessException {
 		empleadoRepository.remove(c);
 		return true;
