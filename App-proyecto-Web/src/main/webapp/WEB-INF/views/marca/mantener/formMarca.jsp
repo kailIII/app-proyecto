@@ -12,27 +12,20 @@
 
 <form:form action="" method="${param.method}" modelAttribute="marca" class="form-horizontal" id="frmMarca">
 	<input type="hidden" name="codigo" value="${marca.codigo}" />
+	<input type="hidden" name="activo" value="1" />
+	
 	<fieldset>
-   		
    		<legend><h3>${label_marca} <small> ${param.sublabel}</small></h3></legend>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_marca_nombre}</label>
     		<div class="controls">
     			<form:input path="nombre" class="input-large" />
     			<form:errors path="nombre" cssClass="alert alert-error" />
     		</div>
-   		</div>
-   		   		
-   		<div class="control-group">
-    		<label class="control-label">${label_marca_activo}</label>
-    		<div class="controls">
-    			<form:checkbox path="activo" value="1"/>
-    		</div>
-   		</div>
+   		</div>  		
    	</fieldset>
+   	
 </form:form>
-
 
 <div class="control-group form-horizontal">
 	<div class="controls">
@@ -56,6 +49,5 @@ $(document).ready(function () {
  	});
  	
  	$("#guardar").click(function () { $("#frmMarca").submit(); });
-
 });
 </script>

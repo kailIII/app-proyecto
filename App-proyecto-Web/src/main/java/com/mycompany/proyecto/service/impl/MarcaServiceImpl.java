@@ -59,4 +59,9 @@ public class MarcaServiceImpl implements MarcaService {
 		return true;
 	}
 
+	@Override
+	public List<Marca> findByCombo() throws DataAccessException {
+		return marcaRepository.findByCombo();
+	}
+
 }
