@@ -1,6 +1,9 @@
 package com.mycompany.proyecto.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +13,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.mycompany.proyecto.model.Ciudad;
 import com.mycompany.proyecto.model.Proveedor;
+import com.mycompany.proyecto.service.CiudadService;
 import com.mycompany.proyecto.service.ProveedorService;
 
 /**
@@ -47,15 +53,9 @@ public class ProveedorController {
 	public ProveedorController(ProveedorService ps){
 		this.proveedorService = ps;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
+	
+	@Autowired
+	private CiudadService ciudadService;
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").
@@ -75,8 +75,9 @@ public class ProveedorController {
 	 */
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
-		uiModel.addAttribute("proveedor", new Proveedor());
-		uiModel.addAttribute("active", "incluir");
+		Proveedor p = new Proveedor();
+		uiModel.addAttribute("proveedor", p);
+		cargarComboCiudad(uiModel, p);
 		log.debug("Listo para insertar proveedor");
 		return "incluirProveedor";
 	}
@@ -110,6 +111,7 @@ public class ProveedorController {
 		Proveedor p = proveedorService.findById(id);
 		if (p != null) {
 			uiModel.addAttribute("proveedor", p);
+			cargarComboCiudad(uiModel, p);
 		}
 		return "editarProveedor";
 	}
@@ -145,5 +147,10 @@ public class ProveedorController {
 		}
 		return "redirect:/proveedor/listado";
     }
+	
+	private void cargarComboCiudad(Model uiModel, Proveedor p){
+		List<Ciudad> ciudades = ciudadService.findByCombo();
+		uiModel.addAttribute("ciudades", ciudades);
+	}
 	
 }

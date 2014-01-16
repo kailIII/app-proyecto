@@ -1,30 +1,44 @@
 package com.mycompany.proyecto.model;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
 /**
  * 
- * @author rodrigo garcete Fecha Creacion:21-11-2013
+ * @author Rodrigo Garcete 
+ * @since 21/11/2013
  */
 @Entity
 @Table(name = "proveedores")
-public class Proveedor extends Persona implements java.io.Serializable {
+@NamedQueries({
+	@NamedQuery(name="Proveedor.findById", query="SELECT p FROM Proveedor p WHERE p.codigo = :codigo"),
+	@NamedQuery(name="Proveedor.findByName", query="SELECT p FROM Proveedor p WHERE p.nombre LIKE :nombre"),
+	@NamedQuery(name="Proveedor.findByCombo", query="SELECT NEW com.mycompany.proyecto.model.Proveedor(p.codigo, p.nombre) FROM Proveedor AS p ORDER BY p.codigo"),
+	@NamedQuery(name="Proveedor.findByAll", query="SELECT p FROM Proveedor p ORDER BY p.codigo")
+})
+public class Proveedor extends Persona {
 
 	private static final long serialVersionUID = 1L;
 
 	private String ci;
 
 	private String ruc;
+	
+	@Column(name = "codigo_postal")
+	private String codigoPostal;
 
 	private String representante;
 
-	@ManyToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private String direccion2;
+	
+	@OneToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "ciudad_id")
-	@NotNull
+	@Basic(optional=false)
 	private Ciudad ciudad;
 	
 	private String telefono;
@@ -35,11 +49,17 @@ public class Proveedor extends Persona implements java.io.Serializable {
 
 	private String celular2;
 
-	//Constructor
+	//Constructor por Defecto
 	public Proveedor() {
-
+		super();
+	}
+	
+	public Proveedor(Long codigo, String nombre) {
+		this.codigo = codigo;
+		this.nombre = nombre;
 	}
 
+	//Metodos Getters and Setters
 	public Ciudad getCiudad() {
 		return ciudad;
 	}
@@ -102,6 +122,22 @@ public class Proveedor extends Persona implements java.io.Serializable {
 
 	public void setCelular2(String celular2) {
 		this.celular2 = celular2;
+	}
+	
+	public void setCodigoPostal(String codigoPostal) {
+		this.codigoPostal = codigoPostal;
+	}
+	
+	public String getCodigoPostal() {
+		return codigoPostal;
+	}
+	
+	public void setDireccion2(String direccion2) {
+		this.direccion2 = direccion2;
+	}
+	
+	public String getDireccion2() {
+		return direccion2;
 	}
 
 }

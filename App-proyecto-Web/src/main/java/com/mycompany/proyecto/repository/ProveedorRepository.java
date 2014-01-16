@@ -7,9 +7,9 @@ import org.springframework.dao.DataAccessException;
 import com.mycompany.proyecto.model.Proveedor;
 
 /**
- * 
- * @author rodrigo garcete
- * Fecha Creacion:23/11/2013
+ * Interfaz de la entidad Proveedor, con las operaciones del CRUD
+ * @author Rodrigo Garcete
+ * @since 23/11/2013
  */
 public interface ProveedorRepository {
 
@@ -28,6 +28,8 @@ public interface ProveedorRepository {
 	 * @throws DataAccessException
 	 */
 	List<Proveedor> findByName(String nombre) throws DataAccessException; 
+	
+	List<Proveedor> findByCombo() throws DataAccessException; 
 
 	/**
 	 * 

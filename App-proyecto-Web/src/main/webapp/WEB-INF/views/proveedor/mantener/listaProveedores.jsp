@@ -22,7 +22,6 @@
 			<tr>
 				<th>#</th>
 				<th>${label_proveedor_nombre}</th>
-				<th>${label_proveedor_apellido}</th>
 				<th>${label_proveedor_direccion}</th>
 				<th>${label_proveedor_telefono}</th>
 			</tr>
@@ -35,7 +34,6 @@
 				</spring:url>
 				<a href="${edit_url}" title="${label_editar} ${m.nombre}">${m.nombre}</a>
 			</td>
-			<td>${m.apellido}</td>
 			<td>${m.direccion}</td>
 			<td>${m.telefono}</td>
 		</tr>

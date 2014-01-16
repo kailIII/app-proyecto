@@ -60,4 +60,9 @@ public class ProveedorServiceImpl implements ProveedorService {
 		return true;
 	}
 
+	@Override
+	public List<Proveedor> findByCombo() throws DataAccessException {
+		return proveedorRepository.findByCombo();
+	}
+
 }
