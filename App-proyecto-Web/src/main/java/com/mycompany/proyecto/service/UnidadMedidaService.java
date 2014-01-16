@@ -27,7 +27,9 @@ public interface UnidadMedidaService {
 	 * @return
 	 * @throws DataAccessException
 	 */
-	List<UnidadMedida> findByName(String nombre) throws DataAccessException; 
+	List<UnidadMedida> findByName(String nombre) throws DataAccessException;
+	
+	List<UnidadMedida> findByCombo() throws DataAccessException;
 
 	/**
 	 * 
