@@ -12,11 +12,10 @@
 
 <form:form action="" method="${param.method}" modelAttribute="umedida" class="form-horizontal" id="frmUmedida">
 	<input type="hidden" name="codigo" value="${umedida.codigo}" />
+	<input type="hidden" name="activo" value="1" />
 	
 	<fieldset>
-   		
    		<legend><h3>${label_umedida} <small> ${param.sublabel}</small></h3></legend>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_umedida_nombre}</label>
     		<div class="controls">
@@ -24,22 +23,13 @@
     			<form:errors path="nombre" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_umedida_abreviatura}</label>
     		<div class="controls">
     			<form:input path="abreviatura" class="input-large" maxlength="3"/>
     			<form:errors path="abreviatura" cssClass="alert alert-error" />
     		</div>
-   		</div>
-   		
-   		<div class="control-group">
-    		<label class="control-label">${label_umedida_activo}</label>
-    		<div class="controls">
-    			<form:checkbox path="activo" class="input-small" id="activo" value="1"/>
-    		</div>
-   		</div>
-   		
+   		</div>   		
    	</fieldset>
 </form:form>
 
