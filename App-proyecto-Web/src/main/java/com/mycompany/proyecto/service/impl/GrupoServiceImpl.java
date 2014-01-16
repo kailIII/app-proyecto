@@ -59,4 +59,9 @@ public class GrupoServiceImpl implements GrupoService {
 		return true;
 	}
 
+	@Override
+	public List<Grupo> findByCombo() throws DataAccessException {
+		return grupoRepository.findByCombo();
+	}
+
 }

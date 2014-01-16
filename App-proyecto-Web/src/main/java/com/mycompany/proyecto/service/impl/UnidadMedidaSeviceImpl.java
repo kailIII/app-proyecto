@@ -59,4 +59,9 @@ public class UnidadMedidaSeviceImpl implements UnidadMedidaService {
 		return true;
 	}
 
+	@Override
+	public List<UnidadMedida> findByCombo() throws DataAccessException {
+		return umRepository.findByCombo();
+	}
+
 }

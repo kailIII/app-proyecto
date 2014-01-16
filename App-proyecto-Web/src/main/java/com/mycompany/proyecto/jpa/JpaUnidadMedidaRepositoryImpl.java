@@ -1,11 +1,14 @@
 package com.mycompany.proyecto.jpa;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+
 import com.mycompany.proyecto.model.UnidadMedida;
 import com.mycompany.proyecto.repository.UnidadMedidaRepository;
 
@@ -21,21 +24,21 @@ public class JpaUnidadMedidaRepositoryImpl implements UnidadMedidaRepository {
 	private EntityManager em;
 
 	public UnidadMedida findById(Long codigo) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT i FROM UnidadMedida i WHERE i.codigo =:codigo");
+        Query query = this.em.createNamedQuery("UnidadMedida.findById");
         query.setParameter("codigo", codigo);
         return (UnidadMedida) query.getSingleResult(); 
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<UnidadMedida> findByName(String nombre) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT i FROM UnidadMedida i WHERE i.nombre LIKE :nombre");
+        Query query = this.em.createNamedQuery("UnidadMedida.findByName");
         query.setParameter("nombre", nombre + "%");
         return (List<UnidadMedida>)query.getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<UnidadMedida> getAll() throws DataAccessException {
-		return (List<UnidadMedida>)em.createQuery("SELECT i FROM UnidadMedida i ORDER BY i.codigo").getResultList();
+		return (List<UnidadMedida>)em.createNamedQuery("UnidadMedida.findByAll").getResultList();
 	}
 
 	@Override
@@ -52,6 +55,11 @@ public class JpaUnidadMedidaRepositoryImpl implements UnidadMedidaRepository {
 	public Boolean remove(UnidadMedida umedida) throws DataAccessException {
 		this.em.remove(em.contains(umedida) ? umedida : em.merge(umedida));
 		return true;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<UnidadMedida> findByCombo() throws DataAccessException {
+		return (List<UnidadMedida>)em.createNamedQuery("UnidadMedida.findByCombo").getResultList();
 	}
 	
 }
