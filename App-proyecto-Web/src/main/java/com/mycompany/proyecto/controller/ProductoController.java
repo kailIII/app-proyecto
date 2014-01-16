@@ -1,6 +1,11 @@
 package com.mycompany.proyecto.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +15,19 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.mycompany.proyecto.model.Grupo;
+import com.mycompany.proyecto.model.Impuesto;
+import com.mycompany.proyecto.model.Marca;
 import com.mycompany.proyecto.model.Producto;
+import com.mycompany.proyecto.model.Proveedor;
+import com.mycompany.proyecto.model.UnidadMedida;
+import com.mycompany.proyecto.service.GrupoService;
+import com.mycompany.proyecto.service.ImpuestoService;
+import com.mycompany.proyecto.service.MarcaService;
 import com.mycompany.proyecto.service.ProductoService;
+import com.mycompany.proyecto.service.ProveedorService;
+import com.mycompany.proyecto.service.UnidadMedidaService;
 
 
 /**
@@ -50,15 +66,25 @@ public class ProductoController {
 	public ProductoController(ProductoService is){
 		this.productoService = is;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
+	
+	//probando
+	@Autowired
+	private MarcaService marcaService;
+	
+	@Autowired
+	private GrupoService grupoService;
+	
+	@Autowired
+	private ImpuestoService impuestoService;
+	
+	@Autowired
+	private UnidadMedidaService umedidaService;
+	
+	@Autowired
+	private ProveedorService proveedorService; 
+	
+	private Map<Integer,String> tipos;
+	
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").
@@ -79,9 +105,14 @@ public class ProductoController {
 	 */
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
-		uiModel.addAttribute("producto", new Producto());
-		//uiModel.addAttribute("active", "incluir");
-		//log.debug("Listo para insertar insumo");
+		Producto p = new Producto();
+		uiModel.addAttribute("producto", p);
+		cargarComboUMedida(uiModel, p);
+		cargarComboGrupo(uiModel, p);
+		cargarComboMarca(uiModel, p);
+		cargarComboImpuesto(uiModel, p);
+		cargarComboProveedor(uiModel, p);
+		cargarTipos(uiModel);
 		return "incluirProducto";
 	}
 	
@@ -113,9 +144,17 @@ public class ProductoController {
 	 */
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
-		Producto m = productoService.findById(id);
-		if (m != null) {
-			uiModel.addAttribute("producto", m);
+		Producto p = productoService.findById(id);
+		
+		if (p!= null) {
+			uiModel.addAttribute("producto", p);
+			cargarComboUMedida(uiModel, p);
+			cargarComboGrupo(uiModel, p);
+			cargarComboMarca(uiModel, p);
+			cargarComboImpuesto(uiModel, p);
+			cargarComboProveedor(uiModel, p);
+			cargarTipos(uiModel);
+			
 			log.debug("Listo para editar Producto");
 		}
 		return "editarProducto";
@@ -136,7 +175,7 @@ public class ProductoController {
         }
 		this.productoService.save(insumo);
 		log.debug("Producto actualizado: " + insumo.getCodigo());
-		return "redirect:/insumo/listado";
+		return "redirect:/producto/listado";
 	}
 	
 	/**
@@ -154,5 +193,40 @@ public class ProductoController {
 		}
 		return "redirect:/producto/listado";
     }
+	
+	private void cargarComboMarca(Model uiModel, Producto p){
+		List<Marca> marcas = marcaService.findByCombo();
+		uiModel.addAttribute("marcas", marcas);
+	}
+	
+	private void cargarComboGrupo(Model uiModel, Producto p){
+		List<Grupo> grupos = grupoService.findByCombo();
+		uiModel.addAttribute("grupos", grupos);
+	}
+	
+	private void cargarComboImpuesto(Model uiModel, Producto p){
+		List<Impuesto> impuestos = impuestoService.findByCombo();
+		uiModel.addAttribute("impuestos", impuestos);
+	}
+	
+	private void cargarComboUMedida(Model uiModel, Producto p){
+		List<UnidadMedida> umedidas = umedidaService.findByCombo();
+		uiModel.addAttribute("umedidas", umedidas);
+	}
+	
+	private void cargarComboProveedor(Model uiModel, Producto p){
+		List<Proveedor> proveedores = proveedorService.findByCombo();
+		uiModel.addAttribute("proveedores", proveedores);
+	}
+	
+	private void cargarTipos(Model uiModel){
+		tipos = new HashMap<Integer,String>();
+
+		tipos.put(1, "Producto");
+		tipos.put(2, "Insumo");
+		tipos.put(3, "Paquete");
+		tipos.put(4, "Servicio");
+		uiModel.addAttribute("tipos", tipos);
+	}
 	
 }

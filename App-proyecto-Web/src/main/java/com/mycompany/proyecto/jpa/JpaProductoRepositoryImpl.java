@@ -5,17 +5,15 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
-
 import com.mycompany.proyecto.model.Producto;
 import com.mycompany.proyecto.repository.ProductoRepository;
 
 /**
  * Implementacion de JPA de la interfaz {@link ProductoRepository}
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @Repository
 public class JpaProductoRepositoryImpl implements ProductoRepository {
@@ -24,7 +22,7 @@ public class JpaProductoRepositoryImpl implements ProductoRepository {
 	private EntityManager em;
 
     public Producto findById(Long codigo) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT i FROM Producto i WHERE i.codigo =:codigo");
+        Query query = this.em.createNamedQuery("Producto.findById");
         query.setParameter("codigo", codigo);
         return (Producto) query.getSingleResult();
 	}
@@ -32,9 +30,7 @@ public class JpaProductoRepositoryImpl implements ProductoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Producto> findByName(String nombre, int pag) throws DataAccessException {
-		// using 'join fetch' because a single query should load both owners and pets
-        // using 'left join fetch' because it might happen that an owner does not have pets yet
-        Query query = this.em.createQuery("SELECT i FROM Producto i WHERE i.nombre LIKE :nombre");
+        Query query = this.em.createNamedQuery("Producto.findByName");
         query.setParameter("nombre", nombre + "%");
         query.setMaxResults(pag);
         return (List<Producto>)query.getResultList();
@@ -43,23 +39,23 @@ public class JpaProductoRepositoryImpl implements ProductoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Producto> getAll(int pag) throws DataAccessException {
-		Query query = this.em.createQuery("FROM Producto");  
+		Query query = this.em.createNamedQuery("Producto.findAll");  
 		return (List<Producto>)query.getResultList();
 	}
 
 	@Override
-	public void save(Producto insumo) throws DataAccessException {
-		if(insumo.getCodigo() == null){
-			this.em.persist(insumo);
+	public void save(Producto p) throws DataAccessException {
+		if(p.getCodigo() == null){
+			this.em.persist(p);
 		}else {
-			this.em.merge(insumo);
+			this.em.merge(p);
 		}
 		this.em.flush();
 	}
 
 	@Override
-	public Boolean remove(Producto insumo) throws DataAccessException {
-		this.em.remove(em.contains(insumo) ? insumo : em.merge(insumo));
+	public Boolean remove(Producto p) throws DataAccessException {
+		this.em.remove(em.contains(p) ? p : em.merge(p));
 		return true;
 	}
 

@@ -1,98 +1,102 @@
 package com.mycompany.proyecto.model;
 
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 /**
  * @author rodrigo garcete 
  * Fecha Creacion:21-11-2013
  * 
  * Validaciones con Bean Validations, mecanismo de validaciones de Java
- * basado en anotaciones
+ * basado en anotaciones, las consultas son optimizadas con JPA Projections
  */
 @Entity
-@Table(name = "productos")
-public class Producto extends BaseEntity {
+@Table(name = "productos") //modificar el buscador por Id
+@NamedQueries({
+	@NamedQuery(name = "Producto.findAll", query = "SELECT NEW com.mycompany.proyecto.model.Producto(p.codigo, p.nombre) FROM Producto AS p ORDER BY p.codigo"),
+	@NamedQuery(name = "Producto.findById", query = "select p from Producto p where p.codigo = :codigo"),
+	@NamedQuery(name = "Producto.findByName", query ="select p from Producto p where p.nombre LIKE :nombre")
+})
+public class Producto extends NamedEntity {
 
 	private static final long serialVersionUID = 1L;
-
-	@NotNull
-	@Size(min = 5, max = 200)
-	private String nombre;
+	
+	private int tipo;
 
 	private String descripcion;
 
-	@ManyToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne //targetEntity = UnidadMedida.class, cascade = CascadeType.ALL
 	@JoinColumn(name = "umedida_id")
-	@NotNull
-	private UnidadMedida umedida;
+	//@NotNull
+	@Basic(optional=false) //columnas pueden definir una constricción de tipo non null, 
+	private UnidadMedida umedida; //la cual impide que se inserte un valor null; por tanto, con @Basic(optional=false) nos ajustaríamos a la citada constricción
 	
-	@ManyToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "impuesto_id")
-	@NotNull
+	//@NotNull
+	@Basic(optional=false)
 	private Impuesto impuesto;
 	
-	@ManyToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "marca_id")
-	@NotNull
+	//@NotNull
+	@Basic(optional=false)
 	private Marca marca;
 	
-	@ManyToOne //(cascade = CascadeType.ALL) //fetch = FetchType.LAZY,
-	@JoinColumn(name = "clasificacion_id")
-	@NotNull
-	private Clasificacion clasificacion;
-	
-	@ManyToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "grupo_id")
-	@NotNull
+	//@NotNull
+	@Basic(optional=false)
 	private Grupo grupo;
 	
-	@ManyToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "proveedor_id")
-	@NotNull
+	//@NotNull
+	@Basic(optional=false)
 	private Proveedor proveedor;
 
-//	@OneToMany(orphanRemoval = true)
-//	@JoinColumn(name = "insumo_id")
-//	@NotNull
-//	private List<InsumoStock> insumoStock;
-//
-//	@OneToMany(mappedBy = "insumo")
-//	private List<InsumoPrecio> insumoPrecio; 
-
-//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JoinColumn(name = "pd_insumo_id")
-//	@NotNull
-//	private PedidoDetalle pDetalle;
-
-//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JoinColumn(name = "cd_insumo_id")
-//	@NotNull
-//	private CompraDetalle cDetalle;
-
 	private int activo;
+	
+	@Column(name="codigo_barra")
+	private String codigoBarra;
+	
+	private Double pcu;
+	
+	private Double pcp;
+	
+	@Temporal(TemporalType.DATE)
+	private Date ultimaCompra;
 
+	//Constructor por Defecto
 	public Producto() {
-
+		super();
+		this.grupo = new Grupo();
+		this.impuesto = new Impuesto();
+		this.marca = new Marca();
+		this.proveedor = new Proveedor();
+		this.umedida = new UnidadMedida();
 	}
 	
+	public Producto(Long codigo, String nombre){
+		this.codigo = codigo;
+		this.nombre = nombre;
+	}
+	
+	//Metodos Getters and Setters
 	public UnidadMedida getUmedida() {
 		return umedida;
 	}
 
 	public void setUmedida(UnidadMedida umedida) {
 		this.umedida = umedida;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 
 	public String getDescripcion() {
@@ -127,14 +131,6 @@ public class Producto extends BaseEntity {
 		this.marca = marca;
 	}
 
-	public Clasificacion getClasificacion() {
-		return clasificacion;
-	}
-
-	public void setClasificacion(Clasificacion clasificacion) {
-		this.clasificacion = clasificacion;
-	}
-
 	public Grupo getGrupo() {
 		return grupo;
 	}
@@ -149,6 +145,46 @@ public class Producto extends BaseEntity {
 
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
+	}
+
+	public int getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getCodigoBarra() {
+		return codigoBarra;
+	}
+
+	public void setCodigoBarra(String codigoBarra) {
+		this.codigoBarra = codigoBarra;
+	}
+
+	public Double getPcu() {
+		return pcu;
+	}
+
+	public void setPcu(Double pcu) {
+		this.pcu = pcu;
+	}
+
+	public Double getPcp() {
+		return pcp;
+	}
+
+	public void setPcp(Double pcp) {
+		this.pcp = pcp;
+	}
+
+	public Date getUltimaCompra() {
+		return ultimaCompra;
+	}
+
+	public void setUltimaCompra(Date ultimaCompra) {
+		this.ultimaCompra = ultimaCompra;
 	}
 	
 }
