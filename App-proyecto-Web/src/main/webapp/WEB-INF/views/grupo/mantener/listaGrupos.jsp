@@ -1,16 +1,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div>
 	<spring:message code="label.grupos" var="label_grupo" htmlEscape="false" />
 	<spring:message code="label.listado" var="label_listado" htmlEscape="false" />
-	
 	<spring:message code="label.grupo" var="label_grupo" htmlEscape="false" />
 	<spring:message code="label.grupo.codigo" var="label_grupo_codigo" htmlEscape="false" />
 	<spring:message code="label.grupo.nombre" var="label_grupo_nombre" htmlEscape="false" />
-	
 	<spring:message code="label.editar" var="label_editar" htmlEscape="false" />
 	<spring:message code="button.actualizar" var="button_actualizar" htmlEscape="false" />
 	
