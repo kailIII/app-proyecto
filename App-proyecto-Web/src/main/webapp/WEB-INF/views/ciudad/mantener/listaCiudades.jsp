@@ -1,7 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div>
 	<spring:message code="label.ciudades" var="label_ciudades" htmlEscape="false" />
@@ -9,7 +8,6 @@
 	<spring:message code="label.ciudad.codigo" var="label_ciudad_codigo" htmlEscape="false" />
 	<spring:message code="label.ciudad.nombre" var="label_ciudad_nombre" htmlEscape="false" />
 	<spring:message code="label.ciudad.abreviatura" var="label_ciudad_abreviatura" htmlEscape="false" />
-	
 	<spring:message code="label.editar" var="label_editar" htmlEscape="false" />
 	<spring:message code="button.actualizar" var="button_actualizar" htmlEscape="false" />
 	

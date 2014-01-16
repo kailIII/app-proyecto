@@ -12,11 +12,10 @@ import com.mycompany.proyecto.repository.CiudadRepository;
 import com.mycompany.proyecto.service.CiudadService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
+ * Servicio para Ciudad
  *
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2012
+ * @author Rodrigo Garcete
+ * @since 21/11/2012
  */
 @Service
 public class CiudadServiceImpl implements CiudadService {
@@ -57,6 +56,11 @@ public class CiudadServiceImpl implements CiudadService {
 	public Boolean remove(Ciudad c) throws DataAccessException {
 		ciudadRepository.remove(c);
 		return true;
+	}
+
+	@Override
+	public List<Ciudad> findByCombo() throws DataAccessException {
+		return ciudadRepository.findByCombo();
 	}
 
 }

@@ -5,20 +5,18 @@
 <spring:message code="button.guardar" var="button_guardar" htmlEscape="false" />
 <spring:message code="button.cancelar" var="button_cancelar" htmlEscape="false" />
 <spring:message code="button.excluir" var="button_excluir" htmlEscape="false" />
-
 <spring:message code="label.ciudad" var="label_ciudad" htmlEscape="false" />
 <spring:message code="label.ciudad.nombre" var="label_ciudad_nombre" htmlEscape="false" />
 <spring:message code="label.ciudad.abreviatura" var="label_ciudad_abreviatura" htmlEscape="false" />
 <spring:message code="label.ciudad.departamento" var="label_ciudad_departamento" htmlEscape="false" />
 <spring:message code="label.ciudad.pais" var="label_ciudad_pais" htmlEscape="false" />
-<spring:message code="label.ciudad.activo" var="label_ciudad_activo" htmlEscape="false" />
 
 <form:form action="" method="${param.method}" modelAttribute="ciudad" class="form-horizontal" id="frmCiudad">
 	<input type="hidden" name="codigo" value="${ciudad.codigo}" />
+	<input type="hidden" name="activo" value="1" />
+	
 	<fieldset>
-   		
    		<legend><h3>${label_ciudad} <small> ${param.sublabel}</small></h3></legend>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_ciudad_nombre}</label>
     		<div class="controls">
@@ -26,45 +24,53 @@
     			<form:errors path="nombre" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_ciudad_abreviatura}</label>
     		<div class="controls">
-    			<form:input path="abreviatura" class="input-large"/>
+    			<form:input path="abreviatura" class="input-large" maxlength="3"/>
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_ciudad_departamento}</label>
     		<div class="controls">
-    			<form:input path="departamento.codigo" class="input-large" id="dep"/>
+    			<form:select path="departamento.codigo" id="dep">
+					<option value=""></option>
+					<c:forEach items="${departamentos}" var="dep">
+						<c:choose>
+		                    <c:when test="${dep.codigo == ciudad.departamento.codigo}">
+		                        <option value="${dep.codigo}" selected="true">${dep.nombre}</option>
+		                    </c:when>
+		                    <c:otherwise>
+		                        <option value="${dep.codigo}">${dep.nombre}</option>
+		                    </c:otherwise>
+	                	</c:choose>
+					</c:forEach>
+				</form:select>
     			<form:errors path="departamento.codigo" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_ciudad_pais}</label>
     		<div class="controls">
-    			<form:input path="pais.codigo" class="input-large" id="pais"/>
+    			<form:select path="pais.codigo" id="pais">
+					<option value=""></option>
+					<c:forEach items="${paises}" var="pais">
+						<c:choose>
+		                    <c:when test="${pais.codigo == ciudad.pais.codigo}">
+		                        <option value="${pais.codigo}" selected="true">${pais.nombre}</option>
+		                    </c:when>
+		                    <c:otherwise>
+		                        <option value="${pais.codigo}">${pais.nombre}</option>
+		                    </c:otherwise>
+	                	</c:choose>
+					</c:forEach>
+				</form:select>
     			<form:errors path="pais.codigo" cssClass="alert alert-error" />
-    			
-<%--     			<form:select path="pais"> pendiente --%>
-<%--     				<form:option value="-">Seleccione Pais</form:option> --%>
-<%--     				<form:options items="${}" itemValue="pais.codigo" itemLabel="pais.nombre"/> --%>
-<%--     			</form:select> --%>
     		</div>
-   		</div>
-   		
-   		<div class="control-group">
-    		<label class="control-label">${label_ciudad_activo}</label>
-    		<div class="controls">
-    			<form:checkbox path="activo" value="1"/>
-    		</div>
-   		</div>
-   		
+   		</div>   		
    	</fieldset>
+   	
 </form:form>
-
 
 <div class="control-group form-horizontal">
 	<div class="controls">
@@ -92,6 +98,5 @@ $(document).ready(function () {
  	});
  	
  	$("#guardar").click(function () { $("#frmCiudad").submit(); });
-
 });
 </script>

@@ -1,5 +1,6 @@
 package com.mycompany.proyecto.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,8 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.mycompany.proyecto.model.Ciudad;
+import com.mycompany.proyecto.model.Departamento;
+import com.mycompany.proyecto.model.Pais;
 import com.mycompany.proyecto.service.CiudadService;
-
+import com.mycompany.proyecto.service.DepartamentoService;
+import com.mycompany.proyecto.service.PaisService;
 /**
  * Handles requests for the application home page.
  * Anotando una clase Java como @Controller se convierte en un controlador, 
@@ -19,11 +23,6 @@ import com.mycompany.proyecto.service.CiudadService;
  * El objeto Model simplemente es un mapa donde guardaremos los objetos 
  * que queremos pasar a la vista (es la M de MVC)
  * 
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
- */
-
-/**
  * Principal componente do framework <code>Spring MVC</code>, esse é o controller do cadastro de mercadorias. 
  * 
  * <p>Tem como responsabilidade: definir o mapeamento de navegação, acionar validadores e conversores de dados, 
@@ -32,6 +31,7 @@ import com.mycompany.proyecto.service.CiudadService;
  * <p>Os métodos de navegação, retornam a url definida no Tiles. Veja também o arquivo <code>views.xml</code>.</p>
  * 
  * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @RequestMapping(value="/ciudad")
 @Controller
@@ -47,6 +47,12 @@ public class CiudadController {
 	public CiudadController(CiudadService is){
 		this.ciudadService = is;
 	}
+	
+	@Autowired
+	private DepartamentoService depService;
+	
+	@Autowired
+	private PaisService paisService;
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").
@@ -66,7 +72,10 @@ public class CiudadController {
 	 */
 	@RequestMapping(value="/form", method = RequestMethod.GET) //, params = "form"
 	public String crearForm(Model uiModel) {
-		uiModel.addAttribute("ciudad", new Ciudad());
+		Ciudad c = new Ciudad();
+		uiModel.addAttribute("ciudad", c);
+		cargarComboDepartamento(uiModel, c);
+		cargarComboPais(uiModel, c);
 		return "incluirCiudad";
 	}
 	
@@ -95,9 +104,11 @@ public class CiudadController {
 	 */
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
-		Ciudad m = ciudadService.findById(id);
-		if (m != null) {
-			uiModel.addAttribute("ciudad", m);
+		Ciudad c = ciudadService.findById(id);
+		if (c != null) {
+			uiModel.addAttribute("ciudad", c);
+			cargarComboDepartamento(uiModel, c);
+			cargarComboPais(uiModel, c);
 		}
 		return "editarCiudad";
 	}
@@ -133,5 +144,15 @@ public class CiudadController {
 		}
 		return "redirect:/ciudad/listado";
     }
+	
+	private void cargarComboDepartamento(Model uiModel, Ciudad c){
+		List<Departamento> departamentos = depService.findByCombo();
+		uiModel.addAttribute("departamentos", departamentos);
+	}
+
+	private void cargarComboPais(Model uiModel, Ciudad c){
+		List<Pais> paises = paisService.findByCombo();
+		uiModel.addAttribute("paises", paises);
+	}
 	
 }

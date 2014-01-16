@@ -5,7 +5,6 @@
 <spring:message code="button.guardar" var="button_guardar" htmlEscape="false" />
 <spring:message code="button.cancelar" var="button_cancelar" htmlEscape="false" />
 <spring:message code="button.excluir" var="button_excluir" htmlEscape="false" />
-
 <spring:message code="label.proveedor" var="label_proveedor" htmlEscape="false" />
 <spring:message code="label.proveedor.nombre" var="label_proveedor_nombre" htmlEscape="false" />
 <spring:message code="label.proveedor.apellido" var="label_proveedor_apellido" htmlEscape="false" />
@@ -21,11 +20,11 @@
 <spring:message code="label.proveedor.ciudad" var="label_proveedor_ciudad" htmlEscape="false" />
 
 <form:form action="" method="${param.method}" modelAttribute="proveedor" class="form-horizontal" id="frmProveedor">
-	<input type="hidden" name="id" value="${proveedor.codigo}" />
+	<input type="hidden" name="codigo" value="${proveedor.codigo}" />
+	<input type="hidden" name="activo" value="1" />
 	
 	<fieldset>
    		<legend><h3>${label_proveedor} <small> ${param.sublabel}</small></h3></legend>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_proveedor_ruc}</label>
     		<div class="controls">
@@ -33,7 +32,6 @@
     			<form:errors path="ruc" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_proveedor_ci}</label>
     		<div class="controls">
@@ -41,7 +39,6 @@
     			<form:errors path="ci" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_proveedor_nombre}</label>
     		<div class="controls">
@@ -49,7 +46,6 @@
     			<form:errors path="nombre" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_proveedor_apellido}</label>
     		<div class="controls">
@@ -57,53 +53,83 @@
     			<form:errors path="apellido" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_proveedor_representante}</label>
     		<div class="controls">
-    			<form:input path="representante" class="input-small" />
+    			<form:input path="representante" class="input-large" />
     		</div>
    		</div>
-   		
+   		<div class="control-group">
+    		<label class="control-label">${label_proveedor_celular} Nro. 2</label>
+    		<div class="controls">
+    			<form:input path="codigo" class="input-large"/>
+    		</div>
+   		</div>
    		<div class="control-group">
     		<label class="control-label">${label_proveedor_direccion}</label>
-    		<div class="controls">
-    			<form:input path="direccion" class="input-small" />
+    		<div class="controls"> 
+    			<form:input path="direccion" class="input-large" />
     			<form:errors path="direccion" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
+   		<div class="control-group">
+    		<label class="control-label">${label_proveedor_direccion} Nro. 2</label>
+    		<div class="controls">
+    			<form:input path="direccion2" class="input-large" />
+    			<form:errors path="direccion2" cssClass="alert alert-error" />
+    		</div>
+   		</div>
    		<div class="control-group">
     		<label class="control-label">${label_proveedor_barrio}</label>
     		<div class="controls">
-    			<form:input path="barrio" class="input-small"/>
+    			<form:input path="barrio" class="input-large"/>
     		</div>
    		</div>
-   		
-   		<div class="control-group">
-    		<label class="control-label">${label_proveedor_telefono}</label>
-    		<div class="controls">
-    			<form:input path="telefono" class="input-small"/>
-    			<form:errors path="telefono" cssClass="alert alert-error" />
-    		</div>
-   		</div>
-   		
-   		<div class="control-group">
-    		<label class="control-label">${label_proveedor_celular}</label>
-    		<div class="controls">
-    			<form:input path="celular" class="input-small"/>
-    		</div>
-   		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_proveedor_ciudad}</label>
     		<div class="controls">
-    			<form:input path="ciudad.codigo" class="input-small" id="ciudad"/>
+    			<form:select path="ciudad.codigo">
+					<option value=""></option>
+					<c:forEach items="${ciudades}" var="ciudad">
+						<c:choose>
+		                    <c:when test="${ciudad.codigo == proveedor.ciudad.codigo}">
+		                        <option value="${ciudad.codigo}" selected="true">${ciudad.nombre}</option>
+		                    </c:when>
+		                    <c:otherwise>
+		                        <option value="${ciudad.codigo}">${ciudad.nombre}</option>
+		                    </c:otherwise>
+	                	</c:choose>
+					</c:forEach>
+				</form:select>
     			<form:errors path="ciudad.codigo" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
+   		<div class="control-group">
+    		<label class="control-label">${label_proveedor_telefono}</label>
+    		<div class="controls">
+    			<form:input path="telefono" class="input-large"/>
+    		</div>
+   		</div>
+   		<div class="control-group">
+    		<label class="control-label">${label_proveedor_telefono} Nro. 2</label>
+    		<div class="controls">
+    			<form:input path="telefono2" class="input-large"/>
+    		</div>
+   		</div>
+   		<div class="control-group">
+    		<label class="control-label">${label_proveedor_celular}</label>
+    		<div class="controls">
+    			<form:input path="celular" class="input-large"/>
+    		</div>
+   		</div>
+   		<div class="control-group">
+    		<label class="control-label">${label_proveedor_celular} Nro. 2</label>
+    		<div class="controls">
+    			<form:input path="celular2" class="input-large"/>
+    		</div>
+   		</div>
    	</fieldset>
+   	
 </form:form>
 
 
@@ -122,12 +148,10 @@ $(document).ready(function () {
  	$("#frmProveedor").validate({
  		 	rules: {
  	 		 	nombre: { required: true, minlength: 5 },
- 	 		 	apellido: { required: true, minlength: 5 },
  	 		 	ciudad: {required: true }
  		 	},
  		 	messages: {
  		 		nombre:'El campo Nombre es obligatorio',
- 		 		apellido:'El campo Apellido es obligatorio',
  		 		ciudad: 'El campo Ciudad es obligatorio'
  		 	}
  		
