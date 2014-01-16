@@ -5,7 +5,6 @@
 <spring:message code="button.guardar" var="button_guardar" htmlEscape="false" />
 <spring:message code="button.cancelar" var="button_cancelar" htmlEscape="false" />
 <spring:message code="button.excluir" var="button_excluir" htmlEscape="false" />
-
 <spring:message code="label.lote" var="label_lote" htmlEscape="false" />
 <spring:message code="label.lote.nombre" var="label_lote_nombre" htmlEscape="false" />
 <spring:message code="label.lote.vencimiento" var="label_lote_vencimiento" htmlEscape="false" />
@@ -14,10 +13,10 @@
 
 <form:form action="" method="${param.method}" modelAttribute="lote" class="form-horizontal" id="frmLote">
 	<input type="hidden" name="codigo" value="${lote.codigo}" />
+	<input type="hidden" name="activo" value="1" />
+	
 	<fieldset>
-   		
    		<legend><h3>${label_lote} <small> ${param.sublabel}</small></h3></legend>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_lote_nombre}</label>
     		<div class="controls">
@@ -25,7 +24,6 @@
     			<form:errors path="nombre" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_lote_vencimiento}</label>
     		<div class="controls">
@@ -33,24 +31,28 @@
     			<form:errors path="vencimiento" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_lote_insumo}</label>
     		<div class="controls">
-    			<form:input path="insumo.codigo" class="input-large" />
-    			<form:errors path="insumo.codigo" cssClass="alert alert-error" />
-    		</div>
-   		</div>
-   		   		
-   		<div class="control-group">
-    		<label class="control-label">${label_lote_activo}</label>
-    		<div class="controls">
-    			<form:checkbox path="activo" value="1"/>
+    			<form:select path="producto.codigo" id="producto">
+					<option value=""></option>
+					<c:forEach items="${productos}" var="producto">
+						<c:choose>
+		                    <c:when test="${producto.codigo == lote.producto.codigo}">
+		                        <option value="${producto.codigo}" selected="true">${producto.nombre}</option>
+		                    </c:when>
+		                    <c:otherwise>
+		                        <option value="${producto.codigo}">${producto.nombre}</option>
+		                    </c:otherwise>
+	                	</c:choose>
+					</c:forEach>
+				</form:select>
+    			<form:errors path="producto.codigo" cssClass="alert alert-error" />
     		</div>
    		</div>
    	</fieldset>
+   	
 </form:form>
-
 
 <div class="control-group form-horizontal">
 	<div class="controls">
@@ -66,14 +68,15 @@
 $(document).ready(function () {
  	$("#frmLote").validate({
  		 	rules: {
- 	 		 	nombre: { required: true, minlength: 5 }
+ 	 		 	nombre: { required: true, minlength: 5 },
+ 	 		 	vencimiento: {required: true}
  		 	},
  		 	messages:{
- 		 		nombre:'El campo Nombre es obligatorio'
+ 		 		nombre:'El campo Nombre es obligatorio',
+ 		 		vencimiento:'El campo Vencimiento es obligatorio'
  		 	}
  	});
  	
  	$("#guardar").click(function () { $("#frmLote").submit(); });
-
 });
 </script>

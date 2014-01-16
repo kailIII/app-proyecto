@@ -7,13 +7,11 @@ import javax.persistence.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import com.mycompany.proyecto.model.Lote;
-import com.mycompany.proyecto.repository.BancoRepository;
 import com.mycompany.proyecto.repository.LoteRepository;
-
 /**
- * Implementacion de JPA de la interfaz {@link BancoRepository}
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
+ * Implementacion de JPA de la interfaz {@link LoteRepository}
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @Repository
 public class JpaLoteRepositoryImpl implements LoteRepository {
@@ -23,7 +21,7 @@ public class JpaLoteRepositoryImpl implements LoteRepository {
 
     @Override
 	public Lote findById(Long codigo) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT b FROM Lote b WHERE b.codigo =:codigo");
+        Query query = this.em.createNamedQuery("Lote.findById");
         query.setParameter("codigo", codigo);
         return (Lote)query.getSingleResult();
 	}
@@ -31,9 +29,7 @@ public class JpaLoteRepositoryImpl implements LoteRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Lote> findByName(String nombre) throws DataAccessException {
-		// using 'join fetch' because a single query should load both owners and pets
-        // using 'left join fetch' because it might happen that an owner does not have pets yet
-        Query query = this.em.createQuery("SELECT b FROM Lote b WHERE b.nombre LIKE :nombre");
+        Query query = this.em.createNamedQuery("Lote.findByName");
         query.setParameter("nombre", nombre + "%");
         return (List<Lote>)query.getResultList();
 	}
@@ -41,23 +37,22 @@ public class JpaLoteRepositoryImpl implements LoteRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Lote> getAll() throws DataAccessException {
-		return (List<Lote>)em.createQuery("SELECT b FROM Lote b order by b.codigo").getResultList();
+		return (List<Lote>)em.createNamedQuery("Lote.findByAll").getResultList();
 	}
 
 	@Override
-	public void save(Lote c) throws DataAccessException {
-		if(c.getCodigo() == null){
-			this.em.persist(c);
-			this.em.flush();
+	public void save(Lote l) throws DataAccessException {
+		if(l.getCodigo() == null){
+			this.em.persist(l);
 		}else {
-			this.em.merge(c);
-			this.em.flush();
+			this.em.merge(l);	
 		}
+		this.em.flush();
 	}
 
 	@Override
-	public Boolean remove(Lote c) throws DataAccessException {
-		this.em.remove(em.contains(c) ? c : em.merge(c));
+	public Boolean remove(Lote l) throws DataAccessException {
+		this.em.remove(em.contains(l) ? l : em.merge(l));
 		return true;
 	}
 

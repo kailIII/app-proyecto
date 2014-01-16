@@ -1,5 +1,6 @@
 package com.mycompany.proyecto.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,8 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.mycompany.proyecto.model.Lote;
+import com.mycompany.proyecto.model.Producto;
 import com.mycompany.proyecto.service.LoteService;
-
+import com.mycompany.proyecto.service.ProductoService;
 /**
  * Handles requests for the application home page.
  * Anotando una clase Java como @Controller se convierte en un controlador, 
@@ -19,11 +21,6 @@ import com.mycompany.proyecto.service.LoteService;
  * El objeto Model simplemente es un mapa donde guardaremos los objetos 
  * que queremos pasar a la vista (es la M de MVC)
  * 
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
- */
-
-/**
  * Principal componente do framework <code>Spring MVC</code>, esse é o controller do cadastro de mercadorias. 
  * 
  * <p>Tem como responsabilidade: definir o mapeamento de navegação, acionar validadores e conversores de dados, 
@@ -32,6 +29,7 @@ import com.mycompany.proyecto.service.LoteService;
  * <p>Os métodos de navegação, retornam a url definida no Tiles. Veja também o arquivo <code>views.xml</code>.</p>
  * 
  * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @RequestMapping(value="/lote")
 @Controller
@@ -47,6 +45,9 @@ public class LoteController {
 	public LoteController(LoteService is){
 		this.loteService = is;
 	}
+	
+	@Autowired
+	private ProductoService productoService;
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").
@@ -66,7 +67,9 @@ public class LoteController {
 	 */
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
-		uiModel.addAttribute("lote", new Lote());
+		Lote l = new Lote();
+		uiModel.addAttribute("lote", l);
+		cargarComboProducto(uiModel, l);
 		return "incluirLote";
 	}
 	
@@ -95,9 +98,10 @@ public class LoteController {
 	 */
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
-		Lote m = loteService.findById(id);
-		if (m != null) {
-			uiModel.addAttribute("lote", m);
+		Lote l = loteService.findById(id);
+		if (l != null) {
+			uiModel.addAttribute("lote", l);
+			cargarComboProducto(uiModel, l);
 		}
 		return "editarLote";
 	}
@@ -127,11 +131,16 @@ public class LoteController {
 	 */
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
-		Lote m = loteService.findById(id);
-		if (m != null) {
-			this.loteService.remove(m); 
+		Lote l = loteService.findById(id);
+		if (l != null) {
+			this.loteService.remove(l); 
 		}
 		return "redirect:/lote/listado";
     }
+	
+	private void cargarComboProducto(Model uiModel, Lote l){
+		List<Producto> productos = productoService.findByCombo();
+		uiModel.addAttribute("productos", productos);
+	}
 	
 }
