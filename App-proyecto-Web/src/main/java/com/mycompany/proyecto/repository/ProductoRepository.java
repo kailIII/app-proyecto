@@ -29,6 +29,8 @@ public interface ProductoRepository {
 	 * @throws DataAccessException
 	 */
 	List<Producto> findByName(String nombre, int pag) throws DataAccessException; 
+	
+	List<Producto> findByCombo() throws DataAccessException; 
 
 	/**
 	 * 

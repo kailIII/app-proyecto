@@ -17,6 +17,8 @@ public interface ProductoService {
 	
 	List<Producto> findByName(String nombre) throws DataAccessException;
 	
+	List<Producto> findByCombo() throws DataAccessException;
+	
 	void save(Producto p) throws DataAccessException;
 	
 	List<Producto> getAll() throws DataAccessException;

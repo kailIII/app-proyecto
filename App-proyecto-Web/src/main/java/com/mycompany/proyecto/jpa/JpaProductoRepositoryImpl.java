@@ -5,8 +5,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+
 import com.mycompany.proyecto.model.Producto;
 import com.mycompany.proyecto.repository.ProductoRepository;
 
@@ -39,8 +41,7 @@ public class JpaProductoRepositoryImpl implements ProductoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Producto> getAll(int pag) throws DataAccessException {
-		Query query = this.em.createNamedQuery("Producto.findAll");  
-		return (List<Producto>)query.getResultList();
+		return this.em.createNamedQuery("Producto.findAll").getResultList();  
 	}
 
 	@Override
@@ -57,6 +58,12 @@ public class JpaProductoRepositoryImpl implements ProductoRepository {
 	public Boolean remove(Producto p) throws DataAccessException {
 		this.em.remove(em.contains(p) ? p : em.merge(p));
 		return true;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Producto> findByCombo() throws DataAccessException {
+		return this.em.createNamedQuery("Producto.findByCombo").getResultList();  
 	}
 
 }
