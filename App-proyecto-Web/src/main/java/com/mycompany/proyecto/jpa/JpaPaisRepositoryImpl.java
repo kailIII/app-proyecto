@@ -12,13 +12,11 @@ import org.springframework.util.StringUtils;
 
 import com.mycompany.proyecto.config.SearchCriteria;
 import com.mycompany.proyecto.model.Pais;
-import com.mycompany.proyecto.repository.BancoRepository;
 import com.mycompany.proyecto.repository.PaisRepository;
-
 /**
- * Implementacion de JPA de la interfaz {@link BancoRepository}
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
+ * Implementacion de JPA de la interfaz {@link PaisRepository}
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @Repository
 public class JpaPaisRepositoryImpl implements PaisRepository {
@@ -28,7 +26,7 @@ public class JpaPaisRepositoryImpl implements PaisRepository {
 
     @Override
 	public Pais findById(Long codigo) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT b FROM Pais b WHERE b.codigo =:codigo");
+        Query query = this.em.createNamedQuery("Pais.findById");
         query.setParameter("codigo", codigo);
         return (Pais)query.getSingleResult();
 	}
@@ -36,7 +34,7 @@ public class JpaPaisRepositoryImpl implements PaisRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Pais> findByName(String nombre) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT b FROM Pais b WHERE b.nombre LIKE :nombre");
+        Query query = this.em.createNamedQuery("Pais.findByName");
         query.setParameter("nombre", nombre + "%");
         return (List<Pais>)query.getResultList();
 	}
@@ -44,18 +42,17 @@ public class JpaPaisRepositoryImpl implements PaisRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Pais> getAll() throws DataAccessException {
-		return (List<Pais>)em.createQuery("SELECT p FROM Pais p order by p.codigo").getResultList();
+		return (List<Pais>)em.createNamedQuery("Pais.findByAll").getResultList();
 	}
 
 	@Override
 	public void save(Pais c) throws DataAccessException {
 		if(c.getCodigo() == null){
 			this.em.persist(c);
-			this.em.flush();
 		}else {
 			this.em.merge(c);
-			this.em.flush();
 		}
+		this.em.flush();
 	}
 
 	@Override
@@ -75,6 +72,7 @@ public class JpaPaisRepositoryImpl implements PaisRepository {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Pais> findPais(SearchCriteria criterio) throws DataAccessException {
 		String pattern = getSearchPattern(criterio);
@@ -82,6 +80,12 @@ public class JpaPaisRepositoryImpl implements PaisRepository {
 				"select p from Pais where lower(p.nombre) like " + pattern)
 				.setMaxResults(criterio.getPageSize()).setFirstResult(criterio.getPage() * criterio.getPageSize())
 				.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Pais> findByCombo() throws DataAccessException {
+		return (List<Pais>)em.createNamedQuery("Pais.findByCombo").getResultList();
 	}
 
 }

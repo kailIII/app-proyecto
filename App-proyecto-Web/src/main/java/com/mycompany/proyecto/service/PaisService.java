@@ -8,18 +8,17 @@ import com.mycompany.proyecto.config.SearchCriteria;
 import com.mycompany.proyecto.model.Pais;
 
 /**
- * Contrato de Persistencia para la entidad <code>Insumo</code>
- * Define las operaciones basicas de registro (CRUD), siguiendo el patron
- * de diseño <code>Data Access Object</code>
- *  
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
+ * Contrato de Servicio para la entidad <code>Pais</code>  
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 public interface PaisService {
 
 	Pais findById(Long codigo) throws DataAccessException;
 	
 	List<Pais> findByName(String nombre) throws DataAccessException;
+	
+	List<Pais> findByCombo() throws DataAccessException;
 	
 	List<Pais> findPaises(SearchCriteria criteria) throws DataAccessException;
 

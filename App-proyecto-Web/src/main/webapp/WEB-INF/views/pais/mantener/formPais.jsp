@@ -5,7 +5,6 @@
 <spring:message code="button.guardar" var="button_guardar" htmlEscape="false" />
 <spring:message code="button.cancelar" var="button_cancelar" htmlEscape="false" />
 <spring:message code="button.excluir" var="button_excluir" htmlEscape="false" />
-
 <spring:message code="label.pais" var="label_pais" htmlEscape="false" />
 <spring:message code="label.pais.nombre" var="label_pais_nombre" htmlEscape="false" />
 <spring:message code="label.pais.abreviatura" var="label_pais_abreviatura" htmlEscape="false" />
@@ -13,34 +12,25 @@
 
 <form:form action="" method="${param.method}" modelAttribute="pais" class="form-horizontal" id="frmPais">
 	<input type="hidden" name="codigo" value="${pais.codigo}" />
+	<input type="hidden" name="activo" value="1" />
+	
 	<fieldset>
-   		
    		<legend><h3>${label_pais} <small> ${param.sublabel}</small></h3></legend>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_pais_nombre}</label>
     		<div class="controls">
     			<form:input path="nombre" class="input-large" />
     			<form:errors path="nombre" cssClass="alert alert-error" />
     		</div>
-   		</div>
-   		
+   		</div>	
    		<div class="control-group">
     		<label class="control-label">${label_pais_abreviatura}</label>
     		<div class="controls">
-    			<form:input path="abreviatura" class="input-large"/>
-    			<form:errors path="abreviatura" cssClass="alert alert-error" />
+    			<form:input path="abreviatura" class="input-large" maxlength="3"/>
     		</div>
-   		</div>
-   		
-   		<div class="control-group">
-    		<label class="control-label">${label_pais_activo}</label>
-    		<div class="controls">
-    			<form:checkbox path="activo" value="1"/>
-    		</div>
-   		</div>
-   		
+   		</div>   		
    	</fieldset>
+   	
 </form:form>
 
 <div class="control-group form-horizontal">
@@ -65,6 +55,5 @@ $(document).ready(function () {
  	});
  	
  	$("#guardar").click(function () { $("#frmPais").submit(); });
-
 });
 </script>

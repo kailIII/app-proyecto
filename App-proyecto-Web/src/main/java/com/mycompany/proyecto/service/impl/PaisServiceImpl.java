@@ -13,11 +13,10 @@ import com.mycompany.proyecto.repository.PaisRepository;
 import com.mycompany.proyecto.service.PaisService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
- *
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2012
+ * Implementacion de la capa de Servicio 
+ * de la Entidad Pais
+ * @author Rodrigo garcete
+ * @since 21/11/2013
  */
 @Service
 public class PaisServiceImpl implements PaisService {
@@ -65,6 +64,11 @@ public class PaisServiceImpl implements PaisService {
 	public List<Pais> findPaises(SearchCriteria criteria)
 			throws DataAccessException {
 		return paisRepository.findPais(criteria);
+	}
+
+	@Override
+	public List<Pais> findByCombo() throws DataAccessException {
+		return paisRepository.findByCombo();
 	}
 
 }
