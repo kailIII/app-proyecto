@@ -5,17 +5,15 @@
 <spring:message code="button.guardar" var="button_guardar" htmlEscape="false" />
 <spring:message code="button.cancelar" var="button_cancelar" htmlEscape="false" />
 <spring:message code="button.excluir" var="button_excluir" htmlEscape="false" />
-
 <spring:message code="label.deposito" var="label_deposito" htmlEscape="false" />
 <spring:message code="label.deposito.nombre" var="label_deposito_nombre" htmlEscape="false" />
-<spring:message code="label.deposito.activo" var="label_deposito_activo" htmlEscape="false" />
 
 <form:form action="" method="${param.method}" modelAttribute="deposito" class="form-horizontal" id="frmDeposito">
 	<input type="hidden" name="codigo" value="${deposito.codigo}" />
+	<input type="hidden" name="activo" value="1" />
+	
 	<fieldset>
-   		
    		<legend><h3>${label_deposito} <small> ${param.sublabel}</small></h3></legend>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_deposito_nombre}</label>
     		<div class="controls">
@@ -23,16 +21,9 @@
     			<form:errors path="nombre" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		   		
-   		<div class="control-group">
-    		<label class="control-label">${label_deposito_activo}</label>
-    		<div class="controls">
-    			<form:checkbox path="activo" value="1"/>
-    		</div>
-   		</div>
    	</fieldset>
+   	
 </form:form>
-
 
 <div class="control-group form-horizontal">
 	<div class="controls">
@@ -56,6 +47,5 @@ $(document).ready(function () {
  	});
  	
  	$("#guardar").click(function () { $("#frmDeposito").submit(); });
-
 });
 </script>

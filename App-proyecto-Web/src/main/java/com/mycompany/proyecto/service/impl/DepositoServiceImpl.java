@@ -12,11 +12,10 @@ import com.mycompany.proyecto.repository.DepositoRepository;
 import com.mycompany.proyecto.service.DepositoService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
- *
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2012
+ * Implementacion de la capa de Servicios para la 
+ * entidad Deposito
+ * @author Rodrigo Garcete
+ * @since 21/11/2012
  */
 @Service
 public class DepositoServiceImpl implements DepositoService {
@@ -59,4 +58,8 @@ public class DepositoServiceImpl implements DepositoService {
 		return true;
 	}
 
+	@Override
+	public List<Deposito> findByCombo() throws DataAccessException {
+		return depRepository.findByCombo();
+	}
 }

@@ -17,6 +17,8 @@ public interface DepositoRepository {
 	Deposito findById(Long codigo) throws DataAccessException;
 	
 	List<Deposito> findByName(String nombre) throws DataAccessException; 
+	
+	List<Deposito> findByCombo() throws DataAccessException; 
 
 	List<Deposito> getAll() throws DataAccessException;
 		
