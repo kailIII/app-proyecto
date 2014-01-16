@@ -39,7 +39,7 @@
   		<div class="container">
 	   		<div id="wrapper" class="row-fluid show-grid">
 			    <div class="sidebar">
-			    	<div class="well span2">
+			    	<div class="well span2">  <!-- span2 -->
 			    		<tiles:insertAttribute name="menu" ignore="true" />
 			    	</div>
 			    </div>

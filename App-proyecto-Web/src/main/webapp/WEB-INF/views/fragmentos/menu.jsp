@@ -1,9 +1,4 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-	
-	<spring:message code="label.insumos" var="label_insumos" htmlEscape="false" />
-	<spring:message code="menu.lista" var="menu_lista" htmlEscape="false" />
-	<spring:message code="menu.incluir" var="menu_incluir" htmlEscape="false" />
-	<spring:message code="menu.sobre" var="menu_sobre" htmlEscape="false" />
 
 	<div class="row">
 	<ul class="nav nav-list">
@@ -35,7 +30,6 @@
 					<li><a href="../producto/listado">Productos</a></li>
              		<li><a href="../umedida/listado">U.Medidas</a></li>
                 	<li><a href="../marca/listado">Marcas</a></li>
-                	<li><a href="../clasificacion/listado">Clasificaciones</a></li>
                 	<li><a href="../grupo/listado">Grupos</a></li>
                 	<li><a href="../impuesto/listado">Impuestos</a></li>
                 	<li><a href="../lote/listado">Lotes</a></li>
