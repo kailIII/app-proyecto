@@ -16,11 +16,12 @@ public class NamedEntity extends BaseEntity {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@NotNull @Size(min=5, max=200)
-	private String nombre;
+	@NotNull 
+	@Size(min=5, max=60)
+	protected String nombre;
 	
 	public NamedEntity() {
-		
+		super();
 	}
 	
 	public String getNombre() {
