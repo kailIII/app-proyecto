@@ -12,11 +12,10 @@ import com.mycompany.proyecto.repository.DepartamentoRepository;
 import com.mycompany.proyecto.service.DepartamentoService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
+ * Capa de Servicio para Departamento
  *
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2012
+ * @author Rodrigo Garcete
+ * @since 21/11/2012
  */
 @Service
 public class DepartamentoServiceImpl implements DepartamentoService {
@@ -57,6 +56,11 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 	public Boolean remove(Departamento c) throws DataAccessException {
 		depRepository.remove(c);
 		return true;
+	}
+
+	@Override
+	public List<Departamento> findByCombo() throws DataAccessException {
+		return depRepository.findByCombo();
 	}
 
 }

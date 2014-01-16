@@ -8,14 +8,13 @@ import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
-import com.mycompany.proyecto.model.Departamento;
-import com.mycompany.proyecto.repository.BancoRepository;
-import com.mycompany.proyecto.repository.DepartamentoRepository;
 
+import com.mycompany.proyecto.model.Departamento;
+import com.mycompany.proyecto.repository.DepartamentoRepository;
 /**
- * Implementacion de JPA de la interfaz {@link BancoRepository}
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
+ * Implementacion de JPA de la interfaz {@link DepartamentoRepository}
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @Repository
 public class JpaDepartamentoRepositoryImpl implements DepartamentoRepository {
@@ -25,7 +24,7 @@ public class JpaDepartamentoRepositoryImpl implements DepartamentoRepository {
 
     @Override
 	public Departamento findById(Long codigo) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT c FROM Departamento c WHERE c.codigo =:codigo");
+        Query query = this.em.createNamedQuery("Departamento.findById");
         query.setParameter("codigo", codigo);
         return (Departamento)query.getSingleResult();
 	}
@@ -33,9 +32,7 @@ public class JpaDepartamentoRepositoryImpl implements DepartamentoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Departamento> findByName(String nombre) throws DataAccessException {
-		// using 'join fetch' because a single query should load both owners and pets
-        // using 'left join fetch' because it might happen that an owner does not have pets yet
-        Query query = this.em.createQuery("SELECT c FROM Departamento c WHERE c.nombre LIKE :nombre");
+        Query query = this.em.createNamedQuery("Departamento.findByName");
         query.setParameter("nombre", nombre + "%");
         return (List<Departamento>)query.getResultList();
 	}
@@ -43,7 +40,7 @@ public class JpaDepartamentoRepositoryImpl implements DepartamentoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Departamento> getAll() throws DataAccessException {
-		return (List<Departamento>)em.createQuery("SELECT c FROM Departamento c ORDER BY c.codigo").getResultList();
+		return (List<Departamento>)em.createNamedQuery("Departamento.findByAll").getResultList();
 	}
 
 	@Override
@@ -53,12 +50,19 @@ public class JpaDepartamentoRepositoryImpl implements DepartamentoRepository {
 		}else {
 			this.em.merge(c);
 		}
+		this.em.flush();
 	}
 
 	@Override
 	public Boolean remove(Departamento c) throws DataAccessException {
 		this.em.remove(em.contains(c) ? c : em.merge(c));
 		return true;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Departamento> findByCombo() throws DataAccessException {
+		return (List<Departamento>)em.createNamedQuery("Departamento.findByCombo").getResultList();
 	}
 
 }

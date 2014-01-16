@@ -1,7 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div>
 	<spring:message code="label.departamentos" var="label_departamentos" htmlEscape="false" />
@@ -9,7 +8,6 @@
 	<spring:message code="label.departamento.codigo" var="label_departamento_codigo" htmlEscape="false" />
 	<spring:message code="label.departamento.nombre" var="label_departamento_nombre" htmlEscape="false" />
 	<spring:message code="label.departamento.abreviatura" var="label_departamento_abreviatura" htmlEscape="false" />
-	
 	<spring:message code="label.editar" var="label_editar" htmlEscape="false" />
 	<spring:message code="button.actualizar" var="button_actualizar" htmlEscape="false" />
 	
@@ -37,7 +35,5 @@
 		</tr>
 		</c:forEach>
 	</table>
-	
-	<br/>
     <a href='<spring:url value="/departamento/form/" htmlEscape="true"/>'>Registrar Departamento</a>
 </div>

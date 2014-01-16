@@ -1,5 +1,6 @@
 package com.mycompany.proyecto.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.mycompany.proyecto.model.Departamento;
+import com.mycompany.proyecto.model.Pais;
 import com.mycompany.proyecto.service.DepartamentoService;
+import com.mycompany.proyecto.service.PaisService;
 
 /**
  * Handles requests for the application home page.
@@ -19,11 +22,6 @@ import com.mycompany.proyecto.service.DepartamentoService;
  * El objeto Model simplemente es un mapa donde guardaremos los objetos 
  * que queremos pasar a la vista (es la M de MVC)
  * 
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
- */
-
-/**
  * Principal componente do framework <code>Spring MVC</code>, esse é o controller do cadastro de mercadorias. 
  * 
  * <p>Tem como responsabilidade: definir o mapeamento de navegação, acionar validadores e conversores de dados, 
@@ -32,6 +30,7 @@ import com.mycompany.proyecto.service.DepartamentoService;
  * <p>Os métodos de navegação, retornam a url definida no Tiles. Veja também o arquivo <code>views.xml</code>.</p>
  * 
  * @author Rodrigo Garcete
+ * @since 21-11-2013
  */
 @RequestMapping(value="/departamento")
 @Controller
@@ -45,15 +44,9 @@ public class DepartamentoController {
 	public DepartamentoController(DepartamentoService is){
 		this.depService = is;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
+	
+	@Autowired
+	private PaisService paisService;
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").
@@ -73,8 +66,9 @@ public class DepartamentoController {
 	 */
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
-		uiModel.addAttribute("departamento", new Departamento());
-		uiModel.addAttribute("active", "incluir");
+		Departamento d = new Departamento();
+		uiModel.addAttribute("departamento", d);
+		cargarComboPais(uiModel, d);
 		return "incluirDepartamento";
 	}
 	
@@ -86,13 +80,13 @@ public class DepartamentoController {
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
 	@RequestMapping(value="/form", method = RequestMethod.POST)
-	public String crear(@Valid Departamento c, BindingResult bindingResult, Model uiModel) {
+	public String crear(@Valid Departamento d, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
-            uiModel.addAttribute("departamento", c);
+            uiModel.addAttribute("departamento", d);
             return "incluirDepartamento";
         }
 		
-		this.depService.save(c);
+		this.depService.save(d);
 		return "redirect:/departamento/listado";
 	}
 	
@@ -104,9 +98,10 @@ public class DepartamentoController {
 	 */
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
-		Departamento c = depService.findById(id);
-		if (c != null) {
-			uiModel.addAttribute("departamento", c);
+		Departamento d = depService.findById(id);
+		if (d != null) {
+			uiModel.addAttribute("departamento", d);
+			cargarComboPais(uiModel, d);
 		}
 		return "editarDepartamento";
 	}
@@ -119,12 +114,12 @@ public class DepartamentoController {
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
-	public String editar(@Valid Departamento c, BindingResult bindingResult, Model uiModel) {
+	public String editar(@Valid Departamento d, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
-            uiModel.addAttribute("departamento", c);
+            uiModel.addAttribute("departamento", d);
             return "editarDepartamento";
         }
-		this.depService.save(c);
+		this.depService.save(d);
 		return "redirect:/departamento/listado";
 	}
 	
@@ -136,11 +131,16 @@ public class DepartamentoController {
 	 */
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
-		Departamento m = depService.findById(id);
-		if (m != null) {
-			this.depService.remove(m); 
+		Departamento d = depService.findById(id);
+		if (d != null) {
+			this.depService.remove(d); 
 		}
 		return "redirect:/departamento/listado";
     }
+	
+	private void cargarComboPais(Model uiModel, Departamento d){
+		List<Pais> paises = paisService.findByCombo();
+		uiModel.addAttribute("paises", paises);
+	}
 	
 }
