@@ -14,11 +14,10 @@
 
 <form:form action="" method="${param.method}" modelAttribute="impuesto" class="form-horizontal" id="frmImpuesto">
 	<input type="hidden" name="codigo" value="${impuesto.codigo}" />
+	<input type="hidden" name="activo" value="1" />
 	
 	<fieldset>
-   		
    		<legend><h3>${label_impuesto} <small> ${param.sublabel}</small></h3></legend>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_impuesto_nombre}</label>
     		<div class="controls">
@@ -26,28 +25,19 @@
     			<form:errors path="nombre" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_impuesto_abreviatura}</label>
     		<div class="controls">
     			<form:input path="abreviatura" class="input-large" maxlength="3"/>
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_impuesto_porcentaje}</label>
     		<div class="controls">
     			<form:input path="porcentaje" class="input-large" id="porcentaje"/>
     			<form:errors path="porcentaje" cssClass="alert alert-error" />
     		</div>
-   		</div>
-   		   		
-   		<div class="control-group">
-    		<label class="control-label">${label_impuesto_activo}</label>
-    		<div class="controls">
-    			<form:checkbox path="activo" value="1"/>
-    		</div>
-   		</div>
+   		</div>		
    	</fieldset>
    	
 </form:form>

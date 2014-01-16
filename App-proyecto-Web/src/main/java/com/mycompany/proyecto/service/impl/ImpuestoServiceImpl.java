@@ -59,4 +59,9 @@ public class ImpuestoServiceImpl implements ImpuestoService {
 		return true;
 	}
 
+	@Override
+	public List<Impuesto> findByCombo() throws DataAccessException {
+		return impuestoRepository.findByCombo();
+	}
+
 }

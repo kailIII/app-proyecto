@@ -5,8 +5,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+
 import com.mycompany.proyecto.model.Impuesto;
 import com.mycompany.proyecto.repository.BancoRepository;
 import com.mycompany.proyecto.repository.ImpuestoRepository;
@@ -24,7 +26,7 @@ public class JpaImpuestoRepositoryImpl implements ImpuestoRepository {
 
     @Override
 	public Impuesto findById(Long codigo) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT b FROM Impuesto b WHERE b.codigo =:codigo");
+        Query query = this.em.createNamedQuery("Impuesto.findById");
         query.setParameter("codigo", codigo);
         return (Impuesto)query.getSingleResult();
 	}
@@ -32,7 +34,7 @@ public class JpaImpuestoRepositoryImpl implements ImpuestoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Impuesto> findByName(String nombre) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT b FROM Impuesto b WHERE b.nombre LIKE :nombre");
+        Query query = this.em.createNamedQuery("Impuesto.findByName");
         query.setParameter("nombre", nombre + "%");
         return (List<Impuesto>)query.getResultList();
 	}
@@ -40,7 +42,7 @@ public class JpaImpuestoRepositoryImpl implements ImpuestoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Impuesto> getAll() throws DataAccessException {
-		return (List<Impuesto>)em.createQuery("SELECT i FROM Impuesto i order by i.codigo").getResultList();
+		return (List<Impuesto>)em.createNamedQuery("Impuesto.findByAll").getResultList();
 	}
 
 	@Override
@@ -57,6 +59,12 @@ public class JpaImpuestoRepositoryImpl implements ImpuestoRepository {
 	public Boolean remove(Impuesto c) throws DataAccessException {
 		this.em.remove(em.contains(c) ? c : em.merge(c));
 		return true;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Impuesto> findByCombo() throws DataAccessException {
+		return (List<Impuesto>)em.createNamedQuery("Impuesto.findByCombo").getResultList();
 	}
 
 }
