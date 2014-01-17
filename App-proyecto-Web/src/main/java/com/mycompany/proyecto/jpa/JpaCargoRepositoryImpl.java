@@ -1,19 +1,20 @@
 package com.mycompany.proyecto.jpa;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
-import com.mycompany.proyecto.model.Cargo;
-import com.mycompany.proyecto.repository.BancoRepository;
-import com.mycompany.proyecto.repository.CargoRepository;
 
+import com.mycompany.proyecto.model.Cargo;
+import com.mycompany.proyecto.repository.CargoRepository;
 /**
- * Implementacion de JPA de la interfaz {@link BancoRepository}
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
+ * Implementacion de JPA de la interfaz {@link CargoRepository}
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @Repository
 public class JpaCargoRepositoryImpl implements CargoRepository {
@@ -23,7 +24,7 @@ public class JpaCargoRepositoryImpl implements CargoRepository {
 
     @Override
 	public Cargo findById(Long codigo) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT c FROM Cargo c WHERE c.codigo =:codigo");
+        Query query = this.em.createNamedQuery("Cargo.findById");
         query.setParameter("codigo", codigo);
         return (Cargo)query.getSingleResult();
 	}
@@ -31,7 +32,7 @@ public class JpaCargoRepositoryImpl implements CargoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Cargo> findByName(String nombre) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT c FROM Cargo c WHERE c.nombre LIKE :nombre");
+        Query query = this.em.createNamedQuery("Cargo.findByName");
         query.setParameter("nombre", nombre + "%");
         return (List<Cargo>)query.getResultList();
 	}
@@ -39,7 +40,7 @@ public class JpaCargoRepositoryImpl implements CargoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Cargo> getAll() throws DataAccessException {
-		return (List<Cargo>)em.createQuery("SELECT c FROM Cargo c ORDER BY c.codigo").getResultList();
+		return (List<Cargo>)em.createNamedQuery("Cargo.findAll").getResultList();
 	}
 
 	@Override
@@ -56,6 +57,12 @@ public class JpaCargoRepositoryImpl implements CargoRepository {
 	public Boolean remove(Cargo cargo) throws DataAccessException {
 		this.em.remove(em.contains(cargo) ? cargo : em.merge(cargo));
 		return true;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Cargo> findByCombo() throws DataAccessException {
+		return (List<Cargo>)em.createNamedQuery("Cargo.findByCombo").getResultList();
 	}
 
 }

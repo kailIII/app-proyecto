@@ -5,12 +5,12 @@ import org.springframework.dao.DataAccessException;
 import com.mycompany.proyecto.model.Cargo;
 
 /**
- * Contrato de Persistencia para la entidad <code>Insumo</code>
+ * Contrato de Persistencia para la entidad <code>Cargo</code>
  * Define las operaciones basicas de registro (CRUD), siguiendo el patron
  * de diseño <code>Data Access Object</code>
  *  
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 public interface CargoRepository {
 
@@ -29,6 +29,8 @@ public interface CargoRepository {
 	 * @throws DataAccessException
 	 */
 	List<Cargo> findByName(String nombre) throws DataAccessException; 
+	
+	List<Cargo> findByCombo() throws DataAccessException; 
 
 	/**
 	 * 

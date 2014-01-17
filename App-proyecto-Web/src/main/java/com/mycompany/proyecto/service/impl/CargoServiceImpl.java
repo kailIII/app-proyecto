@@ -12,11 +12,10 @@ import com.mycompany.proyecto.repository.CargoRepository;
 import com.mycompany.proyecto.service.CargoService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
- *
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2012
+ * Implementacion de Servicio para la Entidad
+ * Cargo
+ * @author Rodrigo Garcete
+ * @since 21/11/2012
  */
 @Service
 public class CargoServiceImpl implements CargoService {
@@ -57,6 +56,11 @@ public class CargoServiceImpl implements CargoService {
 	public Boolean remove(Cargo c) throws DataAccessException {
 		cargoRepository.remove(c);
 		return true;
+	}
+
+	@Override
+	public List<Cargo> findByCombo() throws DataAccessException {
+		return cargoRepository.findByCombo();
 	}
 
 }

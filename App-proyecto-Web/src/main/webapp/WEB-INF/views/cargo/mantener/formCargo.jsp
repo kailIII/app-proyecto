@@ -5,18 +5,16 @@
 <spring:message code="button.guardar" var="button_guardar" htmlEscape="false" />
 <spring:message code="button.cancelar" var="button_cancelar" htmlEscape="false" />
 <spring:message code="button.excluir" var="button_excluir" htmlEscape="false" />
-
 <spring:message code="label.cargo" var="label_cargo" htmlEscape="false" />
 <spring:message code="label.cargo.nombre" var="label_cargo_nombre" htmlEscape="false" />
 <spring:message code="label.cargo.descripcion" var="label_cargo_descripcion" htmlEscape="false" />
-<spring:message code="label.cargo.activo" var="label_cargo_activo" htmlEscape="false" />
 
 <form:form action="" method="${param.method}" modelAttribute="cargo" class="form-horizontal" id="frmCargo">
 	<input type="hidden" name="codigo" value="${cargo.codigo}" />
+	<input type="hidden" name="activo" value="1" />
+	
 	<fieldset>
-   		
    		<legend><h3>${label_cargo} <small> ${param.sublabel}</small></h3></legend>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_cargo_nombre}</label>
     		<div class="controls">
@@ -24,23 +22,14 @@
     			<form:errors path="nombre" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_cargo_descripcion}</label>
     		<div class="controls">
     			<form:input path="descripcion" class="input-large"/>
-    			<form:errors path="descripcion" cssClass="alert alert-error" />
     		</div>
-   		</div>
-   		
-   		<div class="control-group">
-    		<label class="control-label">${label_cargo_activo}</label>
-    		<div class="controls">
-    			<form:checkbox path="activo" value="1"/>
-    		</div>
-   		</div>
-   		
+   		</div>   		
    	</fieldset>
+   	
 </form:form>
 
 <div class="control-group form-horizontal">
@@ -65,6 +54,5 @@ $(document).ready(function () {
  	});
  	
  	$("#guardar").click(function () { $("#frmCargo").submit(); });
-
 });
 </script>
