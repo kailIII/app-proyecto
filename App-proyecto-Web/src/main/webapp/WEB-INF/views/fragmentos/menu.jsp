@@ -7,9 +7,7 @@
 				<ul class="nav nav-list tree">
              		<li><a href="../pedido/listado">Pedidos</a></li>
                 	<li><a href="#">Recepcion</a></li>
-                	<li><a href="../proveedor/listado">Proveedores</a></li>
                 	<li><a href="../compra/listado">Compras</a></li>
-                	<li><a href="#">Clientes</a></li>
                 	<li><a href="#">Ventas</a></li>
                 	<li><a href="../formula/listado">Formulas</a></li>
              		<li><a href="../produccion/listado">Produccion</a></li>
@@ -27,6 +25,9 @@
 		<li>
 			<label class="tree-toggle nav-header">Registros</label>
 				<ul class="nav nav-list tree">
+					<li><a href="../tpersona/listado">Tipo Persona</a></li>
+					<li><a href="../cliente/listado">Clientes</a></li>
+					<li><a href="../proveedor/listado">Proveedores</a></li>
 					<li><a href="../producto/listado">Productos</a></li>
              		<li><a href="../umedida/listado">U.Medidas</a></li>
                 	<li><a href="../marca/listado">Marcas</a></li>
