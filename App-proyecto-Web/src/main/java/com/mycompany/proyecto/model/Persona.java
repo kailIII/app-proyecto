@@ -13,8 +13,8 @@ public class Persona extends NamedEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotNull 
-	private String apellido;
+	@NotNull
+	protected String apellido;
 	
 	private String direccion;
 	
@@ -22,7 +22,12 @@ public class Persona extends NamedEntity {
 		
 	private int activo;
 	
+	//Constructor por Defecto
+	public Persona(){
+		super();
+	}
 	
+	//Metodos Getters and Setters
 	public String getApellido() {
 		return apellido;
 	}
@@ -39,13 +44,9 @@ public class Persona extends NamedEntity {
 		this.direccion = direccion;
 	}
 
-
-
 	public String getBarrio() {
 		return barrio;
 	}
-
-
 
 	public void setBarrio(String barrio) {
 		this.barrio = barrio;
@@ -58,9 +59,4 @@ public class Persona extends NamedEntity {
 	public void setActivo(int activo) {
 		this.activo = activo;
 	}
-
-	public Persona() {
-		
-	}
-
 }

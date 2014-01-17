@@ -8,8 +8,8 @@ import javax.validation.constraints.Size;
  * Un simple POJO con una propiedad nombre.
  * Se utiliza como clase base para los objetos que necesiten 
  * esta propiedad
- * @author rodrigo garcete
- * Fecha de Creacion:21-11-2013
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @MappedSuperclass
 public class NamedEntity extends BaseEntity {
