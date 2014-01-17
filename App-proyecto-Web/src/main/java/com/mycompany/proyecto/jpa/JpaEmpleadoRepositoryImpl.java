@@ -7,13 +7,11 @@ import javax.persistence.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import com.mycompany.proyecto.model.Empleado;
-import com.mycompany.proyecto.repository.BancoRepository;
 import com.mycompany.proyecto.repository.EmpleadoRepository;
-
 /**
- * Implementacion de JPA de la interfaz {@link BancoRepository}
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
+ * Implementacion de JPA de la interfaz {@link EmpleadoRepository}
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @Repository
 public class JpaEmpleadoRepositoryImpl implements EmpleadoRepository {
@@ -23,7 +21,7 @@ public class JpaEmpleadoRepositoryImpl implements EmpleadoRepository {
 
     @Override
 	public Empleado findById(Long codigo) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT c FROM Empleado c WHERE c.codigo =:codigo");
+        Query query = this.em.createNamedQuery("Empleado.findById");
         query.setParameter("codigo", codigo);
         return (Empleado)query.getSingleResult();
 	}
@@ -31,7 +29,7 @@ public class JpaEmpleadoRepositoryImpl implements EmpleadoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Empleado> findByName(String nombre) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT c FROM Empleado c WHERE c.nombre LIKE :nombre");
+        Query query = this.em.createNamedQuery("Empleado.findByName");
         query.setParameter("nombre", nombre + "%");
         return (List<Empleado>)query.getResultList();
 	}
@@ -39,7 +37,7 @@ public class JpaEmpleadoRepositoryImpl implements EmpleadoRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Empleado> getAll() throws DataAccessException {
-		return (List<Empleado>)em.createQuery("SELECT c FROM Empleado c ORDER BY c.codigo").getResultList();
+		return (List<Empleado>)em.createNamedQuery("Empleado.findByAll").getResultList();
 	}
 
 	@Override
@@ -58,4 +56,9 @@ public class JpaEmpleadoRepositoryImpl implements EmpleadoRepository {
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Empleado> findByCombo() throws DataAccessException {
+		return (List<Empleado>)em.createNamedQuery("Empleado.findByCombo").getResultList();
+	}
 }

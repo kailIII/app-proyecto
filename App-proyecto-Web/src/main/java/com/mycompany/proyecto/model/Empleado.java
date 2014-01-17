@@ -1,12 +1,27 @@
 package com.mycompany.proyecto.model;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+/**
+ * Entidad Empleado, cada objeto representa un registo
+ * de la tabla correspondiente
+ * @author Rodrigo Garcete
+ * @since 27/12/2013
+ */
 @Entity
 @Table(name = "empleados")
+@NamedQueries({
+	@NamedQuery(name="Empleado.findById", query="SELECT p FROM Empleado p WHERE p.codigo = :codigo"),
+	@NamedQuery(name="Empleado.findByName", query="SELECT p FROM Empleado p WHERE p.nombre LIKE :nombre"),
+	@NamedQuery(name="Empleado.findByCombo", query="SELECT NEW com.mycompany.proyecto.model.Empleado(p.codigo, p.nombre) FROM Empleado AS p ORDER BY p.codigo"),
+	@NamedQuery(name="Empleado.findByAll", query="SELECT p FROM Empleado p ORDER BY p.codigo")
+})
 public class Empleado extends Persona {
 		
 	private static final long serialVersionUID = 1L;
@@ -31,10 +46,17 @@ public class Empleado extends Persona {
 	
 	private String obs;
 	
+	//Constructores por Defecto
 	public Empleado() {
-		
+		super();
+	}
+	
+	public Empleado(Long codigo, String nombre){
+		this.codigo = codigo;
+		this.nombre = nombre;
 	}
 
+	//Metodos Getters and Setters
 	public String getCi() {
 		return ci;
 	}

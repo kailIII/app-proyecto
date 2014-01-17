@@ -12,11 +12,11 @@ import com.mycompany.proyecto.repository.EmpleadoRepository;
 import com.mycompany.proyecto.service.EmpleadoService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
+ * Implementacion de la capa de Persistencia para 
+ * la entidad Empleado
  *
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2012
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @Service
 public class EmpleadoServiceImpl implements EmpleadoService {
@@ -59,4 +59,8 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 		return true;
 	}
 
+	@Override
+	public List<Empleado> findByCombo() throws DataAccessException {
+		return empleadoRepository.findByCombo();
+	}
 }

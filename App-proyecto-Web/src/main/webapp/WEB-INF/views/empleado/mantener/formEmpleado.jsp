@@ -18,10 +18,11 @@
 <spring:message code="label.empleado.fechaNacimiento" var="label_empleado_fechaNacimiento" htmlEscape="false" />
 <spring:message code="label.empleado.email" var="label_empleado_email" htmlEscape="false" />
 <spring:message code="label.empleado.obs" var="label_empleado_obs" htmlEscape="false" />
-<spring:message code="label.empleado.activo" var="label_empleado_activo" htmlEscape="false" />
 
 <form:form action="" method="${param.method}" modelAttribute="empleado" class="form-horizontal" id="frmEmpleado">
 	<input type="hidden" name="codigo" value="${empleado.codigo}" />
+	<input type="hidden" name="activo" value="1" />
+	
 	<fieldset>
    		<legend><h3>${label_empleado} <small> ${param.sublabel}</small></h3></legend>
    		<div class="control-group">
@@ -94,15 +95,9 @@
     			<form:errors path="fechaIngreso" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		<div class="control-group">
-    		<label class="control-label">${label_empleado_activo}</label>
-    		<div class="controls">
-    			<form:checkbox path="activo" value="1"/>
-    		</div>
-   		</div>
    	</fieldset>
+   	
 </form:form>
-
 
 <div class="control-group form-horizontal">
 	<div class="controls">
