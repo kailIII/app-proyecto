@@ -1,33 +1,30 @@
 package com.mycompany.proyecto.jpa;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
-import com.mycompany.proyecto.model.TipoPersona;
-import com.mycompany.proyecto.repository.BancoRepository;
-import com.mycompany.proyecto.repository.TipoPersonaRepository;
 
+import com.mycompany.proyecto.model.TipoPersona;
+import com.mycompany.proyecto.repository.TipoPersonaRepository;
 /**
- * Implementacion de JPA de la interfaz {@link BancoRepository}
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
+ * Implementacion de JPA de la interfaz {@link TipoPersonaRepository}
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @Repository
 public class JpaTipoPersonaRepositoryImpl implements TipoPersonaRepository {
 	
-	private EntityManager em = null;
-
-    @PersistenceContext
-    public void setEntityManager(EntityManager em) {
-        this.em = em;
-    }
+	@PersistenceContext
+	private EntityManager em;
 
     @Override
 	public TipoPersona findById(Long codigo) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT b FROM TipoPersona b WHERE b.codigo =:codigo");
+        Query query = this.em.createNamedQuery("TipoPersona.findById");
         query.setParameter("codigo", codigo);
         return (TipoPersona)query.getSingleResult();
 	}
@@ -35,9 +32,7 @@ public class JpaTipoPersonaRepositoryImpl implements TipoPersonaRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TipoPersona> findByName(String nombre) throws DataAccessException {
-		// using 'join fetch' because a single query should load both owners and pets
-        // using 'left join fetch' because it might happen that an owner does not have pets yet
-        Query query = this.em.createQuery("SELECT b FROM TipoPersona b WHERE b.nombre LIKE :nombre");
+        Query query = this.em.createNamedQuery("TipoPersona.findByName");
         query.setParameter("nombre", nombre + "%");
         return (List<TipoPersona>)query.getResultList();
 	}
@@ -45,7 +40,7 @@ public class JpaTipoPersonaRepositoryImpl implements TipoPersonaRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TipoPersona> getAll() throws DataAccessException {
-		return (List<TipoPersona>)em.createQuery("SELECT b FROM TipoPersona b order by i.codigo").getResultList();
+		return (List<TipoPersona>)em.createNamedQuery("TipoPersona.findByAll").getResultList();
 	}
 
 	@Override
@@ -55,12 +50,18 @@ public class JpaTipoPersonaRepositoryImpl implements TipoPersonaRepository {
 		}else {
 			this.em.merge(c);
 		}
+		this.em.flush();
 	}
 
 	@Override
-	public Boolean remove(TipoPersona c) throws DataAccessException {
-		this.em.remove(c);
+	public Boolean remove(TipoPersona t) throws DataAccessException {
+		this.em.remove(em.contains(t) ? t : em.merge(t));
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TipoPersona> findByCombo() throws DataAccessException {
+		return (List<TipoPersona>)em.createNamedQuery("TipoPersona.findByCombo").getResultList();
+	}
 }

@@ -12,11 +12,11 @@ import com.mycompany.proyecto.repository.TipoPersonaRepository;
 import com.mycompany.proyecto.service.TipoPersonaService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
+ * Implementacion de la Capa de Servicio para 
+ * la entidad TipoPersona
  *
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2012
+ * @author Rodrigo Garcete
+ * @since 21/11/2012
  */
 @Service
 public class TipoPersonaServiceImpl implements TipoPersonaService {
@@ -53,9 +53,15 @@ public class TipoPersonaServiceImpl implements TipoPersonaService {
 	}
 
 	@Override
+	@Transactional
 	public Boolean remove(TipoPersona c) throws DataAccessException {
 		tipoPersonaRepository.remove(c);
 		return true;
+	}
+
+	@Override
+	public List<TipoPersona> findByCombo() throws DataAccessException {
+		return tipoPersonaRepository.findByCombo();
 	}
 
 }
