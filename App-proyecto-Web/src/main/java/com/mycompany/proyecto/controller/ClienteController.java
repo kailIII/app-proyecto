@@ -1,26 +1,22 @@
 package com.mycompany.proyecto.controller;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
+import java.util.List;
 import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import com.mycompany.proyecto.model.Ciudad;
 import com.mycompany.proyecto.model.Cliente;
+import com.mycompany.proyecto.model.TipoPersona;
+import com.mycompany.proyecto.service.CiudadService;
 import com.mycompany.proyecto.service.ClienteService;
-
+import com.mycompany.proyecto.service.TipoPersonaService;
 /**
  * Handles requests for the application home page.
  * Anotando una clase Java como @Controller se convierte en un controlador, 
@@ -29,11 +25,6 @@ import com.mycompany.proyecto.service.ClienteService;
  * El objeto Model simplemente es un mapa donde guardaremos los objetos 
  * que queremos pasar a la vista (es la M de MVC)
  * 
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
- */
-
-/**
  * Principal componente do framework <code>Spring MVC</code>, esse é o controller do cadastro de mercadorias. 
  * 
  * <p>Tem como responsabilidade: definir o mapeamento de navegação, acionar validadores e conversores de dados, 
@@ -41,8 +32,10 @@ import com.mycompany.proyecto.service.ClienteService;
  * 
  * <p>Os métodos de navegação, retornam a url definida no Tiles. Veja também o arquivo <code>views.xml</code>.</p>
  * 
- * @author YaW Tecnologia
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
+@RequestMapping("/cliente")
 @Controller
 public class ClienteController {
 	
@@ -54,22 +47,19 @@ public class ClienteController {
 	public ClienteController(ClienteService is){
 		this.clienteService = is;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(Double.class, 
-				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-	}
+	
+	@Autowired
+	private CiudadService ciudadService;
+	
+	@Autowired
+	private TipoPersonaService tpService;
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/clientes",method = RequestMethod.GET)
+	@RequestMapping(value="/listado",method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("clientes", clienteService.getAll());
 		log.debug("Consultando en la BD y mostrando todos los clientes");
@@ -81,10 +71,12 @@ public class ClienteController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/cliente/form", method = RequestMethod.GET)
+	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
+		Cliente c = new Cliente();
 		uiModel.addAttribute("cliente", new Cliente());
-		uiModel.addAttribute("active", "incluir");
+		cargarComboTP(uiModel, c);
+		cargarComboCiudad(uiModel, c);
 		log.debug("Listo para insertar cliente");
 		return "incluirCliente";
 	}
@@ -96,17 +88,16 @@ public class ClienteController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/cliente/form", method = RequestMethod.POST)
+	@RequestMapping(value="/form", method = RequestMethod.POST)
 	public String crear(@Valid Cliente c, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
-            uiModel.addAttribute("insumo", c);
-            uiModel.addAttribute("active", "incluir");
+            uiModel.addAttribute("cliente", c);
             return "incluirInsumo";
         }
 		
 		this.clienteService.save(c);
 		log.debug("Cliente persistido: "+ c.getCodigo());
-		return "redirect:/clientes";
+		return "redirect:/cliente/listado";
 	}
 	
 	/**
@@ -115,12 +106,14 @@ public class ClienteController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/cliente/form/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Cliente c = clienteService.findById(id);
 		if (c != null) {
 			uiModel.addAttribute("cliente", c);
-			log.debug("Listo para editar Insumo");
+			cargarComboTP(uiModel, c);
+			cargarComboCiudad(uiModel, c);
+			log.debug("Listo para editar Cliente");
 		}
 		return "editarCliente";
 	}
@@ -132,15 +125,15 @@ public class ClienteController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/cliente/form/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Cliente c, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
-            uiModel.addAttribute("insumo", c);
+            uiModel.addAttribute("cliente", c);
             return "editarCliente";
         }
 		this.clienteService.save(c);
 		log.debug("Cliente actualizado: " + c.getCodigo());
-		return "redirect:/clientes";
+		return "redirect:/cliente/listado";
 	}
 	
 	/**
@@ -149,14 +142,24 @@ public class ClienteController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/cliente/form/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Cliente m = clienteService.findById(id);
 		if (m != null) {
 			this.clienteService.remove(m); 
 			log.debug("Cliente removido: "+m.getCodigo());
 		}
-		return "redirect:/clientes";
+		return "redirect:/cliente/listado";
     }
+	
+	private void cargarComboCiudad(Model uiModel, Cliente c){
+		List<Ciudad> ciudades = ciudadService.findByCombo();
+		uiModel.addAttribute("ciudades", ciudades);
+	}
+	
+	private void cargarComboTP(Model uiModel, Cliente c){
+		List<TipoPersona> tpersonas = tpService.findByCombo();
+		uiModel.addAttribute("tpersonas", tpersonas);
+	}
 	
 }

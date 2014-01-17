@@ -7,8 +7,7 @@
 	<spring:message code="label.clientes" var="label_clientes" htmlEscape="false" />
 	<spring:message code="label.listado" var="label_listado" htmlEscape="false" />
 	<spring:message code="label.cliente.codigo" var="label_cliente_codigo" htmlEscape="false" />
-	<spring:message code="label.cliente.nombre" var="label_cliente_nombre" htmlEscape="false" />
-	<spring:message code="label.cliente.apellido" var="label_cliente_apellido" htmlEscape="false" />
+	<spring:message code="label.cliente" var="label_cliente" htmlEscape="false" />
 	<spring:message code="label.cliente.telefono" var="label_cliente_telefono" htmlEscape="false" />
 	<spring:message code="label.cliente.celular" var="label_cliente_celular" htmlEscape="false" />
 	<spring:message code="label.cliente.email" var="label_cliente_email" htmlEscape="false" />
@@ -24,7 +23,7 @@
 		<thead>
 			<tr>
 				<th>${label_cliente_codigo}</th>
-				<th>${label_cliente_nombre} ${label_cliente_apellido}</th>
+				<th>${label_cliente}</th>
 				<th>${label_cliente_telefono}</th>
 				<th>${label_cliente_celular}</th>
 				<th>${label_cliente_email}</th>

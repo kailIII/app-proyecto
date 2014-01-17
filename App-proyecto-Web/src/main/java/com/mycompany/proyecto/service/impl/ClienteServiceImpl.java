@@ -12,11 +12,11 @@ import com.mycompany.proyecto.repository.ClienteRepository;
 import com.mycompany.proyecto.service.ClienteService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
+ * Implementacion de los servicios para la 
+ * entidad Cliente
  *
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2012
+ * @author Rodrigo Garcete
+ * @since 21/11/2012
  */
 @Service
 public class ClienteServiceImpl implements ClienteService {
@@ -53,9 +53,15 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
+	@Transactional
 	public Boolean remove(Cliente c) throws DataAccessException {
 		clienteRepository.remove(c);
 		return true;
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<Cliente> findByCombo() throws DataAccessException {
+		return clienteRepository.findByCombo();
+	}
 }

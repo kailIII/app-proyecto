@@ -8,28 +8,24 @@ import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
-import com.mycompany.proyecto.model.Cliente;
-import com.mycompany.proyecto.repository.BancoRepository;
-import com.mycompany.proyecto.repository.ClienteRepository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.model.Cliente;
+import com.mycompany.proyecto.repository.ClienteRepository;
 /**
- * Implementacion de JPA de la interfaz {@link BancoRepository}
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
+ * Implementacion de JPA de la interfaz {@link ClienteRepository}
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @Repository
 public class JpaClienteRepositoryImpl implements ClienteRepository {
 	
-	private EntityManager em = null;
-
-    @PersistenceContext
-    public void setEntityManager(EntityManager em) {
-        this.em = em;
-    }
+	@PersistenceContext
+	private EntityManager em;
 
     @Override
 	public Cliente findById(Long codigo) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT b FROM Cliente b WHERE b.codigo =:codigo");
+        Query query = this.em.createNamedQuery("Cliente.findById");
         query.setParameter("codigo", codigo);
         return (Cliente)query.getSingleResult();
 	}
@@ -37,9 +33,7 @@ public class JpaClienteRepositoryImpl implements ClienteRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Cliente> findByName(String nombre) throws DataAccessException {
-		// using 'join fetch' because a single query should load both owners and pets
-        // using 'left join fetch' because it might happen that an owner does not have pets yet
-        Query query = this.em.createQuery("SELECT b FROM Cliente b WHERE b.nombre LIKE :nombre");
+        Query query = this.em.createNamedQuery("Cliente.findByName");
         query.setParameter("nombre", nombre + "%");
         return (List<Cliente>)query.getResultList();
 	}
@@ -47,7 +41,7 @@ public class JpaClienteRepositoryImpl implements ClienteRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Cliente> getAll() throws DataAccessException {
-		return (List<Cliente>)em.createQuery("SELECT b FROM Cliente b order by i.codigo").getResultList();
+		return (List<Cliente>)em.createNamedQuery("Cliente.findByAll").getResultList();
 	}
 
 	@Override
@@ -57,12 +51,21 @@ public class JpaClienteRepositoryImpl implements ClienteRepository {
 		}else {
 			this.em.merge(c);
 		}
+		this.em.flush();
 	}
 
 	@Override
+	@Transactional
 	public Boolean remove(Cliente c) throws DataAccessException {
 		this.em.remove(c);
 		return true;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<Cliente> findByCombo() throws DataAccessException {
+		return (List<Cliente>)em.createNamedQuery("Cliente.findByCombo").getResultList();
 	}
 
 }
