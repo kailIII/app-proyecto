@@ -6,9 +6,9 @@
 			<label class="tree-toggle nav-header">Movimientos</label>
 				<ul class="nav nav-list tree">
              		<li><a href="../pedido/listado">Pedidos</a></li>
-                	<li><a href="#">Recepcion</a></li>
+                	<li><a href="../recepcion/listado">Recepcion</a></li>
                 	<li><a href="../compra/listado">Compras</a></li>
-                	<li><a href="#">Ventas</a></li>
+                	<li><a href="../venta/listado">Ventas</a></li>
                 	<li><a href="../formula/listado">Formulas</a></li>
              		<li><a href="../produccion/listado">Produccion</a></li>
 				</ul>

@@ -7,13 +7,11 @@ import javax.persistence.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import com.mycompany.proyecto.model.Produccion;
-import com.mycompany.proyecto.repository.BancoRepository;
 import com.mycompany.proyecto.repository.ProduccionRepository;
-
 /**
- * Implementacion de JPA de la interfaz {@link BancoRepository}
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
+ * Implementacion de JPA de la interfaz {@link ProduccionRepository}
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @Repository
 public class JpaProduccionRepositoryImpl implements ProduccionRepository {
@@ -23,7 +21,7 @@ public class JpaProduccionRepositoryImpl implements ProduccionRepository {
 
     @Override
 	public Produccion findById(Long codigo) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT b FROM Produccion b WHERE b.codigo =:codigo");
+        Query query = this.em.createNamedQuery("Produccion.findById");
         query.setParameter("codigo", codigo);
         return (Produccion)query.getSingleResult();
 	}
@@ -31,9 +29,7 @@ public class JpaProduccionRepositoryImpl implements ProduccionRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Produccion> findByName(String nombre) throws DataAccessException {
-		// using 'join fetch' because a single query should load both owners and pets
-        // using 'left join fetch' because it might happen that an owner does not have pets yet
-        Query query = this.em.createQuery("SELECT b FROM Produccion b WHERE b.nombre LIKE :nombre");
+        Query query = this.em.createNamedQuery("Produccion.findByEstado");
         query.setParameter("nombre", nombre + "%");
         return (List<Produccion>)query.getResultList();
 	}
@@ -41,7 +37,7 @@ public class JpaProduccionRepositoryImpl implements ProduccionRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Produccion> getAll() throws DataAccessException {
-		return (List<Produccion>)em.createQuery("SELECT b FROM Produccion b order by b.codigo").getResultList();
+		return (List<Produccion>)em.createNamedQuery("Produccion.findByAll").getResultList();
 	}
 
 	@Override

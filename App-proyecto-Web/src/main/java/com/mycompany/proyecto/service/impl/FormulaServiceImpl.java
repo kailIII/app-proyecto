@@ -8,14 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mycompany.proyecto.model.Formula;
+import com.mycompany.proyecto.model.FormulaDetalle;
 import com.mycompany.proyecto.repository.FormulaRepository;
 import com.mycompany.proyecto.service.FormulaService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers Also a placeholder for @Transactional
- * and @Cacheable annotations
+ * Implementacion del Contrato de Servicio 
+ * para la entidad Formula
  * 
- * @author rodrigo garcete Fecha Creacion:21-11-2012
+ * @author Rodrigo Garcete 
+ * @since 21/11/2012
  */
 @Service
 public class FormulaServiceImpl implements FormulaService {
@@ -55,6 +57,12 @@ public class FormulaServiceImpl implements FormulaService {
 	@Transactional
 	public Boolean remove(Formula f) throws DataAccessException {
 		return formulaRepository.remove(f);
+	}
+
+	@Override
+	public void save(Formula f, List<FormulaDetalle> fDetalles)
+			throws DataAccessException {
+		formulaRepository.save(f, fDetalles);
 	}
 
 }

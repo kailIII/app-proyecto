@@ -21,10 +21,14 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "productos") //modificar el buscador por Id
 @NamedQueries({
-	@NamedQuery(name = "Producto.findAll", query = "SELECT NEW com.mycompany.proyecto.model.Producto(p.codigo, p.nombre) FROM Producto AS p ORDER BY p.codigo"),
+	@NamedQuery(name = "Producto.findAll", query = "SELECT NEW com.mycompany.proyecto.model.Producto(p.codigo, p.nombre) "
+			+ "FROM Producto AS p ORDER BY p.codigo"),
 	@NamedQuery(name = "Producto.findById", query = "select p from Producto p where p.codigo = :codigo"),
 	@NamedQuery(name = "Producto.findByName", query ="select p from Producto p where p.nombre LIKE :nombre"),
-	@NamedQuery(name = "Producto.findByCombo", query = "SELECT NEW com.mycompany.proyecto.model.Producto(p.codigo, p.nombre) FROM Producto AS p ORDER BY p.codigo")
+	@NamedQuery(name = "Producto.findByInsumo", query ="SELECT NEW com.mycompany.proyecto.model.Producto(p.codigo, p.nombre) "
+			+ "FROM Producto AS p WHERE p.tipo=2 ORDER BY p.codigo"),
+	@NamedQuery(name = "Producto.findByCombo", query = "SELECT NEW com.mycompany.proyecto.model.Producto(p.codigo, p.nombre) "
+			+ "FROM Producto AS p ORDER BY p.codigo")
 })
 public class Producto extends NamedEntity {
 

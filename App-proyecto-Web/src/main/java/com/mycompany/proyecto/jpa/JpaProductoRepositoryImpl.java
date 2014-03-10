@@ -66,4 +66,10 @@ public class JpaProductoRepositoryImpl implements ProductoRepository {
 		return this.em.createNamedQuery("Producto.findByCombo").getResultList();  
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Producto> findByInsumo() throws DataAccessException {
+		return this.em.createNamedQuery("Producto.findByInsumo").getResultList(); 
+	}
+
 }

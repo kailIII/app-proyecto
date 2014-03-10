@@ -25,7 +25,7 @@ public class PedidoDetalle extends BaseEntity {
 	private Pedido pedido;
 
 	@ManyToOne
-	@JoinColumn(name = "pd_insumo_id") //, insertable= false, updatable=false
+	@JoinColumn(name = "producto_id") //, insertable= false, updatable=false
 	@NotNull
 	private Producto itemId;
 	

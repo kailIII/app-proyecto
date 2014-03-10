@@ -1,6 +1,9 @@
 package com.mycompany.proyecto.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +13,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.mycompany.proyecto.model.Compra;
+import com.mycompany.proyecto.model.Producto;
+import com.mycompany.proyecto.model.Proveedor;
 import com.mycompany.proyecto.service.CompraService;
+import com.mycompany.proyecto.service.ProductoService;
+import com.mycompany.proyecto.service.ProveedorService;
 
 /**
  * Handles requests for the application home page.
@@ -21,11 +29,6 @@ import com.mycompany.proyecto.service.CompraService;
  * El objeto Model simplemente es un mapa donde guardaremos los objetos 
  * que queremos pasar a la vista (es la M de MVC)
  * 
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
- */
-
-/**
  * Principal componente do framework <code>Spring MVC</code>, esse é o controller do cadastro de mercadorias. 
  * 
  * <p>Tem como responsabilidade: definir o mapeamento de navegação, acionar validadores e conversores de dados, 
@@ -34,6 +37,7 @@ import com.mycompany.proyecto.service.CompraService;
  * <p>Os métodos de navegação, retornam a url definida no Tiles. Veja também o arquivo <code>views.xml</code>.</p>
  * 
  * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @RequestMapping(value="/compra")
 @Controller
@@ -47,20 +51,14 @@ public class CompraController {
 	public CompraController(CompraService is){
 		this.compraService = is;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
+	
+	@Autowired
+	private ProveedorService proveedorService;
 	
 	/**
-	 * Ponto de entrada da aplicação ("/").
-	 * @param uiModel recebe a lista de mercadorias.
-	 * @return url para a pagina de listagem de mercadorias.
+	 * Punto de entrada de la aplicação ("/").
+	 * @param uiModel recibe la lista de compras
+	 * @return url para cargar el listado de compras.
 	 */
 	@RequestMapping(value="/listado",method = RequestMethod.GET)
 	public String listar(Model uiModel) {
@@ -70,24 +68,25 @@ public class CompraController {
 	}
 	
 	/**
-	 * Método ejecutado antes de cargar la pantalla de insercion de insumos
+	 * Método ejecutado antes de cargar la pantalla de insercion de compras
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
-		uiModel.addAttribute("compra", new Compra());
-		//uiModel.addAttribute("active", "incluir");
+		Compra c = new Compra();
+		uiModel.addAttribute("compra", c);
+		cargarComboProveedor(uiModel, c);
 		log.debug("Listo para insertar compra");
 		return "incluirCompra";
 	}
 	
 	/**
-	 * Método ejecutado en la insercion de insumos.
-	 * @param instancia de insumo con los datos cargados en la pantalla
+	 * Método ejecutado en la insercion del registro de compra.
+	 * @param instancia del objeto compra con los datos cargados recibido de la pantalla
 	 * @param bindingResult componente utilizado para verificar problemas com validacion
 	 * @param uiModel
-	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
+	 * @return url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
 	@RequestMapping(value="/form", method = RequestMethod.POST)
 	public String crear(@Valid Compra c, BindingResult bindingResult, Model uiModel) {
@@ -103,27 +102,28 @@ public class CompraController {
 	}
 	
 	/**
-	 * Método ejecutado antes de cargar la pantalla de edicion de insumos.
-	 * @param id del insumo que va a ser editado.
-	 * @param uiModel almacena el objeto insumo que debe ser modificado.
+	 * Método ejecutado antes de cargar la pantalla de edicion del registro de compras.
+	 * @param id de la compra que va a ser editado.
+	 * @param uiModel almacena el objeto compra que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
-		Compra m = compraService.findById(id);
-		if (m != null) {
-			uiModel.addAttribute("compra", m);
-			log.debug("Listo para editar Cliente");
+		Compra c = compraService.findById(id);
+		if (c != null) {
+			uiModel.addAttribute("compra", c);
+			cargarComboProveedor(uiModel, c);
+			log.debug("Listo para editar Compra");
 		}
 		return "editarCompra";
 	}
 	
 	/**
-	 * Método executado ao salvar a edição de mercadoria.
-	 * @param mercadoria objeto com os dados enviados pela tela.
-	 * @param bindingResult componente usado para verificar problemas com validação.
+	 * Método ejecutado al actualizar el registro de compras
+	 * @param c objeto compra cargado, recibido de la pantalla 
+	 * @param bindingResult componente usado para verificar problemas con validacion.
 	 * @param uiModel
-	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
+	 * @return url para el listado, se algun error de validacion fue encontrado, regresa a la pagina de edicion.
 	 */
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Compra c, BindingResult bindingResult, Model uiModel) {
@@ -137,8 +137,8 @@ public class CompraController {
 	}
 	
 	/**
-	 * Método ejecutado para la eliminacion de insumos.
-	 * @param id de insumo que debe ser eliminado.
+	 * Método ejecutado para la eliminacion del registro de compras
+	 * @param id de compra que debe ser eliminado.
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
@@ -151,5 +151,15 @@ public class CompraController {
 		}
 		return "redirect:/compra/listado";
     }
+	
+	/**
+	 * Carga el Componente combo Box en la pantalla con los proveedores existentes
+	 * @param uiModel 
+	 * @param c objeto Compra
+	 */
+	private void cargarComboProveedor(Model uiModel, Compra c){
+		List<Proveedor> proveedores = proveedorService.findByCombo();
+		uiModel.addAttribute("proveedores", proveedores);
+	}
 	
 }

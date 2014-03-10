@@ -1,7 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div>
 	<spring:message code="label.formulas" var="label_formulas" htmlEscape="false" />
@@ -20,7 +19,6 @@
 			<tr>
 				<th>#</th>
 				<th>${label_formula_nombre}</th>
-				<th>${label_formula_descripcion}</th>
 			</tr>
 		</thead>
 		<c:forEach items="${formulas}" var="m">
@@ -31,7 +29,6 @@
 				</spring:url>
 				<a href="${edit_url}" title="${label_editar} ${m.nombre}">${m.nombre}</a>
 			</td>
-			<td>${m.descripcion}</td>
 		</tr>
 		</c:forEach>
 	</table>

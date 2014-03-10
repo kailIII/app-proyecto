@@ -13,9 +13,9 @@ import com.mycompany.proyecto.model.Usuario;
 import com.mycompany.proyecto.repository.UsuarioRepository;
 
 /**
- * Implementacion de JPA de la interfaz {@link InusmoRepository}
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
+ * Implementacion de JPA de la interfaz {@link UsuarioRepository}
+ * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @Repository
 public class JpaUsuarioRepositoryImpl implements UsuarioRepository {
@@ -25,7 +25,7 @@ public class JpaUsuarioRepositoryImpl implements UsuarioRepository {
 
     @Override
 	public Usuario findById(Long codigo) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT i FROM Usuario i WHERE i.codigo =:codigo");
+        Query query = this.em.createNamedQuery("Usuario.findById");
         query.setParameter("codigo", codigo);
         return (Usuario) query.getSingleResult();
 	}
@@ -33,7 +33,7 @@ public class JpaUsuarioRepositoryImpl implements UsuarioRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Usuario> findByName(String nombre) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT i FROM Usuario i WHERE i.nombre LIKE :nombre");
+        Query query = this.em.createNamedQuery("Usuario.findByName");
         query.setParameter("nombre", nombre + "%");
         return (List<Usuario>)query.getResultList();
 	}
@@ -41,7 +41,7 @@ public class JpaUsuarioRepositoryImpl implements UsuarioRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Usuario> getAll() throws DataAccessException {
-		return (List<Usuario>)em.createQuery("select i from Usuario i order by i.codigo").getResultList();
+		return (List<Usuario>)em.createNamedQuery("Usuario.findByAll").getResultList();
 	}
 
 	@Override

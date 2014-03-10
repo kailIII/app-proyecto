@@ -2,19 +2,36 @@ package com.mycompany.proyecto.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Entidad Compra que representa la tabla del mismo nombre
+ * @author Rodrigo Garcete
+ * @since 05/01/2014
+ *
+ */
 @Entity
 @Table(name = "compras")
+@NamedQueries({
+	@NamedQuery(name="Compra.findById", query="SELECT c FROM Compra c WHERE c.codigo = :codigo"),
+	@NamedQuery(name="Compra.findByEstado", query="SELECT c FROM Compra c WHERE c.estado LIKE :estado"),
+	@NamedQuery(name="Compra.findByCombo", query="SELECT NEW com.mycompany.proyecto.model.Compra(c.codigo, c.estado) FROM Compra AS c ORDER BY c.codigo"),
+	@NamedQuery(name="Compra.findByAll", query="SELECT c FROM Compra c ORDER BY c.codigo")
+})
 public class Compra extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -33,10 +50,16 @@ public class Compra extends BaseEntity {
 	@NotNull
 	private String comprobanteNumero;
 
-	@ManyToOne
-	@JoinColumn(name = "com_deposito_id")
-	@NotNull
-	private Deposito deposito;
+	/**
+	 * MappedBy: informamos el nombre de la variable de instancia,
+	 * que va a indicar a quien el One pertenece
+	 * TargetEntity: informa cual es la asociacion entre las entidades
+	 * FetchType.Lazy: Este tipo fue escogido por performance
+	 * cascade: ALL para permitir alteraciones en todos los relacionamientos
+	 */
+	@OneToMany(mappedBy = "compra", targetEntity = CompraDetalle.class, 
+			fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<CompraDetalle> cDetalles;
 
 	@ManyToOne
 	@JoinColumn(name = "com_proveedor_id")
@@ -67,11 +90,18 @@ public class Compra extends BaseEntity {
 
 	private String obs;
 
-	// Constructor por Defecto
+	// Constructores por Defecto
 	public Compra() {
-
+		super();
+		this.proveedor = new Proveedor();
+	}
+	
+	public Compra(Long codigo, String estado) {
+		this.codigo = codigo;
+		this.estado = estado;
 	}
 
+	//Metodos Getters and Setters
 	public Date getFechaDocumento() {
 		return fechaDocumento;
 	}
@@ -83,14 +113,6 @@ public class Compra extends BaseEntity {
 	public Date getFechaRegistro() {
 		return fechaRegistro;
 	}
-
-//	public CompraDetalle getcDetalle() {
-//		return cDetalle;
-//	}
-//
-//	public void setcDetalle(CompraDetalle cDetalle) {
-//		this.cDetalle = cDetalle;
-//	}
 
 	public void setFechaRegistro(Date fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
@@ -176,20 +198,20 @@ public class Compra extends BaseEntity {
 		this.obs = obs;
 	}
 
-	public Deposito getDeposito() {
-		return deposito;
-	}
-
-	public void setDeposito(Deposito deposito) {
-		this.deposito = deposito;
-	}
-
 	public Proveedor getProveedor() {
 		return proveedor;
 	}
 
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
+	}
+	
+	public void setcDetalles(List<CompraDetalle> cDetalles) {
+		this.cDetalles = cDetalles;
+	}
+	
+	public List<CompraDetalle> getcDetalles() {
+		return cDetalles;
 	}
 	
 }

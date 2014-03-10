@@ -6,7 +6,8 @@
 <div>
 	<spring:message code="label.producciones" var="label_producciones" htmlEscape="false" />
 	<spring:message code="label.listado" var="label_listado" htmlEscape="false" />
-	<spring:message code="label.produccion.fecha" var="label_produccion_fecha" htmlEscape="false" />
+	<spring:message code="label.produccion.fechaP" var="label_produccion_fecha" htmlEscape="false" />
+	<spring:message code="label.produccion.emitido" var="label_produccion_emitido" htmlEscape="false" />
 	<spring:message code="label.produccion.formula" var="label_produccion_formula" htmlEscape="false" />
 	<spring:message code="label.editar" var="label_editar" htmlEscape="false" />
 	<spring:message code="button.actualizar" var="button_actualizar" htmlEscape="false" />
@@ -20,6 +21,7 @@
 			<tr>
 				<th>#</th>
 				<th>${label_produccion_fecha}</th>
+				<th>${label_produccion_emitido}</th>
 				<th>${label_produccion_formula}</th>
 			</tr>
 		</thead>
@@ -31,6 +33,7 @@
 				</spring:url>
 				<a href="${edit_url}" title="${label_editar} ${m.fecha}">${m.formula}</a>
 			</td>
+			<td>${m.emitidoPor}</td>
 			<td>${m.formula}</td>
 		</tr>
 		</c:forEach>

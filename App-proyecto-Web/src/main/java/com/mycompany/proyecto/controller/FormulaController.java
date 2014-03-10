@@ -1,16 +1,21 @@
 package com.mycompany.proyecto.controller;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.mycompany.proyecto.model.Formula;
+import com.mycompany.proyecto.model.FormulaDetalle;
 import com.mycompany.proyecto.service.FormulaService;
-
+import com.mycompany.proyecto.service.ProductoService;
 /**
  * Handles requests for the application home page.
  * Anotando una clase Java como @Controller se convierte en un controlador, 
@@ -19,11 +24,6 @@ import com.mycompany.proyecto.service.FormulaService;
  * El objeto Model simplemente es un mapa donde guardaremos los objetos 
  * que queremos pasar a la vista (es la M de MVC)
  * 
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
- */
-
-/**
  * Principal componente do framework <code>Spring MVC</code>, esse é o controller do cadastro de mercadorias. 
  * 
  * <p>Tem como responsabilidade: definir o mapeamento de navegação, acionar validadores e conversores de dados, 
@@ -32,6 +32,7 @@ import com.mycompany.proyecto.service.FormulaService;
  * <p>Os métodos de navegação, retornam a url definida no Tiles. Veja também o arquivo <code>views.xml</code>.</p>
  * 
  * @author Rodrigo Garcete
+ * @since 21-11-2013
  */
 @RequestMapping(value="/formula")
 @Controller
@@ -40,6 +41,8 @@ public class FormulaController {
 	//private static final Logger log = LoggerFactory.getLogger(DepositoController.class);
 	
 	public static final int DEFAULT_FORMULA_POR_PAGINA = 25;
+	
+	private ArrayList<FormulaDetalle> listaItems = new ArrayList<FormulaDetalle>();
 
 	private final FormulaService formulaService;
 	
@@ -47,15 +50,9 @@ public class FormulaController {
 	public FormulaController(FormulaService is){
 		this.formulaService = is;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
+	
+	@Autowired
+	private ProductoService productoService;
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").
@@ -65,6 +62,7 @@ public class FormulaController {
 	@RequestMapping(value="/listado",method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("formulas", formulaService.getAll());
+		listaItems.clear();
 		return "listaFormulas";
 	}
 	
@@ -76,7 +74,7 @@ public class FormulaController {
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("formula", new Formula());
-		uiModel.addAttribute("active", "incluir");
+		uiModel.addAttribute("productos", productoService.findByInsumo());
 		return "incluirFormula";
 	}
 	
@@ -145,5 +143,42 @@ public class FormulaController {
 		}
 		return "redirect:/formula/listado";
     }
+	
+	/**
+	 * 
+	 * @param item
+	 * @param bindingResult
+	 */
+	@RequestMapping(value = "/addItem", method = RequestMethod.POST)
+	public void addItemLista(@ModelAttribute(value = "item") FormulaDetalle item, BindingResult bindingResult){
+		if (!bindingResult.hasErrors()) {
+			//El id lo pasamos al Id del Insumo
+			item.getProducto().setCodigo(item.getId());
+			//cargamos el bean a la lista
+			System.out.println("paso x aqui add");
+			listaItems.add(item); 
+		}
+	}
+	
+	@RequestMapping(value = "/quitarItem", method = RequestMethod.POST)
+	public void quitarItemLista(@ModelAttribute(value = "item") FormulaDetalle item, BindingResult bindingResult){
+		if (!bindingResult.hasErrors()) {
+			//El id lo pasamos al Id del Insumo
+			//item.getInsumo().setCodigo(item.getId());
+			for (int i = 0; i < listaItems.size(); i++) {
+				FormulaDetalle fd = listaItems.get(i);
+				
+				System.out.println("Item Id :" + item.getId());
+				System.out.println("Item Cantidad :" + item.getCantidad());
+				
+				if (fd.getProducto().getCodigo().equals(item.getId()) &&  
+						fd.getCantidad().equals(item.getCantidad())) {
+						System.out.println("paso para remover");
+						listaItems.remove(i); //remuevo de la lista por el indice
+					}
+			}
+			System.out.println("paso x quitar");
+		}
+	}
 	
 }

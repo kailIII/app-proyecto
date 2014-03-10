@@ -16,7 +16,7 @@ import com.mycompany.proyecto.repository.PresupuestoRepository;
  * @author rodrigo garcete Fecha Creacion:21-11-2013
  */
 @Repository
-public class PresupuestoRepositoryImpl implements PresupuestoRepository {
+public class JpaPresupuestoRepositoryImpl implements PresupuestoRepository {
 
 	private EntityManager em = null;
 

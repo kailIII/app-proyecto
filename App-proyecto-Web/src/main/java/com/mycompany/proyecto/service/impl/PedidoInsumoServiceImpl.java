@@ -1,24 +1,20 @@
 package com.mycompany.proyecto.service.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.mycompany.proyecto.model.Pedido;
 import com.mycompany.proyecto.model.PedidoDetalle;
-import com.mycompany.proyecto.model.Producto;
 import com.mycompany.proyecto.repository.PedidoRepository;
 import com.mycompany.proyecto.service.PedidoInsumoService;
-
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
+ * Implementacion del Servicio Pedido para la 
+ * entidad del mismo
  *
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2012
+ * @author Rodrigo Garcete
+ * @since 21/11/2012
  */
 @Service
 public class PedidoInsumoServiceImpl implements PedidoInsumoService {
@@ -29,7 +25,7 @@ public class PedidoInsumoServiceImpl implements PedidoInsumoService {
 	public PedidoInsumoServiceImpl(PedidoRepository cr){
 		this.pedidoRepository = cr;
 	}
-
+	
 	@Override
 	@Transactional(readOnly = true)
 	public Pedido findById(Long codigo) throws DataAccessException {
@@ -59,12 +55,6 @@ public class PedidoInsumoServiceImpl implements PedidoInsumoService {
 	public Boolean remove(Pedido c) throws DataAccessException {
 		pedidoRepository.remove(c);
 		return true;
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<Producto> getProductos() throws DataAccessException {
-		return pedidoRepository.getInsumos();
 	}
 
 	@Override

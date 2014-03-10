@@ -59,4 +59,9 @@ public class ProductoSeviceImpl implements ProductoService {
 	public List<Producto> findByCombo() throws DataAccessException {
 		return productoRepository.findByCombo();
 	}
+
+	@Override
+	public List<Producto> findByInsumo() throws DataAccessException {
+		return productoRepository.findByInsumo();
+	}
 }

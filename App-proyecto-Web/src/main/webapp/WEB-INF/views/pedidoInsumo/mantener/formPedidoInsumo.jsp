@@ -1,12 +1,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <spring:message code="button.guardar" var="button_guardar" htmlEscape="false" />
 <spring:message code="button.cancelar" var="button_cancelar" htmlEscape="false" />
 <spring:message code="button.excluir" var="button_excluir" htmlEscape="false" />
-
 <spring:message code="label.pedido" var="label_pedido" htmlEscape="false" />
 <spring:message code="label.pedido.fecha" var="label_pedido_fecha" htmlEscape="false" />
 <spring:message code="label.pedido.proveedor" var="label_pedido_proveedor" htmlEscape="false" />
@@ -17,28 +15,33 @@
 	
 	<fieldset>
    		<legend><h3>${label_pedido} <small> ${param.sublabel}</small></h3></legend>
-   		<div class="control-group">
-    		<label class="control-label">${label_pedido_fecha}</label>
-    		<div class="controls">
-    			<form:input path="fecha" class="input-large" placeholder="Introduce la fecha"/>
-                <form:errors path="fecha" cssClass="alert alert-error"/>
-    		</div>
-   		</div>
-   		<div class="control-group">
-    		<label class="control-label">${label_pedido_proveedor}</label>
-    		<div class="controls">
-    			<form:input path="proveedor.codigo" class="input-large" placeholder="Introduce el Proveedor"/>
-    			<form:errors path="proveedor.codigo" cssClass="alert alert-error" />
-    		</div>
-   		</div>
-   		<div class="control-group">
-    		<label class="control-label">${label_pedido_estado}</label>
-    		<div class="controls">
-    			<form:input path="estado" class="input-large" placeholder="Introduce el Estado"/>
-    		</div>
-   		</div>
+<!--    		<div class="control-group"> -->
+<%--     		<label class="control-label">${label_pedido_fecha}</label> --%>
+<!--     		<div class="controls"> -->
+<%--     			<form:input path="fecha" class="input-large" placeholder="Introduce la fecha"/> --%>
+<%--                 <form:errors path="fecha" cssClass="alert alert-error"/> --%>
+<!--     		</div> -->
+<!--    		</div> -->
+<!--    		<div class="control-group"> -->
+<%--     		<label class="control-label">${label_pedido_proveedor}</label> --%>
+<!--     		<div class="controls"> -->
+<%--     			<form:input path="proveedor.codigo" class="input-large" placeholder="Introduce el Proveedor"/> --%>
+<%--     			<form:errors path="proveedor.codigo" cssClass="alert alert-error" /> --%>
+<!--     		</div> -->
+<!--    		</div> -->
+   		
+<!--    		<div class="control-group"> -->
+<%--     		<label class="control-label">${label_pedido_estado}</label> --%>
+<!--     		<div class="controls"> -->
+<%--     			<form:input path="estado" class="input-large" placeholder="Introduce el Estado"/> --%>
+<!--     		</div> -->
+<!--    		</div> -->
    	</fieldset>
 </form:form>
+
+<c:import 
+	url="/WEB-INF/views/producto/listaDetalleInsumos.jsp">
+</c:import>
 
 <div class="control-group form-horizontal">
 	<div class="controls">
@@ -49,11 +52,6 @@
 		</c:if>
 	</div>
 </div>
-
-<c:import 
-	url="/WEB-INF/views/insumo/listaDetalleInsumos.jsp">
-</c:import>
-
 
 <script>	
 	$(document).ready(function () {
@@ -69,6 +67,14 @@
 	 	});
 	 	
 	 	$("#guardar").click(function () { $("#frmPedidoInsumo").submit(); });
+	 	
+	 	$("id_1").click(
+	 		function(){
+	 			var id = $('#id_producto').val(); 
+	 			alert('El valor es ' + id);
+	 		}		
+	 	);
+	 	
 	});
 		
 // 	var lista = []; //vector
@@ -110,6 +116,7 @@
 	     error: function(e){
 		 	alert('Error: ' + e);
 	     }
+		 
 		 });
 	}
 	

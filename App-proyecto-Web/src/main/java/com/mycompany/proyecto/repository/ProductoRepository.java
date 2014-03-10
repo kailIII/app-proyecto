@@ -31,11 +31,13 @@ public interface ProductoRepository {
 	List<Producto> findByName(String nombre, int pag) throws DataAccessException; 
 	
 	List<Producto> findByCombo() throws DataAccessException; 
+	
+	List<Producto> findByInsumo() throws DataAccessException; 
 
 	/**
 	 * 
 	 * @return
-	 * @throws DataAccessException
+	 * @throws DataAccessException<
 	 */
 	List<Producto> getAll(int pag) throws DataAccessException;
 		

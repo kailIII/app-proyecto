@@ -6,7 +6,9 @@
 <div>
 	<spring:message code="label.pedidos" var="label_pedidos" htmlEscape="false" />
 	<spring:message code="label.listado" var="label_listado" htmlEscape="false" />
+	<spring:message code="label.pedido.estado" var="label_pedido_estado" htmlEscape="false" />
 	<spring:message code="label.pedido.fecha" var="label_pedido_fecha" htmlEscape="false" />
+	<spring:message code="label.pedido.fechaVencimiento" var="label_pedido_fechaVencimiento" htmlEscape="false" />
 	<spring:message code="label.pedido.proveedor" var="label_pedido_proveedor" htmlEscape="false" />
 	
 	<spring:message code="label.editar" var="label_editar" htmlEscape="false" />
@@ -24,8 +26,10 @@
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>${label_pedido_proveedor}</th>
+<%-- 				<th>${label_pedido_proveedor}</th> --%>
+				<th>${label_pedido_estado}</th>
 				<th>${label_pedido_fecha}</th>
+				<th>${label_pedido_fechaVencimiento}</th>
 			</tr>
 		</thead>
 		<c:forEach items="${pedidos}" var="m">
@@ -34,9 +38,10 @@
 			<td>
 				<spring:url value="/pedido/edit/${m.codigo}" var="edit_url" htmlEscape="true">
 				</spring:url>
-				<a href="${edit_url}" title="${label_editar} ${m.fecha}">${m.proveedor}</a>
+				<a href="${edit_url}" title="${label_editar} ${m.fecha}">${m.estado}</a>
 			</td>
 			<td> <fmt:formatDate value="${m.fecha}" pattern="dd/MM/yyyy"/>  </td>
+			<td> <fmt:formatDate value="${m.fechaVencimiento}" pattern="dd/MM/yyyy"/>  </td>
 		</tr>
 		</c:forEach>
 	</table>

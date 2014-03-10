@@ -16,6 +16,7 @@
 
 <form:form action="" method="${param.method}" modelAttribute="produccion" class="form-horizontal" id="frmProduccion">
 	<input type="hidden" name="codigo" value="${produccion.codigo}" />
+	
 	<fieldset>
    		<legend><h3>${label_produccion} <small> ${param.sublabel}</small></h3></legend>
    		
@@ -27,13 +28,13 @@
     		</div>
    		</div>
    		
-   		<div class="control-group">
-    		<label class="control-label">${label_produccion_formula}</label>
-    		<div class="controls">
-    			<form:input path="formula" class="input-large"/>
-    			<form:errors path="formula" cssClass="alert alert-error" />
-    		</div>
-   		</div>
+<!--    		<div class="control-group"> -->
+<%--     		<label class="control-label">${label_produccion_formula}</label> --%>
+<!--     		<div class="controls"> -->
+<%--     			<form:input path="formula" class="input-large"/> --%>
+<%--     			<form:errors path="formula" cssClass="alert alert-error" /> --%>
+<!--     		</div> -->
+<!--    		</div> -->
    		
    	</fieldset>
 </form:form>

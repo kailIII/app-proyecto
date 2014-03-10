@@ -19,6 +19,8 @@ public interface ProductoService {
 	
 	List<Producto> findByCombo() throws DataAccessException;
 	
+	List<Producto> findByInsumo() throws DataAccessException;
+	
 	void save(Producto p) throws DataAccessException;
 	
 	List<Producto> getAll() throws DataAccessException;

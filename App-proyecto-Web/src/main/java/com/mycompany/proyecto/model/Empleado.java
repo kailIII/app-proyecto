@@ -19,8 +19,10 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="Empleado.findById", query="SELECT p FROM Empleado p WHERE p.codigo = :codigo"),
 	@NamedQuery(name="Empleado.findByName", query="SELECT p FROM Empleado p WHERE p.nombre LIKE :nombre"),
-	@NamedQuery(name="Empleado.findByCombo", query="SELECT NEW com.mycompany.proyecto.model.Empleado(p.codigo, p.nombre) FROM Empleado AS p ORDER BY p.codigo"),
-	@NamedQuery(name="Empleado.findByAll", query="SELECT p FROM Empleado p ORDER BY p.codigo")
+	@NamedQuery(name="Empleado.findByCombo", query="SELECT NEW com.mycompany.proyecto.model.Empleado"
+			+ "(p.codigo, p.nombre) FROM Empleado AS p ORDER BY p.codigo"),
+	@NamedQuery(name="Empleado.findByAll", query="SELECT NEW com.mycompany.proyecto.model.Empleado"
+			+ "(p.codigo, p.nombre, p.apellido, p.celular) FROM Empleado AS p ORDER BY p.codigo")
 })
 public class Empleado extends Persona {
 		
@@ -38,11 +40,29 @@ public class Empleado extends Persona {
 	@Column(name = "fecha_ingreso")
 	private Date fechaIngreso;
 	
-//	private Set<Ciudad> ciudad;
-//	
-//	private Set<EstadoCivil> estadoCivil;
-	
 	private String email;
+	
+	private int sexo;
+	
+	@Column(name = "hora_extra")
+	private Double horaExtra;
+	
+	@Column(name = "tiene_credito")
+	private int tieneCredito;
+	
+	private Double sueldo;
+	
+	@Column(name = "nro_asegurado_ips")
+	private String nroAseguradoIPS;
+	
+	@Column(name = "cant_hijos")
+	private int cantHijos;
+	
+	@Column(name = "descuento_ips")
+	private int descuentoIPS;
+	
+	@Column(name="limite_credito")
+	private Double limiteCredito;
 	
 	private String obs;
 	
@@ -54,6 +74,13 @@ public class Empleado extends Persona {
 	public Empleado(Long codigo, String nombre){
 		this.codigo = codigo;
 		this.nombre = nombre;
+	}
+	
+	public Empleado(Long codigo, String nombre, String apellido, String celular){
+		this.codigo = codigo;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.celular = celular;
 	}
 
 	//Metodos Getters and Setters
@@ -97,22 +124,6 @@ public class Empleado extends Persona {
 		this.fechaIngreso = fechaIngreso;
 	}
 
-//	public Set<Ciudad> getCiudad() {
-//		return ciudad;
-//	}
-//
-//	public void setCiudad(Set<Ciudad> ciudad) {
-//		this.ciudad = ciudad;
-//	}
-//
-//	public Set<EstadoCivil> getEstadoCivil() {
-//		return estadoCivil;
-//	}
-//
-//	public void setEstadoCivil(Set<EstadoCivil> estadoCivil) {
-//		this.estadoCivil = estadoCivil;
-//	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -129,4 +140,67 @@ public class Empleado extends Persona {
 		this.obs = obs;
 	}
 
+	public int getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(int sexo) {
+		this.sexo = sexo;
+	}
+
+	public Double getHoraExtra() {
+		return horaExtra;
+	}
+
+	public void setHoraExtra(Double horaExtra) {
+		this.horaExtra = horaExtra;
+	}
+
+	public int getTieneCredito() {
+		return tieneCredito;
+	}
+
+	public void setTieneCredito(int tieneCredito) {
+		this.tieneCredito = tieneCredito;
+	}
+
+	public Double getSueldo() {
+		return sueldo;
+	}
+
+	public void setSueldo(Double sueldo) {
+		this.sueldo = sueldo;
+	}
+
+	public String getNroAseguradoIPS() {
+		return nroAseguradoIPS;
+	}
+
+	public void setNroAseguradoIPS(String nroAseguradoIPS) {
+		this.nroAseguradoIPS = nroAseguradoIPS;
+	}
+
+	public int getCantHijos() {
+		return cantHijos;
+	}
+
+	public void setCantHijos(int cantHijos) {
+		this.cantHijos = cantHijos;
+	}
+
+	public int getDescuentoIPS() {
+		return descuentoIPS;
+	}
+
+	public void setDescuentoIPS(int descuentoIPS) {
+		this.descuentoIPS = descuentoIPS;
+	}
+
+	public Double getLimiteCredito() {
+		return limiteCredito;
+	}
+
+	public void setLimiteCredito(Double limiteCredito) {
+		this.limiteCredito = limiteCredito;
+	}
 }

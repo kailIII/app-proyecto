@@ -5,8 +5,8 @@
 <div>
 	<spring:message code="label.empleados" var="label_empleados" htmlEscape="false" />
 	<spring:message code="label.listado" var="label_listado" htmlEscape="false" />
-	<spring:message code="label.empleado.nombre" var="label_empleado_nombre" htmlEscape="false" />
-	<spring:message code="label.empleado.apellido" var="label_empleado_apellido" htmlEscape="false" />
+	<spring:message code="label.empleado" var="label_empleado" htmlEscape="false" />
+	<spring:message code="label.empleado.celular" var="label_empleado_celular" htmlEscape="false" />
 	<spring:message code="label.editar" var="label_editar" htmlEscape="false" />
 	<spring:message code="button.actualizar" var="button_actualizar" htmlEscape="false" />
 	
@@ -18,8 +18,8 @@
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>${label_empleado_nombre}</th>
-				<th>${label_empleado_apellido}</th>
+				<th>${label_empleado}</th>
+				<th>${label_empleado_celular}</th>
 			</tr>
 		</thead>
 		<c:forEach items="${empleados}" var="e">
@@ -28,9 +28,9 @@
 			<td>
 				<spring:url value="/empleado/edit/${e.codigo}" var="edit_url" htmlEscape="true">
 				</spring:url>
-				<a href="${edit_url}" title="${label_editar} ${e.nombre}">${e.nombre}</a>
+				<a href="${edit_url}" title="${label_editar} ${e.nombre}">${e.nombre} ${e.apellido}</a>
 			</td>
-			<td>${e.apellido}</td>
+			<td>${e.celular}</td>
 		</tr>
 		</c:forEach>
 	</table>

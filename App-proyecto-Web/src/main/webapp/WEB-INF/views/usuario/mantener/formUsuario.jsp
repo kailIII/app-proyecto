@@ -15,11 +15,10 @@
 
 <form:form action="" method="${param.method}" modelAttribute="usuario" class="form-horizontal" id="frmUsuario">
 	<input type="hidden" name="codigo" value="${usuario.codigo}" />
+	<input type="hidden" name="activo" value="1" />
 	
 	<fieldset>
-   		
    		<legend><h3>${label_usuario} <small> ${param.sublabel}</small></h3></legend>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_usuario_nombre}</label>
     		<div class="controls">
@@ -27,32 +26,23 @@
     			<form:errors path="nombre" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_usuario_login}</label>
     		<div class="controls">
-    			<form:input path="login" class="input-large"/>
+    			<form:input path="login" class="input-large" placeholder="Introduce login"/>
     			<form:errors path="login" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_usuario_clave}</label>
     		<div class="controls">
-    			<form:input path="clave" class="input-small"/>
+    			<form:password path="clave" class="input-large" placeholder="Minimo 8 caracteres"/>
     			<form:errors path="clave" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
-   		<div class="control-group">
-    		<label class="control-label">${label_usuario_activo}</label>
-    		<div class="controls">
-    			<form:checkbox path="activo" value="1"/>
-    		</div>
-   		</div>
    	</fieldset>
+   	
 </form:form>
-
 
 <div class="control-group form-horizontal">
 	<div class="controls">
@@ -80,6 +70,5 @@ $(document).ready(function () {
  	});
  	
  	$("#guardar").click(function () { $("#frmUsuario").submit(); });
-
 });
 </script>

@@ -4,41 +4,33 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-//@Entity
-//@Table(name = "compra_detalles")
+@Entity
+@Table(name = "compra_detalles")
 public class CompraDetalle extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name = "compra_id")
 	private Compra compra;
 
-	@OneToMany
-	@JoinColumn(name = "cd_insumo_id")
+	@ManyToOne
+	@JoinColumn(name = "producto_id")
 	private Producto producto;
 
-	@OneToMany
-	@JoinColumn(name = "cd_umedida_id")
-	private UnidadMedida umedida;
-
-	@Column(name = "insumo_cantidad")
-	private BigDecimal insumoCantidad;
+	@Column(name = "cantidad")
+	private BigDecimal cantidad;
+	
+	@Column(name = "precio")
+	private BigDecimal precio;
 
 	// Constructor por Defecto
 	public CompraDetalle() {
-
-	}
-
-	public BigDecimal getInsumoCantidad() {
-		return insumoCantidad;
-	}
-
-	public void setInsumoCantidad(BigDecimal insumoCantidad) {
-		this.insumoCantidad = insumoCantidad;
+		super();
+		//this.compra = new Compra();
 	}
 
 	public Compra getCompra() {
@@ -48,14 +40,6 @@ public class CompraDetalle extends BaseEntity {
 	public void setCompra(Compra compra) {
 		this.compra = compra;
 	}
-
-	public UnidadMedida getUmedida() {
-		return umedida;
-	}
-
-	public void setUmedida(UnidadMedida umedida) {
-		this.umedida = umedida;
-	}
 	
 	public Producto getProducto() {
 		return producto;
@@ -63,6 +47,22 @@ public class CompraDetalle extends BaseEntity {
 	
 	public void setProducto(Producto producto) {
 		this.producto = producto;
+	}
+	
+	public void setCantidad(BigDecimal cantidad) {
+		this.cantidad = cantidad;
+	}
+	
+	public BigDecimal getCantidad() {
+		return cantidad;
+	}
+	
+	public BigDecimal getPrecio() {
+		return precio;
+	}
+	
+	public void setPrecio(BigDecimal precio) {
+		this.precio = precio;
 	}
 
 }

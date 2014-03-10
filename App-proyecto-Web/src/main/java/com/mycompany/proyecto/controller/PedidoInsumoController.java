@@ -1,7 +1,9 @@
 package com.mycompany.proyecto.controller;
 
 import java.util.ArrayList;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,9 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.mycompany.proyecto.model.Pedido;
 import com.mycompany.proyecto.model.PedidoDetalle;
 import com.mycompany.proyecto.service.PedidoInsumoService;
+import com.mycompany.proyecto.service.ProductoService;
 
 /**
  * Handles requests for the application home page.
@@ -22,11 +26,6 @@ import com.mycompany.proyecto.service.PedidoInsumoService;
  * El objeto Model simplemente es un mapa donde guardaremos los objetos 
  * que queremos pasar a la vista (es la M de MVC)
  * 
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
- */
-
-/**
  * Principal componente do framework <code>Spring MVC</code>, esse é o controller do cadastro de mercadorias. 
  * 
  * <p>Tem como responsabilidade: definir o mapeamento de navegação, acionar validadores e conversores de dados, 
@@ -35,6 +34,7 @@ import com.mycompany.proyecto.service.PedidoInsumoService;
  * <p>Os métodos de navegação, retornam a url definida no Tiles. Veja também o arquivo <code>views.xml</code>.</p>
  * 
  * @author Rodrigo Garcete
+ * @since 21/11/2013
  */
 @RequestMapping(value="/pedido") 
 @Controller
@@ -50,6 +50,9 @@ public class PedidoInsumoController {
 	public PedidoInsumoController(PedidoInsumoService is){
 		this.pedidoInsumoService = is;
 	}
+	
+	@Autowired
+	private ProductoService productoService;
 	
 	/**
 	 * 
@@ -87,9 +90,7 @@ public class PedidoInsumoController {
 			System.out.println("paso x aqui quitar");
 		}
 	}
-	
-	
-	
+
 	/**
 	 * Ponto de entrada da aplicação ("/").
 	 * @param uiModel recebe a lista de mercadorias.
@@ -111,7 +112,7 @@ public class PedidoInsumoController {
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("pedido", new Pedido());
-		uiModel.addAttribute("insumos", pedidoInsumoService.getProductos());
+		uiModel.addAttribute("productos", productoService.findByInsumo());
 		return "incluirPedidoInsumo";
 	}
 	
@@ -122,8 +123,18 @@ public class PedidoInsumoController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST)
+	//@RequestMapping(value="/form", method = RequestMethod.POST)
 	public String crear(@Valid Pedido p, BindingResult bindingResult, Model uiModel) {
+		if (bindingResult.hasErrors()) {
+            uiModel.addAttribute("pedido", p);
+            return "incluirPedidoInsumo";
+        }
+		pedidoInsumoService.savePedido(p, listaItems);
+		return "redirect:/pedido/listado";
+	}
+	
+	@RequestMapping(value="/form", method = RequestMethod.POST)
+	public String crear2(@Valid Pedido p, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("pedido", p);
             return "incluirPedidoInsumo";

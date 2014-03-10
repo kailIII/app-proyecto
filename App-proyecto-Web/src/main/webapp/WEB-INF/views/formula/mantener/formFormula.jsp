@@ -9,15 +9,13 @@
 <spring:message code="label.formula" var="label_formula" htmlEscape="false" />
 <spring:message code="label.formula.nombre" var="label_formula_nombre" htmlEscape="false" />
 <spring:message code="label.formula.descripcion" var="label_formula_descripcion" htmlEscape="false" />
-<spring:message code="label.formula.activo" var="label_formula_activo" htmlEscape="false" />
 
 <form:form action="" method="${param.method}" modelAttribute="formula" class="form-horizontal" id="frmFormula">
 	<input type="hidden" name="codigo" value="${formula.codigo}" />
+	<input type="hidden" name="activo" value="1" />
 	
 	<fieldset>
-   		
    		<legend><h3>${label_formula} <small> ${param.sublabel}</small></h3></legend>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_formula_nombre}</label>
     		<div class="controls">
@@ -25,7 +23,6 @@
     			<form:errors path="nombre" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
    		<div class="control-group">
     		<label class="control-label">${label_formula_descripcion}</label>
     		<div class="controls">
@@ -33,20 +30,9 @@
     			<form:errors path="descripcion" cssClass="alert alert-error" />
     		</div>
    		</div>
-   		
-   		<div class="control-group">
-    		<label class="control-label">${label_formula_activo}</label>
-    		<div class="controls">
-    			<form:checkbox path="activo" value="1"/>
-    		</div>
-   		</div>
-   		
-   		<br/>
-   		
    		<c:import 
-	   		url="/WEB-INF/views/insumo/listaDetalleInsumos.jsp">
+	   		url="/WEB-INF/views/producto/listaDetalleInsumos.jsp">
 	   	</c:import>
-   		
    	</fieldset>
 </form:form>
 
@@ -54,7 +40,7 @@
 <div class="control-group form-horizontal">
 	<div class="controls">
 		<button id="guardar" class="btn btn-success">${button_guardar}</button>
-		<a href="/formula/listado"><button class="btn">${button_cancelar}</button></a>
+		<a href="proyecto/formula/listado"><button class="btn">${button_cancelar}</button></a>
 		<c:if test="${not empty param.enableRemove}">
 			<button id="excluir" class="btn btn-danger">${button_excluir}</button>
 		</c:if>
@@ -70,6 +56,5 @@ $(document).ready(function () {
  	});
  	
  	$("#guardar").click(function () { $("#frmFormula").submit(); });
-
 });
 </script>

@@ -1,16 +1,17 @@
 package com.mycompany.proyecto.jpa;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+
 import com.mycompany.proyecto.model.Pedido;
 import com.mycompany.proyecto.model.PedidoDetalle;
-import com.mycompany.proyecto.model.Producto;
 import com.mycompany.proyecto.repository.PedidoRepository;
-
 /**
  * Implementacion de JPA de la interfaz {@link PedidoRepository}
  * @author Rodrigo Garcete
@@ -22,26 +23,25 @@ public class JpaPedidoRepositoryImpl implements PedidoRepository {
 	@PersistenceContext
 	private EntityManager em;
 
-
     @Override
 	public Pedido findById(Long codigo) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT b FROM Pedido b WHERE b.codigo =:codigo");
+        Query query = this.em.createNamedQuery("Pedido.findById");
         query.setParameter("codigo", codigo);
         return (Pedido)query.getSingleResult();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Pedido> findByName(String nombre) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT b FROM Pedido b WHERE b.nombre LIKE :nombre");
-        query.setParameter("nombre", nombre + "%");
+	public List<Pedido> findByName(String estado) throws DataAccessException {
+        Query query = this.em.createNamedQuery("Pedido.findByEstado");
+        query.setParameter("estado", estado + "%");
         return (List<Pedido>)query.getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Pedido> getAll() throws DataAccessException {
-		return (List<Pedido>)em.createQuery("SELECT p FROM Pedido p order by p.codigo").getResultList();
+		return (List<Pedido>)em.createNamedQuery("Pedido.findAll").getResultList();
 	}
 
 	@Override
@@ -60,16 +60,9 @@ public class JpaPedidoRepositoryImpl implements PedidoRepository {
 		return true;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Producto> getInsumos() throws DataAccessException {
-		Query query = this.em.createQuery("FROM Insumo");
-        return (List<Producto>)query.getResultList();
-	}
-
 	@Override
 	public void savePedido(Pedido pedido, List<PedidoDetalle> listaItems) throws DataAccessException {
-		if(pedido.getCodigo() == null){
+		if(pedido.getCodigo() == null){  
 			this.em.persist(pedido);
 		}else {
 			this.em.merge(pedido);
@@ -89,6 +82,7 @@ public class JpaPedidoRepositoryImpl implements PedidoRepository {
 		listaItems.clear(); 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<PedidoDetalle> findPedidoDetalles(Long codigo)
 			throws DataAccessException {
