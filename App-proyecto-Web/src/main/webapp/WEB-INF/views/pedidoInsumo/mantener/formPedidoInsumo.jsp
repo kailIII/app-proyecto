@@ -15,27 +15,27 @@
 	
 	<fieldset>
    		<legend><h3>${label_pedido} <small> ${param.sublabel}</small></h3></legend>
-<!--    		<div class="control-group"> -->
-<%--     		<label class="control-label">${label_pedido_fecha}</label> --%>
-<!--     		<div class="controls"> -->
-<%--     			<form:input path="fecha" class="input-large" placeholder="Introduce la fecha"/> --%>
-<%--                 <form:errors path="fecha" cssClass="alert alert-error"/> --%>
-<!--     		</div> -->
-<!--    		</div> -->
-<!--    		<div class="control-group"> -->
-<%--     		<label class="control-label">${label_pedido_proveedor}</label> --%>
-<!--     		<div class="controls"> -->
-<%--     			<form:input path="proveedor.codigo" class="input-large" placeholder="Introduce el Proveedor"/> --%>
-<%--     			<form:errors path="proveedor.codigo" cssClass="alert alert-error" /> --%>
-<!--     		</div> -->
-<!--    		</div> -->
+   		<div class="control-group">
+    		<label class="control-label">${label_pedido_fecha}</label>
+    		<div class="controls">
+    			<form:input path="fecha" class="input-large" placeholder="Introduce la fecha"/>
+                <form:errors path="fecha" cssClass="alert alert-error"/>
+    		</div>
+   		</div>
+   		<div class="control-group">
+    		<label class="control-label">${label_pedido_proveedor}</label>
+    		<div class="controls">
+    			<form:input path="proveedor.codigo" class="input-large" placeholder="Introduce el Proveedor"/>
+    			<form:errors path="proveedor.codigo" cssClass="alert alert-error" />
+    		</div>
+   		</div>
    		
-<!--    		<div class="control-group"> -->
-<%--     		<label class="control-label">${label_pedido_estado}</label> --%>
-<!--     		<div class="controls"> -->
-<%--     			<form:input path="estado" class="input-large" placeholder="Introduce el Estado"/> --%>
-<!--     		</div> -->
-<!--    		</div> -->
+   		<div class="control-group">
+    		<label class="control-label">${label_pedido_estado}</label>
+    		<div class="controls">
+    			<form:input path="estado" class="input-large" placeholder="Introduce el Estado"/>
+    		</div>
+   		</div>
    	</fieldset>
 </form:form>
 
