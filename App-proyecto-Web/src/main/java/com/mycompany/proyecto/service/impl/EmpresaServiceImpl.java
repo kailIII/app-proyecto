@@ -12,8 +12,6 @@ import com.mycompany.proyecto.repository.EmpresaRepository;
 import com.mycompany.proyecto.service.EmpresaService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -49,7 +47,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Empresa> getAll() throws DataAccessException {
-		return empresaRepository.getAll();
+		return empresaRepository.findAll();
 	}
 
 	@Override

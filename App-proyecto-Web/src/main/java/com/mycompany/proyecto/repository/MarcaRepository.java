@@ -1,7 +1,10 @@
 package com.mycompany.proyecto.repository;
 
+import java.io.Serializable;
 import java.util.List;
+
 import org.springframework.dao.DataAccessException;
+
 import com.mycompany.proyecto.model.Marca;
 /**
  * Contrato de Persistencia para la entidad <code>Marca</code>
@@ -11,18 +14,10 @@ import com.mycompany.proyecto.model.Marca;
  * @author Rodrigo Garcete
  * @since 21/11/2013
  */
-public interface MarcaRepository {
-
-	Marca findById(Long codigo) throws DataAccessException;
+public interface MarcaRepository extends Dao<Marca, Serializable>{
 	
 	List<Marca> findByName(String nombre) throws DataAccessException;
 	
 	List<Marca> findByCombo() throws DataAccessException;
-
-	List<Marca> getAll() throws DataAccessException;
-		
-	void save(Marca marca) throws DataAccessException;
-		
-	Boolean remove(Marca marca) throws DataAccessException;
 	
 }

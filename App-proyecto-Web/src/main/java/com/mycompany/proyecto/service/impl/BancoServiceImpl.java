@@ -1,20 +1,14 @@
 package com.mycompany.proyecto.service.impl;
 
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.mycompany.proyecto.model.Banco;
 import com.mycompany.proyecto.repository.BancoRepository;
 import com.mycompany.proyecto.service.BancoService;
-
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -45,7 +39,6 @@ public class BancoServiceImpl implements BancoService {
 	@Transactional
 	public void save(Banco b) throws DataAccessException {
 		bancoRepository.save(b);
-		//return insumo;
 	}
 
 	@Override

@@ -1,16 +1,13 @@
 package com.mycompany.proyecto.jpa;
 
+import java.io.Serializable;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
-
 import com.mycompany.proyecto.model.Pedido;
 import com.mycompany.proyecto.model.PedidoDetalle;
+import com.mycompany.proyecto.repository.BaseDao;
 import com.mycompany.proyecto.repository.PedidoRepository;
 /**
  * Implementacion de JPA de la interfaz {@link PedidoRepository}
@@ -18,54 +15,22 @@ import com.mycompany.proyecto.repository.PedidoRepository;
  * @since 21-11-2013
  */
 @Repository
-public class JpaPedidoRepositoryImpl implements PedidoRepository {
+public class JpaPedidoRepositoryImpl extends BaseDao<Pedido, Serializable> implements PedidoRepository {
 	
-	@PersistenceContext
-	private EntityManager em;
-
-    @Override
-	public Pedido findById(Long codigo) throws DataAccessException {
-        Query query = this.em.createNamedQuery("Pedido.findById");
-        query.setParameter("codigo", codigo);
-        return (Pedido)query.getSingleResult();
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Pedido> findByName(String estado) throws DataAccessException {
-        Query query = this.em.createNamedQuery("Pedido.findByEstado");
+        Query query = this.entityManager.createNamedQuery("Pedido.findByEstado");
         query.setParameter("estado", estado + "%");
         return (List<Pedido>)query.getResultList();
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Pedido> getAll() throws DataAccessException {
-		return (List<Pedido>)em.createNamedQuery("Pedido.findAll").getResultList();
-	}
-
-	@Override
-	public void save(Pedido c) throws DataAccessException {
-		if(c.getCodigo() == null){
-			this.em.persist(c);
-		}else {
-			this.em.merge(c);	
-		}
-		this.em.flush();
-	}
-
-	@Override
-	public Boolean remove(Pedido c) throws DataAccessException {
-		this.em.remove(em.contains(c) ? c : em.merge(c));
-		return true;
-	}
-
 	@Override
 	public void savePedido(Pedido pedido, List<PedidoDetalle> listaItems) throws DataAccessException {
 		if(pedido.getCodigo() == null){  
-			this.em.persist(pedido);
+			this.entityManager.persist(pedido);
 		}else {
-			this.em.merge(pedido);
+			this.entityManager.merge(pedido);
 		}
 		
 		
@@ -74,10 +39,10 @@ public class JpaPedidoRepositoryImpl implements PedidoRepository {
 				//Le pasamos el Id del pedido del objeto persistente
 				pd.getPedido().setCodigo(pedido.getCodigo());
 				//verificamos si la entidad esta administrado
-				this.em.persist(em.contains(pd) ? pd : em.merge(pd));
+				this.entityManager.persist(entityManager.contains(pd) ? pd : entityManager.merge(pd));
 			}
 		}
-		this.em.flush();
+		this.entityManager.flush();
 		//limpiamos la lista
 		listaItems.clear(); 
 	}
@@ -86,8 +51,7 @@ public class JpaPedidoRepositoryImpl implements PedidoRepository {
 	@Override
 	public List<PedidoDetalle> findPedidoDetalles(Long codigo)
 			throws DataAccessException {
-		
-		Query query = this.em.createQuery("SELECT i FROM PedidoDetalle i WHERE i.pedido =:codigo");
+		Query query = this.entityManager.createQuery("SELECT i FROM PedidoDetalle i WHERE i.pedido =:codigo");
         query.setParameter("codigo", codigo);
 		
 		return query.getResultList();

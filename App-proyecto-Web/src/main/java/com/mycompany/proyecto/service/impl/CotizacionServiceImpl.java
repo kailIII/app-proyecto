@@ -12,8 +12,6 @@ import com.mycompany.proyecto.repository.CotizacionRepository;
 import com.mycompany.proyecto.service.CotizacionService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -49,7 +47,7 @@ public class CotizacionServiceImpl implements CotizacionService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Cotizacion> getAll() throws DataAccessException {
-		return cotizacionRepository.getAll();
+		return cotizacionRepository.findAll();
 	}
 
 	@Override

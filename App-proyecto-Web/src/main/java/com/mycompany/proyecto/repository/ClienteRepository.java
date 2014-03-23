@@ -1,8 +1,10 @@
 package com.mycompany.proyecto.repository;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+
 import com.mycompany.proyecto.model.Cliente;
 
 /**
@@ -13,18 +15,10 @@ import com.mycompany.proyecto.model.Cliente;
  * @author Rodrigo Garcete
  * @since :21/11/2013
  */
-public interface ClienteRepository {
-
-	Cliente findById(Long codigo) throws DataAccessException;
+public interface ClienteRepository extends Dao<Cliente, Serializable> {
 	
 	List<Cliente> findByName(String nombre) throws DataAccessException;
 	
 	List<Cliente> findByCombo() throws DataAccessException;
-
-	List<Cliente> getAll() throws DataAccessException;
-		
-	void save(Cliente cliente) throws DataAccessException;
-		
-	Boolean remove(Cliente cliente) throws DataAccessException;
 	
 }

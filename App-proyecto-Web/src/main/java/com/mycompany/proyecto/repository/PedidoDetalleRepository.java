@@ -1,7 +1,7 @@
 package com.mycompany.proyecto.repository;
 
-import java.util.List;
-import org.springframework.dao.DataAccessException;
+import java.io.Serializable;
+
 import com.mycompany.proyecto.model.PedidoDetalle;
 /**
  * Contrato de Persistencia para la entidad <code>Pedido Detalle</code>
@@ -11,30 +11,7 @@ import com.mycompany.proyecto.model.PedidoDetalle;
  * @author Rodrigo Garcete
  * Fecha Creacion:21-11-2013
  */
-public interface PedidoDetalleRepository {
+public interface PedidoDetalleRepository extends Dao<PedidoDetalle, Serializable>{
 
-	/**
-	 * 
-	 * @param codigo
-	 * @return
-	 * @throws DataAccessException
-	 */
-	PedidoDetalle findById(Long codigo) throws DataAccessException;
-		
-	/**
-	 * Realiza la insercion o actualizacion de insumo en la base de datos
-	 * @param cargo
-	 * @return el id del objeto persistido
-	 * @throws DataAccessException
-	 */
-	void save(List<PedidoDetalle> pdetalle) throws DataAccessException;
-		
-	/**
-	 * 
-	 * @param cargo
-	 * @return
-	 * @throws DataAccessException
-	 */
-	Boolean remove(PedidoDetalle pDetalle) throws DataAccessException;
 	
 }

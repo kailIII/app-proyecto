@@ -15,8 +15,6 @@ import com.mycompany.proyecto.model.VentaDetalle;
 public interface VentaService {
 	
 	Venta findById(Long codigo) throws DataAccessException;
-	
-	List<Venta> findByName(String nombre) throws DataAccessException; 
 
 	List<Venta> getAll() throws DataAccessException;
 		

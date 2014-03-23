@@ -50,13 +50,13 @@ public class FormulaServiceImpl implements FormulaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Formula> getAll() throws DataAccessException {
-		return formulaRepository.getAll();
+		return formulaRepository.findAll();
 	}
 
 	@Override
 	@Transactional
-	public Boolean remove(Formula f) throws DataAccessException {
-		return formulaRepository.remove(f);
+	public void remove(Formula f) throws DataAccessException {
+		formulaRepository.remove(f);
 	}
 
 	@Override

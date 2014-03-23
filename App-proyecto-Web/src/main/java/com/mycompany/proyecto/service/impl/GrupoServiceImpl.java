@@ -12,8 +12,6 @@ import com.mycompany.proyecto.repository.GrupoRepository;
 import com.mycompany.proyecto.service.GrupoService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -49,7 +47,7 @@ public class GrupoServiceImpl implements GrupoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Grupo> getAll() throws DataAccessException {
-		return grupoRepository.getAll();
+		return grupoRepository.findAll();
 	}
 
 	@Override

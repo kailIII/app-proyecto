@@ -1,7 +1,10 @@
 package com.mycompany.proyecto.repository;
 
+import java.io.Serializable;
 import java.util.List;
+
 import org.springframework.dao.DataAccessException;
+
 import com.mycompany.proyecto.model.Producto;
 
 /**
@@ -12,49 +15,12 @@ import com.mycompany.proyecto.model.Producto;
  * @author Rodrigo Garcete
  * @since 21/11/2013
  */
-public interface ProductoRepository {
+public interface ProductoRepository extends Dao<Producto, Serializable>{
 
-	/**
-	 * 
-	 * @param codigo
-	 * @return
-	 * @throws DataAccessException
-	 */
-	Producto findById(Long codigo) throws DataAccessException;
-	
-	/**
-	 * 
-	 * @param nombre
-	 * @return
-	 * @throws DataAccessException
-	 */
 	List<Producto> findByName(String nombre, int pag) throws DataAccessException; 
 	
 	List<Producto> findByCombo() throws DataAccessException; 
 	
 	List<Producto> findByInsumo() throws DataAccessException; 
 
-	/**
-	 * 
-	 * @return
-	 * @throws DataAccessException<
-	 */
-	List<Producto> getAll(int pag) throws DataAccessException;
-		
-	/**
-	 * Realiza la insercion o actualizacion de insumo en la base de datos
-	 * @param insumo
-	 * @return el id del objeto persistido
-	 * @throws DataAccessException
-	 */
-	void save(Producto p) throws DataAccessException;
-		
-	/**
-	 * 
-	 * @param insumo
-	 * @return
-	 * @throws DataAccessException
-	 */
-	Boolean remove(Producto p) throws DataAccessException;
-	
 }

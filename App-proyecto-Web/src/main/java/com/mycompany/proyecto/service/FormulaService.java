@@ -54,6 +54,6 @@ public interface FormulaService {
 	 * @return true/false
 	 * @throws DataAccessException
 	 */
-	Boolean remove(Formula f) throws DataAccessException;
+	void remove(Formula f) throws DataAccessException;
 	
 }

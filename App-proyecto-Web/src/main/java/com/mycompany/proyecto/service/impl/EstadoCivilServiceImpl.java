@@ -12,8 +12,6 @@ import com.mycompany.proyecto.repository.EstadoCivilRepository;
 import com.mycompany.proyecto.service.EstadoCivilService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -49,7 +47,7 @@ public class EstadoCivilServiceImpl implements EstadoCivilService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<EstadoCivil> getAll() throws DataAccessException {
-		return ecRepository.getAll();
+		return ecRepository.findAll();
 	}
 
 	@Override

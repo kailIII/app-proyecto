@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.mycompany.proyecto.model.TipoPersona;
 import com.mycompany.proyecto.service.TipoPersonaService;
 /**
@@ -90,6 +91,7 @@ public class TipoPersonaController {
 	 * @return url de la pagina de edicion.
 	 */
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET) //value = "/edit/{id}", 
+	
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		TipoPersona tp = tpService.findById(id);
 		if (tp != null) {
@@ -129,5 +131,12 @@ public class TipoPersonaController {
 		}
 		return "redirect:/tpersona/listado";
     }
+	
+	@RequestMapping(value = "/person", method = RequestMethod.GET)
+	@ResponseBody
+	private TipoPersona getTipoPersona() {
+		//TipoPersona t = tpService.findById(codigo); @PathVariable Long codigo
+		return new TipoPersona("Respuesta en formato dependiente del header de la peticion");
+	}
 	
 }

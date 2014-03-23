@@ -12,8 +12,6 @@ import com.mycompany.proyecto.repository.ChequeRepository;
 import com.mycompany.proyecto.service.ChequeService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -49,7 +47,7 @@ public class ChequeServiceImpl implements ChequeService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Cheque> getAll() throws DataAccessException {
-		return chequeRepository.getAll();
+		return chequeRepository.findAll();
 	}
 
 	@Override

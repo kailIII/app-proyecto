@@ -1,8 +1,10 @@
 package com.mycompany.proyecto.repository;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+
 import com.mycompany.proyecto.model.Ciudad;
 
 /**
@@ -13,18 +15,10 @@ import com.mycompany.proyecto.model.Ciudad;
  * @author Rodrigo Garcete
  * @since 21/11/2013
  */
-public interface CiudadRepository {
-
-	Ciudad findById(Long codigo) throws DataAccessException;
+public interface CiudadRepository extends Dao<Ciudad, Serializable> {
 	
 	List<Ciudad> findByName(String nombre) throws DataAccessException; 
 
 	List<Ciudad> findByCombo() throws DataAccessException; 
-	
-	List<Ciudad> getAll() throws DataAccessException;
-		
-	void save(Ciudad ciudad) throws DataAccessException;
-		
-	Boolean remove(Ciudad ciudad) throws DataAccessException;
 	
 }

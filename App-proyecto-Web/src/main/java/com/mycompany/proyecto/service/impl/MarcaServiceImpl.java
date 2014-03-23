@@ -12,9 +12,6 @@ import com.mycompany.proyecto.repository.MarcaRepository;
 import com.mycompany.proyecto.service.MarcaService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
- *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
  */
@@ -49,7 +46,7 @@ public class MarcaServiceImpl implements MarcaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Marca> getAll() throws DataAccessException {
-		return marcaRepository.getAll();
+		return marcaRepository.findAll();
 	}
 
 	@Override

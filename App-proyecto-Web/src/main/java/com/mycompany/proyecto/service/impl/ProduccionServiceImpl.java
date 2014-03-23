@@ -12,8 +12,6 @@ import com.mycompany.proyecto.repository.ProduccionRepository;
 import com.mycompany.proyecto.service.ProduccionService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -49,7 +47,7 @@ public class ProduccionServiceImpl implements ProduccionService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Produccion> getAll() throws DataAccessException {
-		return produccionRepository.getAll();
+		return produccionRepository.findAll();
 	}
 
 	@Override

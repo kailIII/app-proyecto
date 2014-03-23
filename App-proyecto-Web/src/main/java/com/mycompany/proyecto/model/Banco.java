@@ -1,5 +1,10 @@
 package com.mycompany.proyecto.model;
 
+/**
+ * @author rodrigo garcete
+ * @since 21/118/212
+ */
+
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -37,6 +42,17 @@ public class Banco extends BaseEntity {
 	private String fax;
 	
 	private String email;
+	
+	private String representante;
+	
+	
+	public void setRepresentante(String representante) {
+		this.representante = representante;
+	}
+	
+	public String getRepresentante() {
+		return representante;
+	}
 	
 	public Banco(){
 		

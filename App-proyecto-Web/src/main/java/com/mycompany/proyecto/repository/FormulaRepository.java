@@ -1,5 +1,6 @@
 package com.mycompany.proyecto.repository;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -15,46 +16,10 @@ import com.mycompany.proyecto.model.FormulaDetalle;
  * @author Rodrigo Garcete
  * @since 21/11/2013
  */
-public interface FormulaRepository {
+public interface FormulaRepository extends Dao<Formula, Serializable> {
 
-	/**
-	 * 
-	 * @param codigo de formula
-	 * @return el objeto Formula
-	 * @throws DataAccessException
-	 */
-	Formula findById(Long codigo) throws DataAccessException;
-	
-	/**
-	 * 
-	 * @param nombre de la formula
-	 * @return Lista de Objetos de tipo Formula
-	 * @throws DataAccessException
-	 */
 	List<Formula> findByName(String nombre) throws DataAccessException; 
 
-	/**
-	 * 
-	 * @return Lista de objetos de tipo Formula
-	 * @throws DataAccessException
-	 */
-	List<Formula> getAll() throws DataAccessException;
-		
-	/**
-	 * Realiza la insercion o actualizacion del registro formula en la base de datos
-	 * @param formula, objeto
-	 * @throws DataAccessException
-	 */
-	void save(Formula formula) throws DataAccessException;
-	
 	void save(Formula f, List<FormulaDetalle> fDetalles) throws DataAccessException;
-		
-	/**
-	 * 
-	 * @param formula
-	 * @return valor booleano si se ha removido correctamente
-	 * @throws DataAccessException
-	 */
-	Boolean remove(Formula formula) throws DataAccessException;
 	
 }

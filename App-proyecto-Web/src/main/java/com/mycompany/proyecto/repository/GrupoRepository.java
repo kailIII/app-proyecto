@@ -1,7 +1,10 @@
 package com.mycompany.proyecto.repository;
 
+import java.io.Serializable;
 import java.util.List;
+
 import org.springframework.dao.DataAccessException;
+
 import com.mycompany.proyecto.model.Grupo;
 
 /**
@@ -12,47 +15,10 @@ import com.mycompany.proyecto.model.Grupo;
  * @author Rodrigo garcete
  * @since 21-11-2013
  */
-public interface GrupoRepository {
-
-	/**
-	 * 
-	 * @param codigo
-	 * @return
-	 * @throws DataAccessException
-	 */
-	Grupo findById(Long codigo) throws DataAccessException;
+public interface GrupoRepository extends Dao<Grupo, Serializable>{
 	
-	/**
-	 * 
-	 * @param nombre
-	 * @return
-	 * @throws DataAccessException
-	 */
 	List<Grupo> findByName(String nombre) throws DataAccessException; 
 	
 	List<Grupo> findByCombo() throws DataAccessException; 
-
-	/**
-	 * 
-	 * @return
-	 * @throws DataAccessException
-	 */
-	List<Grupo> getAll() throws DataAccessException;
-		
-	/**
-	 * Realiza la insercion o actualizacion de insumo en la base de datos
-	 * @param banco
-	 * @return el id del objeto persistido
-	 * @throws DataAccessException
-	 */
-	void save(Grupo g) throws DataAccessException;
-		
-	/**
-	 * 
-	 * @param banco
-	 * @return
-	 * @throws DataAccessException
-	 */
-	Boolean remove(Grupo g) throws DataAccessException;
 	
 }

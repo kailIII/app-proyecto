@@ -48,7 +48,7 @@ public class CiudadServiceImpl implements CiudadService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Ciudad> getAll() throws DataAccessException {
-		return ciudadRepository.getAll();
+		return ciudadRepository.findAll();
 	}
 
 	@Override

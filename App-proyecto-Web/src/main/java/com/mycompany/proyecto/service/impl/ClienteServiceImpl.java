@@ -49,7 +49,7 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Cliente> getAll() throws DataAccessException {
-		return clienteRepository.getAll();
+		return clienteRepository.findAll();
 	}
 
 	@Override

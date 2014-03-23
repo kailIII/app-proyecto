@@ -1,12 +1,10 @@
 package com.mycompany.proyecto.service.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.mycompany.proyecto.model.Cargo;
 import com.mycompany.proyecto.repository.CargoRepository;
 import com.mycompany.proyecto.service.CargoService;
@@ -33,11 +31,11 @@ public class CargoServiceImpl implements CargoService {
 		return cargoRepository.findById(codigo);
 	}
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Cargo> findByName(String nombre) throws DataAccessException {
-		return cargoRepository.findByName(nombre);
-	}
+//	@Override
+//	@Transactional(readOnly = true)
+//	public List<Cargo> findByName(String nombre) throws DataAccessException {
+//		return cargoRepository.findByName(nombre);
+//	}
 
 	@Override
 	@Transactional
@@ -45,11 +43,11 @@ public class CargoServiceImpl implements CargoService {
 		cargoRepository.save(b);
 	}
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Cargo> getAll() throws DataAccessException {
-		return cargoRepository.getAll();
-	}
+//	@Override
+//	@Transactional(readOnly = true)
+//	public Collection<Cargo> getAll() throws DataAccessException {
+//		return cargoRepository.findAll();
+//	}
 
 	@Override
 	@Transactional
@@ -58,9 +56,27 @@ public class CargoServiceImpl implements CargoService {
 		return true;
 	}
 
+//	@Override
+//	public List<Cargo> findByCombo() throws DataAccessException {
+//		return cargoRepository.findByCombo();
+//	}
+
+	@Override
+	public List<Cargo> findByName(String nombre) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Cargo> getAll() throws DataAccessException {
+		// TODO Auto-generated method stub
+		return cargoRepository.findAll();
+	}
+
 	@Override
 	public List<Cargo> findByCombo() throws DataAccessException {
-		return cargoRepository.findByCombo();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

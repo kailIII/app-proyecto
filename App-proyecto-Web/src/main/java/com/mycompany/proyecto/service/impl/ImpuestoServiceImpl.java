@@ -12,8 +12,6 @@ import com.mycompany.proyecto.repository.ImpuestoRepository;
 import com.mycompany.proyecto.service.ImpuestoService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -49,7 +47,7 @@ public class ImpuestoServiceImpl implements ImpuestoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Impuesto> getAll() throws DataAccessException {
-		return impuestoRepository.getAll();
+		return impuestoRepository.findAll();
 	}
 
 	@Override

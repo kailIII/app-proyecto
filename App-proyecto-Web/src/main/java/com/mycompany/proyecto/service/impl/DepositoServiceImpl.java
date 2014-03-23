@@ -48,7 +48,7 @@ public class DepositoServiceImpl implements DepositoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Deposito> getAll() throws DataAccessException {
-		return depRepository.getAll();
+		return depRepository.findAll();
 	}
 
 	@Override

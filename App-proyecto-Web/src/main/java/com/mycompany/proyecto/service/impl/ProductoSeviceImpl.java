@@ -45,7 +45,7 @@ public class ProductoSeviceImpl implements ProductoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Producto> getAll() throws DataAccessException {
-		return productoRepository.getAll(25);
+		return productoRepository.findAll();
 	}
 
 	@Override

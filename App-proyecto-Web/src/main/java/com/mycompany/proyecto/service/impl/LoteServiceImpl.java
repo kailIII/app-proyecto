@@ -12,8 +12,6 @@ import com.mycompany.proyecto.repository.LoteRepository;
 import com.mycompany.proyecto.service.LoteService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -49,7 +47,7 @@ public class LoteServiceImpl implements LoteService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Lote> getAll() throws DataAccessException {
-		return loteRepository.getAll();
+		return loteRepository.findAll();
 	}
 
 	@Override

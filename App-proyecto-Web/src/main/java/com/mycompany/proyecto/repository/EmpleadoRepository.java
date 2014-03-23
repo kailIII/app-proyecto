@@ -1,7 +1,10 @@
 package com.mycompany.proyecto.repository;
 
+import java.io.Serializable;
 import java.util.List;
+
 import org.springframework.dao.DataAccessException;
+
 import com.mycompany.proyecto.model.Empleado;
 
 /**
@@ -12,18 +15,10 @@ import com.mycompany.proyecto.model.Empleado;
  * @author Rodrigo Garcete
  * @since 21/11/2013
  */
-public interface EmpleadoRepository {
-
-	Empleado findById(Long codigo) throws DataAccessException;
+public interface EmpleadoRepository extends Dao<Empleado, Serializable>{
 	
 	List<Empleado> findByName(String nombre) throws DataAccessException;
 	
 	List<Empleado> findByCombo() throws DataAccessException;
-
-	List<Empleado> getAll() throws DataAccessException;
-		
-	void save(Empleado empleado) throws DataAccessException;
-		
-	Boolean remove(Empleado empleado) throws DataAccessException;
 	
 }

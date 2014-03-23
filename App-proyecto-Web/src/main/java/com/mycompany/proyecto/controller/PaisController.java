@@ -53,13 +53,13 @@ public class PaisController {
 		this.paisService = is;
 	}
 	
-	@RequestMapping(value = "/busqueda", method = RequestMethod.GET)
-	public String list(SearchCriteria criteria, Model model) {
-		List<Pais> paises = paisService.findPaises(criteria);
-		model.addAttribute("paises", paises);
-		model.addAttribute("searchCriteria", new SearchCriteria());
-		return "listaPaises";
-	}
+//	@RequestMapping(value = "/busqueda", method = RequestMethod.GET)
+//	public String list(SearchCriteria criteria, Model model) {
+//		List<Pais> paises = paisService.findPaises(criteria);
+//		model.addAttribute("paises", paises);
+//		model.addAttribute("searchCriteria", new SearchCriteria());
+//		return "listaPaises";
+//	}
 
 	/**
 	 * Ponto de entrada da aplicação ("/").

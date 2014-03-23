@@ -47,7 +47,7 @@ public class PedidoInsumoServiceImpl implements PedidoInsumoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Pedido> getAll() throws DataAccessException {
-		return pedidoRepository.getAll();
+		return pedidoRepository.findAll();
 	}
 
 	@Override

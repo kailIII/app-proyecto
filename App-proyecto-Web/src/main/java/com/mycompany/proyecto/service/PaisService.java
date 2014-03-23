@@ -19,8 +19,6 @@ public interface PaisService {
 	List<Pais> findByName(String nombre) throws DataAccessException;
 	
 	List<Pais> findByCombo() throws DataAccessException;
-	
-	List<Pais> findPaises(SearchCriteria criteria) throws DataAccessException;
 
 	List<Pais> getAll() throws DataAccessException;
 		

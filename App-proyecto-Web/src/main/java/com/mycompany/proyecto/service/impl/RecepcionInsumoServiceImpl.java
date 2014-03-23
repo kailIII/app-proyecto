@@ -1,19 +1,14 @@
 package com.mycompany.proyecto.service.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.mycompany.proyecto.model.RecepcionInsumo;
 import com.mycompany.proyecto.repository.RecepcionInsumoRepository;
 import com.mycompany.proyecto.service.RecepcionInsumoService;
-
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -49,7 +44,7 @@ public class RecepcionInsumoServiceImpl implements RecepcionInsumoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<RecepcionInsumo> getAll() throws DataAccessException {
-		return recepcionInsumoRepository.getAll();
+		return recepcionInsumoRepository.findAll();
 	}
 
 	@Override

@@ -11,8 +11,6 @@ import com.mycompany.proyecto.model.Presupuesto;
 import com.mycompany.proyecto.repository.PresupuestoRepository;
 import com.mycompany.proyecto.service.PresupuestoService;
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -48,7 +46,7 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Presupuesto> getAll() throws DataAccessException {
-		return presRepository.getAll();
+		return presRepository.findAll();
 	}
 
 	@Override

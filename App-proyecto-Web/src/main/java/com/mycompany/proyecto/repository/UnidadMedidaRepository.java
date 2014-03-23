@@ -1,5 +1,6 @@
 package com.mycompany.proyecto.repository;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -7,51 +8,17 @@ import org.springframework.dao.DataAccessException;
 import com.mycompany.proyecto.model.UnidadMedida;
 
 /**
+ * Contrato de Persistencia para la entidad <code>Unidad de Medida</code>
+ * Define las operaciones basicas de registro (CRUD), siguiendo el patron
+ * de diseño <code>Data Access Object</code>
  * 
  * @author rodrigo garcete
  * Fecha Creacion:23/11/2013
  */
-public interface UnidadMedidaRepository {
+public interface UnidadMedidaRepository extends Dao<UnidadMedida, Serializable>{
 
-	/**
-	 * 
-	 * @param codigo
-	 * @return
-	 * @throws DataAccessException
-	 */
-	UnidadMedida findById(Long codigo) throws DataAccessException;
-	
-	/**
-	 * 
-	 * @param nombre
-	 * @return
-	 * @throws DataAccessException
-	 */
 	List<UnidadMedida> findByName(String nombre) throws DataAccessException;
 	
 	List<UnidadMedida> findByCombo() throws DataAccessException;
-
-	/**
-	 * 
-	 * @return
-	 * @throws DataAccessException
-	 */
-	List<UnidadMedida> getAll() throws DataAccessException;
-		
-	/**
-	 * Realiza la insercion o actualizacion de usuario en la base de datos
-	 * @param usuario
-	 * @return el id del objeto persistido
-	 * @throws DataAccessException
-	 */
-	void save(UnidadMedida u) throws DataAccessException;
-		
-	/**
-	 * 
-	 * @param insumo
-	 * @return
-	 * @throws DataAccessException
-	 */
-	Boolean remove(UnidadMedida u) throws DataAccessException;
 	
 }

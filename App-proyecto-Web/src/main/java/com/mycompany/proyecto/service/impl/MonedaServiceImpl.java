@@ -49,7 +49,7 @@ public class MonedaServiceImpl implements MonedaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Moneda> getAll() throws DataAccessException {
-		return monedaRepository.getAll();
+		return monedaRepository.findAll();
 	}
 
 	@Override

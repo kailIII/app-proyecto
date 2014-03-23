@@ -1,19 +1,14 @@
 package com.mycompany.proyecto.service.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.mycompany.proyecto.model.Concepto;
 import com.mycompany.proyecto.repository.ConceptoRepository;
 import com.mycompany.proyecto.service.ConceptoService;
-
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -49,7 +44,7 @@ public class ConceptoServiceImpl implements ConceptoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Concepto> getAll() throws DataAccessException {
-		return conceptoRepository.getAll();
+		return conceptoRepository.findAll();
 	}
 
 	@Override

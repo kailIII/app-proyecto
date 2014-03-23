@@ -12,8 +12,6 @@ import com.mycompany.proyecto.repository.CuentaRepository;
 import com.mycompany.proyecto.service.CuentaService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -49,7 +47,7 @@ public class CuentaServiceImpl implements CuentaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Cuenta> getAll() throws DataAccessException {
-		return cuentaRepository.getAll();
+		return cuentaRepository.findAll();
 	}
 
 	@Override

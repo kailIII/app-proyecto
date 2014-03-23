@@ -48,7 +48,7 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Departamento> getAll() throws DataAccessException {
-		return depRepository.getAll();
+		return depRepository.findAll();
 	}
 
 	@Override

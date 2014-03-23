@@ -49,7 +49,7 @@ public class TipoPersonaServiceImpl implements TipoPersonaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<TipoPersona> getAll() throws DataAccessException {
-		return tipoPersonaRepository.getAll();
+		return tipoPersonaRepository.findAll();
 	}
 
 	@Override

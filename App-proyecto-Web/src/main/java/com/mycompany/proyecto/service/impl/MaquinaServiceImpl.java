@@ -12,8 +12,6 @@ import com.mycompany.proyecto.repository.MaquinaRepository;
 import com.mycompany.proyecto.service.MaquinaService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -49,7 +47,7 @@ public class MaquinaServiceImpl implements MaquinaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Maquina> getAll() throws DataAccessException {
-		return maquinaRepository.getAll();
+		return maquinaRepository.findAll();
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import com.mycompany.proyecto.repository.EmpleadoRepository;
 import com.mycompany.proyecto.service.EmpleadoService;
 
 /**
- * Implementacion de la capa de Persistencia para 
+ * Implementacion de la capa de Servicio para 
  * la entidad Empleado
  *
  * @author Rodrigo Garcete
@@ -49,7 +49,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Empleado> getAll() throws DataAccessException {
-		return empleadoRepository.getAll();
+		return empleadoRepository.findAll();
 	}
 
 	@Override

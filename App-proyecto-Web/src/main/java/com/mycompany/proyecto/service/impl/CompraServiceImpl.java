@@ -12,8 +12,6 @@ import com.mycompany.proyecto.repository.CompraRepository;
 import com.mycompany.proyecto.service.CompraService;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
  *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
@@ -49,7 +47,7 @@ public class CompraServiceImpl implements CompraService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Compra> getAll() throws DataAccessException {
-		return compraRepository.getAll();
+		return compraRepository.findAll();
 	}
 
 	@Override

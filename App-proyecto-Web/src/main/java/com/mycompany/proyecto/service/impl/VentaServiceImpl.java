@@ -34,12 +34,6 @@ public class VentaServiceImpl implements VentaService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
-	public List<Venta> findByName(String nombre) throws DataAccessException {
-		return ventaRepository.findByName(nombre);
-	}
-
-	@Override
 	@Transactional
 	public void save(Venta b) throws DataAccessException {
 		ventaRepository.save(b);
@@ -48,7 +42,7 @@ public class VentaServiceImpl implements VentaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Venta> getAll() throws DataAccessException {
-		return ventaRepository.getAll();
+		return ventaRepository.findAll();
 	}
 
 	@Override
