@@ -2,9 +2,12 @@ package com.mycompany.proyecto.jpa;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Query;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+
 import com.mycompany.proyecto.model.TipoPersona;
 import com.mycompany.proyecto.repository.BaseDao;
 import com.mycompany.proyecto.repository.TipoPersonaRepository;
@@ -27,6 +30,12 @@ public class JpaTipoPersonaRepositoryImpl extends BaseDao<TipoPersona, Serializa
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TipoPersona> findByCombo() throws DataAccessException {
-		return (List<TipoPersona>)entityManager.createNamedQuery("TipoPersona.findByCombo").getResultList();
+		return entityManager.createNamedQuery("TipoPersona.findByCombo").getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TipoPersona> findAll() {
+		return entityManager.createNamedQuery("TipoPersona.findByAll").getResultList();
 	}
 }

@@ -2,10 +2,13 @@ package com.mycompany.proyecto.jpa;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Query;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.mycompany.proyecto.model.Cliente;
 import com.mycompany.proyecto.repository.BaseDao;
 import com.mycompany.proyecto.repository.ClienteRepository;
@@ -30,6 +33,13 @@ public class JpaClienteRepositoryImpl extends BaseDao<Cliente, Serializable> imp
 	@Transactional(readOnly = true)
 	public List<Cliente> findByCombo() throws DataAccessException {
 		return (List<Cliente>)entityManager.createNamedQuery("Cliente.findByCombo").getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<Cliente> findAll() {
+		return entityManager.createNamedQuery("Cliente.findByAll").getResultList();
 	}
 
 }

@@ -2,9 +2,12 @@ package com.mycompany.proyecto.jpa;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Query;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+
 import com.mycompany.proyecto.model.Producto;
 import com.mycompany.proyecto.repository.BaseDao;
 import com.mycompany.proyecto.repository.ProductoRepository;
@@ -16,7 +19,6 @@ import com.mycompany.proyecto.repository.ProductoRepository;
 @Repository
 public class JpaProductoRepositoryImpl extends BaseDao<Producto, Serializable> implements ProductoRepository {
 	
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Producto> findByName(String nombre, int pag) throws DataAccessException {
@@ -36,6 +38,12 @@ public class JpaProductoRepositoryImpl extends BaseDao<Producto, Serializable> i
 	@Override
 	public List<Producto> findByInsumo() throws DataAccessException {
 		return this.entityManager.createNamedQuery("Producto.findByInsumo").getResultList(); 
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Producto> findAll() { 
+		return this.entityManager.createNamedQuery("Producto.findByAll").getResultList();
 	}
 
 }

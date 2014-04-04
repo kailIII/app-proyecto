@@ -2,9 +2,12 @@ package com.mycompany.proyecto.jpa;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Query;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+
 import com.mycompany.proyecto.model.Proveedor;
 import com.mycompany.proyecto.repository.BaseDao;
 import com.mycompany.proyecto.repository.ProveedorRepository;
@@ -21,13 +24,19 @@ public class JpaProveedorRepositoryImpl extends BaseDao<Proveedor, Serializable>
 	public List<Proveedor> findByName(String nombre) throws DataAccessException {
         Query query = this.entityManager.createNamedQuery("Proveedor.findByName");
         query.setParameter("nombre", nombre + "%");
-        return (List<Proveedor>)query.getResultList();
+        return query.getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Proveedor> findByCombo() throws DataAccessException {
 		return (List<Proveedor>)entityManager.createNamedQuery("Proveedor.findByCombo").getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Proveedor> findAll() {
+		return entityManager.createNamedQuery("Proveedor.findByAll").getResultList();
 	}
 
 }
