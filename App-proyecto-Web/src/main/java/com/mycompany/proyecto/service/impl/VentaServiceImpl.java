@@ -2,13 +2,15 @@ package com.mycompany.proyecto.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mycompany.proyecto.dao.VentaRepository;
 import com.mycompany.proyecto.model.Venta;
 import com.mycompany.proyecto.model.VentaDetalle;
-import com.mycompany.proyecto.repository.VentaRepository;
 import com.mycompany.proyecto.service.VentaService;
 /**
  * Implementacion de la capa de servicios para

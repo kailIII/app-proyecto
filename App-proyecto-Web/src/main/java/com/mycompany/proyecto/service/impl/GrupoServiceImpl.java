@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.dao.GrupoRepository;
 import com.mycompany.proyecto.model.Grupo;
-import com.mycompany.proyecto.repository.GrupoRepository;
 import com.mycompany.proyecto.service.GrupoService;
 
 /**

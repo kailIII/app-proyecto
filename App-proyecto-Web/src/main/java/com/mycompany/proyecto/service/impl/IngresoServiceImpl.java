@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.dao.IngresoRepository;
 import com.mycompany.proyecto.model.Ingreso;
-import com.mycompany.proyecto.repository.IngresoRepository;
 import com.mycompany.proyecto.service.IngresoService;
 
 /**
@@ -22,8 +22,8 @@ public class IngresoServiceImpl implements IngresoService {
 	private IngresoRepository ingresoRepository;
 	
 	@Autowired
-	public IngresoServiceImpl(IngresoRepository cr){
-		this.ingresoRepository = cr;
+	public IngresoServiceImpl(IngresoRepository ir){
+		this.ingresoRepository = ir;
 	}
 
 	@Override

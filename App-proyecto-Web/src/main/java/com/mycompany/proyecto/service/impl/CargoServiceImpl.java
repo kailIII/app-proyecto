@@ -1,12 +1,14 @@
 package com.mycompany.proyecto.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mycompany.proyecto.dao.CargoRepository;
 import com.mycompany.proyecto.model.Cargo;
-import com.mycompany.proyecto.repository.CargoRepository;
 import com.mycompany.proyecto.service.CargoService;
 
 /**
@@ -63,19 +65,16 @@ public class CargoServiceImpl implements CargoService {
 
 	@Override
 	public List<Cargo> findByName(String nombre) throws DataAccessException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Cargo> getAll() throws DataAccessException {
-		// TODO Auto-generated method stub
 		return cargoRepository.findAll();
 	}
 
 	@Override
 	public List<Cargo> findByCombo() throws DataAccessException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

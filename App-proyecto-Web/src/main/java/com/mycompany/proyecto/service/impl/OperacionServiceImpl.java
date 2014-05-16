@@ -7,12 +7,11 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.dao.OperacionRepository;
 import com.mycompany.proyecto.model.Operacion;
-import com.mycompany.proyecto.repository.OperacionRepository;
 import com.mycompany.proyecto.service.OperacionService;
 
 /**
- *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
  */
@@ -22,8 +21,8 @@ public class OperacionServiceImpl implements OperacionService {
 	private OperacionRepository operacionRepository;
 	
 	@Autowired
-	public OperacionServiceImpl(OperacionRepository cr){
-		this.operacionRepository = cr;
+	public OperacionServiceImpl(OperacionRepository or){
+		this.operacionRepository = or;
 	}
 
 	@Override

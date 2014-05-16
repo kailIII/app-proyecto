@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.dao.LoteRepository;
 import com.mycompany.proyecto.model.Lote;
-import com.mycompany.proyecto.repository.LoteRepository;
 import com.mycompany.proyecto.service.LoteService;
 
 /**
@@ -22,8 +22,8 @@ public class LoteServiceImpl implements LoteService {
 	private LoteRepository loteRepository;
 	
 	@Autowired
-	public LoteServiceImpl(LoteRepository cr){
-		this.loteRepository = cr;
+	public LoteServiceImpl(LoteRepository lr){
+		this.loteRepository = lr;
 	}
 
 	@Override

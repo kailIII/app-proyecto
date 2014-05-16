@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.dao.ImpuestoRepository;
 import com.mycompany.proyecto.model.Impuesto;
-import com.mycompany.proyecto.repository.ImpuestoRepository;
 import com.mycompany.proyecto.service.ImpuestoService;
 
 /**
@@ -22,8 +22,8 @@ public class ImpuestoServiceImpl implements ImpuestoService {
 	private ImpuestoRepository impuestoRepository;
 	
 	@Autowired
-	public ImpuestoServiceImpl(ImpuestoRepository cr){
-		this.impuestoRepository = cr;
+	public ImpuestoServiceImpl(ImpuestoRepository ir){
+		this.impuestoRepository = ir;
 	}
 
 	@Override

@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.dao.FormaPagoRepository;
 import com.mycompany.proyecto.model.FormaPago;
-import com.mycompany.proyecto.repository.FormaPagoRepository;
 import com.mycompany.proyecto.service.FormaPagoService;
 
 /**

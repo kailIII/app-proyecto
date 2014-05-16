@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.dao.ClienteRepository;
 import com.mycompany.proyecto.model.Cliente;
-import com.mycompany.proyecto.repository.ClienteRepository;
 import com.mycompany.proyecto.service.ClienteService;
 
 /**

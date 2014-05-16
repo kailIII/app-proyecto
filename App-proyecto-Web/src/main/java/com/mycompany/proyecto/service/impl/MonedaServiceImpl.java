@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.dao.MonedaRepository;
 import com.mycompany.proyecto.model.Moneda;
-import com.mycompany.proyecto.repository.MonedaRepository;
 import com.mycompany.proyecto.service.MonedaService;
 
 /**
@@ -24,8 +24,8 @@ public class MonedaServiceImpl implements MonedaService {
 	private MonedaRepository monedaRepository;
 	
 	@Autowired
-	public MonedaServiceImpl(MonedaRepository cr){
-		this.monedaRepository = cr;
+	public MonedaServiceImpl(MonedaRepository mr){
+		this.monedaRepository = mr;
 	}
 
 	@Override

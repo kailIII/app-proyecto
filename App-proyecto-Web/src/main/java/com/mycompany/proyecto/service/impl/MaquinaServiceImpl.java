@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.dao.MaquinaRepository;
 import com.mycompany.proyecto.model.Maquina;
-import com.mycompany.proyecto.repository.MaquinaRepository;
 import com.mycompany.proyecto.service.MaquinaService;
 
 /**
@@ -22,8 +22,8 @@ public class MaquinaServiceImpl implements MaquinaService {
 	private MaquinaRepository maquinaRepository;
 	
 	@Autowired
-	public MaquinaServiceImpl(MaquinaRepository cr){
-		this.maquinaRepository = cr;
+	public MaquinaServiceImpl(MaquinaRepository mr){
+		this.maquinaRepository = mr;
 	}
 
 	@Override

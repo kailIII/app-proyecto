@@ -1,13 +1,15 @@
 package com.mycompany.proyecto.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.mycompany.proyecto.config.SearchCriteria;
+import com.mycompany.proyecto.dao.PaisRepository;
 import com.mycompany.proyecto.model.Pais;
-import com.mycompany.proyecto.repository.PaisRepository;
 import com.mycompany.proyecto.service.PaisService;
 /**
  * Implementacion de la capa de Servicio 
@@ -21,8 +23,8 @@ public class PaisServiceImpl implements PaisService {
 	private PaisRepository paisRepository;
 	
 	@Autowired
-	public PaisServiceImpl(PaisRepository cr){
-		this.paisRepository = cr;
+	public PaisServiceImpl(PaisRepository pr){
+		this.paisRepository = pr;
 	}
 
 	@Override

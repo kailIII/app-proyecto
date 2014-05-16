@@ -1,12 +1,14 @@
 package com.mycompany.proyecto.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mycompany.proyecto.dao.BancoRepository;
 import com.mycompany.proyecto.model.Banco;
-import com.mycompany.proyecto.repository.BancoRepository;
 import com.mycompany.proyecto.service.BancoService;
 /**
  *
@@ -32,7 +34,8 @@ public class BancoServiceImpl implements BancoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Banco> findByName(String nombre) throws DataAccessException {
-		return bancoRepository.findByName(nombre);
+		return null;
+				//bancoRepository.findByName(nombre);
 	}
 
 	@Override
@@ -44,7 +47,7 @@ public class BancoServiceImpl implements BancoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Banco> getAll() throws DataAccessException {
-		return bancoRepository.getAll();
+		return bancoRepository.findAll();
 	}
 
 	@Override

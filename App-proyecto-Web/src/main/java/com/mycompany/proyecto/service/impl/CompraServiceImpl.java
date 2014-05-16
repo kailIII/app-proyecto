@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.dao.CompraRepository;
 import com.mycompany.proyecto.model.Compra;
-import com.mycompany.proyecto.repository.CompraRepository;
 import com.mycompany.proyecto.service.CompraService;
 
 /**

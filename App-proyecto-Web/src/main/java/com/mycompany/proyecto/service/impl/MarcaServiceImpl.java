@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.dao.MarcaRepository;
 import com.mycompany.proyecto.model.Marca;
-import com.mycompany.proyecto.repository.MarcaRepository;
 import com.mycompany.proyecto.service.MarcaService;
 
 /**
@@ -57,6 +57,7 @@ public class MarcaServiceImpl implements MarcaService {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<Marca> findByCombo() throws DataAccessException {
 		return marcaRepository.findByCombo();
 	}

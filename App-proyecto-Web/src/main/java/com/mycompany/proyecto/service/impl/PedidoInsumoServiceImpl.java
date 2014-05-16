@@ -1,13 +1,15 @@
 package com.mycompany.proyecto.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mycompany.proyecto.dao.PedidoRepository;
 import com.mycompany.proyecto.model.Pedido;
 import com.mycompany.proyecto.model.PedidoDetalle;
-import com.mycompany.proyecto.repository.PedidoRepository;
 import com.mycompany.proyecto.service.PedidoInsumoService;
 /**
  * Implementacion del Servicio Pedido para la 
@@ -22,8 +24,8 @@ public class PedidoInsumoServiceImpl implements PedidoInsumoService {
 	private PedidoRepository pedidoRepository;
 	
 	@Autowired
-	public PedidoInsumoServiceImpl(PedidoRepository cr){
-		this.pedidoRepository = cr;
+	public PedidoInsumoServiceImpl(PedidoRepository pr){
+		this.pedidoRepository = pr;
 	}
 	
 	@Override

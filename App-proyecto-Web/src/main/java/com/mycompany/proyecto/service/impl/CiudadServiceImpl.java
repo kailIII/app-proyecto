@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.dao.CiudadRepository;
 import com.mycompany.proyecto.model.Ciudad;
-import com.mycompany.proyecto.repository.CiudadRepository;
 import com.mycompany.proyecto.service.CiudadService;
 
 /**
@@ -59,6 +59,7 @@ public class CiudadServiceImpl implements CiudadService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Ciudad> findByCombo() throws DataAccessException {
 		return ciudadRepository.findByCombo();
 	}

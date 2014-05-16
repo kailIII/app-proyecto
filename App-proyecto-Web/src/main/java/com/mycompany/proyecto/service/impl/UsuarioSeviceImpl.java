@@ -1,12 +1,14 @@
 package com.mycompany.proyecto.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mycompany.proyecto.dao.UsuarioRepository;
 import com.mycompany.proyecto.model.Usuario;
-import com.mycompany.proyecto.repository.UsuarioRepository;
 import com.mycompany.proyecto.service.UsuarioService;
 /**
  *

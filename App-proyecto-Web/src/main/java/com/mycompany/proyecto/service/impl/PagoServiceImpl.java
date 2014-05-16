@@ -1,12 +1,14 @@
 package com.mycompany.proyecto.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mycompany.proyecto.dao.PagoRepository;
 import com.mycompany.proyecto.model.Pago;
-import com.mycompany.proyecto.repository.PagoRepository;
 import com.mycompany.proyecto.service.PagoService;
 /**
  *
@@ -19,8 +21,8 @@ public class PagoServiceImpl implements PagoService {
 	private PagoRepository pagoRepository;
 	
 	@Autowired
-	public PagoServiceImpl(PagoRepository cr){
-		this.pagoRepository = cr;
+	public PagoServiceImpl(PagoRepository pr){
+		this.pagoRepository = pr;
 	}
 
 	@Override

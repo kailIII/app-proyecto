@@ -7,9 +7,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.dao.FormulaRepository;
 import com.mycompany.proyecto.model.Formula;
 import com.mycompany.proyecto.model.FormulaDetalle;
-import com.mycompany.proyecto.repository.FormulaRepository;
 import com.mycompany.proyecto.service.FormulaService;
 
 /**

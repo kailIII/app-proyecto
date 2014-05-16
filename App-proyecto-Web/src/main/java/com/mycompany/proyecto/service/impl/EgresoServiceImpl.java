@@ -1,18 +1,14 @@
 package com.mycompany.proyecto.service.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.mycompany.proyecto.dao.EgresoRepository;
 import com.mycompany.proyecto.model.Egreso;
-import com.mycompany.proyecto.repository.EgresoRepository;
 import com.mycompany.proyecto.service.EgresoService;
-
 /**
- *
  * @author rodrigo garcete
  * Fecha Creacion:21-11-2012
  */
@@ -22,8 +18,8 @@ public class EgresoServiceImpl implements EgresoService {
 	private EgresoRepository egresoRepository;
 	
 	@Autowired
-	public EgresoServiceImpl(EgresoRepository cr){
-		this.egresoRepository = cr;
+	public EgresoServiceImpl(EgresoRepository er){
+		this.egresoRepository = er;
 	}
 
 	@Override

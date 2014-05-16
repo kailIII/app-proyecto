@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.proyecto.dao.TipoPersonaRepository;
 import com.mycompany.proyecto.model.TipoPersona;
-import com.mycompany.proyecto.repository.TipoPersonaRepository;
 import com.mycompany.proyecto.service.TipoPersonaService;
 
 /**
@@ -60,6 +60,7 @@ public class TipoPersonaServiceImpl implements TipoPersonaService {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<TipoPersona> findByCombo() throws DataAccessException {
 		return tipoPersonaRepository.findByCombo();
 	}
