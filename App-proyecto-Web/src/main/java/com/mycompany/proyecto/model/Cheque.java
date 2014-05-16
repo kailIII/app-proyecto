@@ -5,9 +5,11 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-//@Entity
-//@Table(name = "cheques")
+@Entity
+@Table(name = "cheques")
 public class Cheque extends NamedEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -18,16 +20,19 @@ public class Cheque extends NamedEntity {
 	
 	private String chequeNumero;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date vencimiento;
 	
 	private BigDecimal monto;
 	
 	private String orden;
 	
+	//Constructor por Defecto
 	public Cheque(){
 		
 	}
 
+	//Metodos Getters and Setters
 	public Long getSecuencia() {
 		return secuencia;
 	}
@@ -75,7 +80,5 @@ public class Cheque extends NamedEntity {
 	public void setOrden(String orden) {
 		this.orden = orden;
 	}
-	
-	
 
 }

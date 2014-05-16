@@ -2,9 +2,10 @@ package com.mycompany.proyecto.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-//@Entity
-//@Table(name = "ingresos")
+@Entity
+@Table(name = "ingresos")
 public class Ingreso extends NamedEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -13,12 +14,15 @@ public class Ingreso extends NamedEntity {
 	
 	private String abreviatura;
 	
+	@Transient
 	private int activo;
 	
+	//constructor por defecto
 	public Ingreso() {
 		
 	}
 
+	//Metodos Getters and Setters
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -42,6 +46,5 @@ public class Ingreso extends NamedEntity {
 	public void setActivo(int activo) {
 		this.activo = activo;
 	}
-	
 	
 }

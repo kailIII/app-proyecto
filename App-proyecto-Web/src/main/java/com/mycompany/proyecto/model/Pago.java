@@ -2,43 +2,48 @@ package com.mycompany.proyecto.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-//@Entity
-//@Table (name = "pagos")
+@Entity
+@Table (name = "pagos")
 public class Pago extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
+	@Column(name="fecha_documento")
 	private Date fechaDocumento;
 	
+	@Column(name="fecha_operacion")
 	private Date fechaOperacion;
 	
 	private String tipo;
 	
-	private Set<Operacion> operacionTipo;
+	//private Set<Operacion> operacionTipo;
 	
+	@Column(name="recibo_numero")
 	private String reciboNumero;
 	
-	private Set<Cuenta> cuenta;
+	//private Set<Cuenta> cuenta;
 	
 	private BigDecimal cotizacion;
 	
-	private Set<Proveedor> proveedor;
+	//private Set<Proveedor> proveedor;
 	
-	private BigDecimal monto_total;
+	@Column(name="monto_total")
+	private BigDecimal montoTotal;
 	
 	private int activo;
 	
 	private String obs;
 	
+	//Constructor por defecto
 	public Pago() {
 		
 	}
 
+	//Metodos Getters and Setters
 	public Date getFechaDocumento() {
 		return fechaDocumento;
 	}
@@ -63,13 +68,13 @@ public class Pago extends BaseEntity {
 		this.tipo = tipo;
 	}
 
-	public Set<Operacion> getOperacionTipo() {
-		return operacionTipo;
-	}
-
-	public void setOperacionTipo(Set<Operacion> operacionTipo) {
-		this.operacionTipo = operacionTipo;
-	}
+//	public Set<Operacion> getOperacionTipo() {
+//		return operacionTipo;
+//	}
+//
+//	public void setOperacionTipo(Set<Operacion> operacionTipo) {
+//		this.operacionTipo = operacionTipo;
+//	}
 
 	public String getReciboNumero() {
 		return reciboNumero;
@@ -79,13 +84,13 @@ public class Pago extends BaseEntity {
 		this.reciboNumero = reciboNumero;
 	}
 
-	public Set<Cuenta> getCuenta() {
-		return cuenta;
-	}
-
-	public void setCuenta(Set<Cuenta> cuenta) {
-		this.cuenta = cuenta;
-	}
+//	public Set<Cuenta> getCuenta() {
+//		return cuenta;
+//	}
+//
+//	public void setCuenta(Set<Cuenta> cuenta) {
+//		this.cuenta = cuenta;
+//	}
 
 	public BigDecimal getCotizacion() {
 		return cotizacion;
@@ -95,20 +100,20 @@ public class Pago extends BaseEntity {
 		this.cotizacion = cotizacion;
 	}
 
-	public Set<Proveedor> getProveedor() {
-		return proveedor;
-	}
+//	public Set<Proveedor> getProveedor() {
+//		return proveedor;
+//	}
+//
+//	public void setProveedor(Set<Proveedor> proveedor) {
+//		this.proveedor = proveedor;
+//	}
 
-	public void setProveedor(Set<Proveedor> proveedor) {
-		this.proveedor = proveedor;
-	}
-
-	public BigDecimal getMonto_total() {
-		return monto_total;
+	public BigDecimal getMontoTotal() {
+		return montoTotal;
 	}
 
 	public void setMonto_total(BigDecimal monto_total) {
-		this.monto_total = monto_total;
+		this.montoTotal = monto_total;
 	}
 
 	public int getActivo() {

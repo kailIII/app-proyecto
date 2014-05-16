@@ -3,8 +3,8 @@ package com.mycompany.proyecto.model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-//@Entity
-//@Table(name = "egresos")
+@Entity
+@Table(name = "egresos")
 public class Egreso extends NamedEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -13,10 +13,12 @@ public class Egreso extends NamedEntity {
 	
 	private int activo;
 	
+	//Constructor por Defecto
 	public Egreso() {
 		
 	}
 
+	//Metodos Getters and Setters
 	public String getDescripcion() {
 		return descripcion;
 	}

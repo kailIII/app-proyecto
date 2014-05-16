@@ -2,9 +2,10 @@ package com.mycompany.proyecto.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-//@Entity
-//@Table (name = "operaciones")
+@Entity
+@Table (name = "operaciones")
 public class Operacion extends NamedEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -13,12 +14,15 @@ public class Operacion extends NamedEntity {
 	
 	private String descripcion;
 	
+	@Transient
 	private int activo;
 	
+	//Constructor por Defecto
 	public Operacion() {
 	
 	}
 
+	//Getters and Setters
 	public String getAbreviatura() {
 		return abreviatura;
 	}

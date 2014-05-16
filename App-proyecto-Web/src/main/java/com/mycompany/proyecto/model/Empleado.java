@@ -17,12 +17,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "empleados")
 @NamedQueries({
-	@NamedQuery(name="Empleado.findById", query="SELECT p FROM Empleado p WHERE p.codigo = :codigo"),
-	@NamedQuery(name="Empleado.findByName", query="SELECT p FROM Empleado p WHERE p.nombre LIKE :nombre"),
+	@NamedQuery(name="Empleado.findById", query="SELECT p FROM Empleado p WHERE p.codigo = :codigo AND p.activo=1"),
+	@NamedQuery(name="Empleado.findByName", query="SELECT p FROM Empleado p WHERE p.activo=1 AND p.nombre LIKE :nombre ORDER BY p.nombre"),
 	@NamedQuery(name="Empleado.findByCombo", query="SELECT NEW com.mycompany.proyecto.model.Empleado"
-			+ "(p.codigo, p.nombre) FROM Empleado AS p ORDER BY p.codigo"),
+			+ "(p.codigo, p.nombre) FROM Empleado AS p WHERE p.activo=1 ORDER BY p.codigo"),
 	@NamedQuery(name="Empleado.findByAll", query="SELECT NEW com.mycompany.proyecto.model.Empleado"
-			+ "(p.codigo, p.nombre, p.apellido, p.celular) FROM Empleado AS p ORDER BY p.codigo")
+			+ "(p.codigo, p.nombre, p.apellido, p.celular) FROM Empleado AS p WHERE p.activo=1 ORDER BY p.codigo")
 })
 public class Empleado extends Persona {
 		

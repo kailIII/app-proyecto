@@ -2,11 +2,13 @@ package com.mycompany.proyecto.model;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-//@Entity
-//@Table(name = "empresas")
+@Entity
+@Table(name = "empresas")
 public class Empresa extends NamedEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -15,6 +17,7 @@ public class Empresa extends NamedEntity {
 	
 	private String rucdv;
 	
+	@Column(name="representante_legal")
 	private String representanteLegal;
 
 	private String descripcion;
@@ -23,11 +26,8 @@ public class Empresa extends NamedEntity {
 	
 	private String barrio;
 	
+	@Transient
 	private Set<Ciudad> ciudades;
-	
-	private Set<Departamento> departamentos;
-	
-	private Set<Pais> paises;
 	
 	private String telefono;
 	
@@ -45,10 +45,12 @@ public class Empresa extends NamedEntity {
 	
 	private String obs;
 	
+	//Constructor por defecto
 	public Empresa() {
 		
 	}
 
+	//Metodos Getters and Settes
 	public String getRuc() {
 		return ruc;
 	}
@@ -103,22 +105,6 @@ public class Empresa extends NamedEntity {
 
 	public void setCiudades(Set<Ciudad> ciudades) {
 		this.ciudades = ciudades;
-	}
-
-	public Set<Departamento> getDepartamentos() {
-		return departamentos;
-	}
-
-	public void setDepartamentos(Set<Departamento> departamentos) {
-		this.departamentos = departamentos;
-	}
-
-	public Set<Pais> getPaises() {
-		return paises;
-	}
-
-	public void setPaises(Set<Pais> paises) {
-		this.paises = paises;
 	}
 
 	public String getTelefono() {

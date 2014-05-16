@@ -2,21 +2,25 @@ package com.mycompany.proyecto.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-//@Entity
-//@Table (name = "maquinas")
+@Entity
+@Table (name = "maquinas")
 public class Maquina extends NamedEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	private String descripcion;
 	
+	@Transient
 	private int activo;
 	
+	//Constructor por defecto
 	public Maquina() {
 		
 	}
 
+	//Getters and Setters
 	public String getDescripcion() {
 		return descripcion;
 	}

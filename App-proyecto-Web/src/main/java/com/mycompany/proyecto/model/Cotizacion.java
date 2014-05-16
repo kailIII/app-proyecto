@@ -6,13 +6,15 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-//@Entity
-//@Table (name = "cotizaciones")
+@Entity
+@Table (name = "cotizaciones")
 public class Cotizacion extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
+	@Transient
 	private Set<Moneda> moneda;
 	
 	private BigDecimal compra;
@@ -21,10 +23,12 @@ public class Cotizacion extends BaseEntity {
 	
 	private Date fecha;
 	
+	//Constructor por Defecto
 	public Cotizacion() {
 		
 	}
 
+	//Metodos Getters and Setters
 	public Set<Moneda> getMoneda() {
 		return moneda;
 	}

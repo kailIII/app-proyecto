@@ -6,20 +6,22 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-
-//@Entity
-//@Table(name = "cuentas")
+@Entity
+@Table(name = "cuentas")
 public class Cuenta extends NamedEntity {
 
 	private static final long serialVersionUID = 1L;
 	
 	private boolean esBanco;
 	
+	@Transient
 	private Set<Banco> banco;
 	
 	private String tipo;
 	
+	@Transient
 	private Set<Moneda> moneda;
 	
 	private BigDecimal saldo;

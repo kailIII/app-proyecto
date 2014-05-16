@@ -2,15 +2,17 @@ package com.mycompany.proyecto.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-//@Entity
-//@Table(name = "estados_civiles")
+@Entity
+@Table(name = "estados_civiles")
 public class EstadoCivil extends NamedEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	private String descripcion;
 	
+	@Transient
 	private int activo;
 	
 	public EstadoCivil() {

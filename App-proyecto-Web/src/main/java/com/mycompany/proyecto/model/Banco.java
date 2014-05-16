@@ -1,35 +1,27 @@
 package com.mycompany.proyecto.model;
 
 /**
+ * Un Simple POJO
  * @author rodrigo garcete
  * @since 21/118/212
  */
-
-import java.util.Set;
-
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-//@Entity
-//@Table(name = "bancos")
+@Entity
+@Table(name = "bancos")
 public class Banco extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	
 	private String nombre;
 	
+	private String representante;
+	
 	private String direccion;
 	
 	private String barrio;
-	
-	//@OneToMany(fetch = FetchType.LAZY, mappedBy="ciudadId")
-	private Set<Ciudad> ciudades;
-	
-	private Set<Departamento> departamentos;
-	
-	private Set<Pais> paises;
 	
 	private String telefono;
 	
@@ -43,9 +35,15 @@ public class Banco extends BaseEntity {
 	
 	private String email;
 	
-	private String representante;
+	@Transient
+	private int activo;
 	
+	//Constructor por Defecto
+	public Banco(){
+		
+	}
 	
+	//Metodos Getters and Setters
 	public void setRepresentante(String representante) {
 		this.representante = representante;
 	}
@@ -54,10 +52,6 @@ public class Banco extends BaseEntity {
 		return representante;
 	}
 	
-	public Banco(){
-		
-	}
-
 	public String getNombre() {
 		return nombre;
 	}
@@ -80,30 +74,6 @@ public class Banco extends BaseEntity {
 
 	public void setBarrio(String barrio) {
 		this.barrio = barrio;
-	}
-
-	public Set<Ciudad> getCiudades() {
-		return ciudades;
-	}
-
-	public void setCiudades(Set<Ciudad> ciudades) {
-		this.ciudades = ciudades;
-	}
-
-	public Set<Departamento> getDepartamentos() {
-		return departamentos;
-	}
-
-	public void setDepartamentos(Set<Departamento> departamentos) {
-		this.departamentos = departamentos;
-	}
-
-	public Set<Pais> getPaises() {
-		return paises;
-	}
-
-	public void setPaises(Set<Pais> paises) {
-		this.paises = paises;
 	}
 
 	public String getTelefono() {
@@ -152,6 +122,14 @@ public class Banco extends BaseEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public int getActivo() {
+		return activo;
+	}
+	
+	public void setActivo(int activo) {
+		this.activo = activo;
 	}
 
 }

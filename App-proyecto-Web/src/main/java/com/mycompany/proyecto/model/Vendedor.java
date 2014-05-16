@@ -1,11 +1,19 @@
 package com.mycompany.proyecto.model;
 
-public class Vendedor extends BaseEntity {
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name="vendedores")
+public class Vendedor extends NamedEntity {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Transient
 	private int activo;
 	
+	//Constructor por Defecto
 	public Vendedor() {
 		
 	}
