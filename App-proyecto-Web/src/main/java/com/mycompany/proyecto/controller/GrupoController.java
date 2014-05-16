@@ -36,12 +36,8 @@ import com.mycompany.proyecto.service.GrupoService;
 @RequestMapping(value="/grupo")
 @Controller
 public class GrupoController {
-	
-	//private static final Logger log = LoggerFactory.getLogger(DepositoController.class);
-	
-	public static final int DEFAULT_CIUDAD_POR_PAGINA = 25;
 
-	private final GrupoService grupoService;
+	private GrupoService grupoService;
 	
 	@Autowired
 	public GrupoController(GrupoService is){

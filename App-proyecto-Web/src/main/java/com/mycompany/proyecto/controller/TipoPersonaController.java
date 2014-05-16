@@ -8,7 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import com.mycompany.proyecto.model.TipoPersona;
 import com.mycompany.proyecto.service.TipoPersonaService;
 /**
@@ -32,12 +31,8 @@ import com.mycompany.proyecto.service.TipoPersonaService;
 @RequestMapping(value="/tpersona")
 @Controller
 public class TipoPersonaController {
-	
-	//private static final Logger log = LoggerFactory.getLogger(DepositoController.class);
-	
-	public static final int DEFAULT_TIPO_PERSONA_POR_PAGINA = 25;
 
-	private final TipoPersonaService tpService;
+	private TipoPersonaService tpService;
 	
 	@Autowired
 	public TipoPersonaController(TipoPersonaService tps){
@@ -45,11 +40,10 @@ public class TipoPersonaController {
 	}
 
 	/**
-	 * Ponto de entrada da aplicação ("/").
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado", method = RequestMethod.GET) //value="/listado" , params = "lista"
+	@RequestMapping(method = RequestMethod.GET) 
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("tpersonas", tpService.getAll());
 		return "listaTpersonas";
@@ -60,7 +54,7 @@ public class TipoPersonaController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET) //, params = "form"
+	@RequestMapping(method = RequestMethod.GET, params="form")
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("tpersona", new TipoPersona());
 		return "incluirTpersona";
@@ -73,7 +67,7 @@ public class TipoPersonaController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST) //value="/form", 
+	@RequestMapping(method = RequestMethod.POST) 
 	public String crear(@Valid TipoPersona tp, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("tpersona", tp);
@@ -81,7 +75,7 @@ public class TipoPersonaController {
         } 
 		
 		this.tpService.save(tp);
-		return "redirect:/tpersona/listado";
+		return "redirect:/tpersona";
 	}
 	
 	/**
@@ -90,7 +84,7 @@ public class TipoPersonaController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET) //value = "/edit/{id}", 
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		TipoPersona tp = tpService.findById(id);
@@ -107,36 +101,29 @@ public class TipoPersonaController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT) //value = "edit/{id}", 
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid TipoPersona tp, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("tpersona", tp);
             return "editarTpersona";
         }
 		this.tpService.save(tp);
-		return "redirect:/tpersona/listado";
+		return "redirect:/tpersona";
 	}
 	
 	/**
-	 * Método ejecutado para la eliminacion de insumos.
-	 * @param id de insumo que debe ser eliminado.
+	 * Método ejecutado para la eliminacion de tipo persona.
+	 * @param id de tipo persona que debe ser eliminado.
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE) //value = "/edit/{id}", 
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		TipoPersona tp = tpService.findById(id);
 		if (tp != null) {
 			this.tpService.remove(tp); 
 		}
-		return "redirect:/tpersona/listado";
+		return "redirect:/tpersona";
     }
-	
-	@RequestMapping(value = "/person", method = RequestMethod.GET)
-	@ResponseBody
-	private TipoPersona getTipoPersona() {
-		//TipoPersona t = tpService.findById(codigo); @PathVariable Long codigo
-		return new TipoPersona("Respuesta en formato dependiente del header de la peticion");
-	}
 	
 }

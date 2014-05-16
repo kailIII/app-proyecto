@@ -37,12 +37,8 @@ import com.mycompany.proyecto.service.DepositoService;
 @RequestMapping(value="/deposito")
 @Controller
 public class DepositoController {
-	
-	//private static final Logger log = LoggerFactory.getLogger(DepositoController.class);
-	
-	public static final int DEFAULT_DEPOSITO_POR_PAGINA = 25;
 
-	private final DepositoService depositoService;
+	private DepositoService depositoService;
 	
 	@Autowired
 	public DepositoController(DepositoService is){

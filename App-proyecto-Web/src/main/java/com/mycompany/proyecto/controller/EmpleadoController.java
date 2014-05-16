@@ -32,12 +32,8 @@ import com.mycompany.proyecto.service.EmpleadoService;
 @RequestMapping(value="/empleado")
 @Controller
 public class EmpleadoController {
-	
-	//private static final Logger log = LoggerFactory.getLogger(DepositoController.class);
-	
-	public static final int DEFAULT_EMPLEADO_POR_PAGINA = 25;
 
-	private final EmpleadoService empleadoService;
+	private EmpleadoService empleadoService;
 	
 	@Autowired
 	public EmpleadoController(EmpleadoService is){

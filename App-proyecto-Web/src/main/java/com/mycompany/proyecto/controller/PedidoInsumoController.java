@@ -40,9 +40,7 @@ import com.mycompany.proyecto.service.ProductoService;
 @Controller
 public class PedidoInsumoController {
 	
-	//private static final Logger log = LoggerFactory.getLogger(PedidoInsumoController.class);
-	
-	private final PedidoInsumoService pedidoInsumoService;
+	private PedidoInsumoService pedidoInsumoService;
 	
 	private ArrayList<PedidoDetalle> listaItems = new ArrayList<PedidoDetalle>();
 	

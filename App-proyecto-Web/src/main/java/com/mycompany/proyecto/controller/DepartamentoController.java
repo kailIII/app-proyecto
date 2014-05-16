@@ -36,9 +36,7 @@ import com.mycompany.proyecto.service.PaisService;
 @Controller
 public class DepartamentoController {
 	
-	//private static final Logger log = LoggerFactory.getLogger(DepartamentoController.class);
-	
-	private final DepartamentoService depService;
+	private DepartamentoService depService;
 	
 	@Autowired
 	public DepartamentoController(DepartamentoService is){

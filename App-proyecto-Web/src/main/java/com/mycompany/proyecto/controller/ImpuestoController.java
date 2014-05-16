@@ -37,12 +37,8 @@ import com.mycompany.proyecto.service.ImpuestoService;
 @RequestMapping(value="/impuesto")
 @Controller
 public class ImpuestoController {
-	
-	//private static final Logger log = LoggerFactory.getLogger(DepositoController.class);
-	
-	public static final int DEFAULT_IMPUESTO_POR_PAGINA = 25;
 
-	private final ImpuestoService impuestoService;
+	private ImpuestoService impuestoService;
 	
 	@Autowired
 	public ImpuestoController(ImpuestoService is){

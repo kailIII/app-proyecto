@@ -1,9 +1,7 @@
 package com.mycompany.proyecto.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.mycompany.proyecto.model.Compra;
-import com.mycompany.proyecto.model.Producto;
 import com.mycompany.proyecto.model.Proveedor;
 import com.mycompany.proyecto.service.CompraService;
-import com.mycompany.proyecto.service.ProductoService;
 import com.mycompany.proyecto.service.ProveedorService;
-
 /**
  * Handles requests for the application home page.
  * Anotando una clase Java como @Controller se convierte en un controlador, 
@@ -45,7 +39,7 @@ public class CompraController {
 	
 	private static final Logger log = LoggerFactory.getLogger(CompraController.class);
 	
-	private final CompraService compraService;
+	private CompraService compraService;
 	
 	@Autowired
 	public CompraController(CompraService is){

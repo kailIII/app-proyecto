@@ -37,12 +37,8 @@ import com.mycompany.proyecto.service.MarcaService;
 @RequestMapping(value="/marca")
 @Controller
 public class MarcaController {
-	
-	//private static final Logger log = LoggerFactory.getLogger(DepositoController.class);
-	
-	public static final int DEFAULT_MARCA_POR_PAGINA = 25;
 
-	private final MarcaService marcaService;
+	private MarcaService marcaService;
 	
 	@Autowired
 	public MarcaController(MarcaService is){

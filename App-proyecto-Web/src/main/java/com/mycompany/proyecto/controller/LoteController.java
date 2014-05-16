@@ -34,12 +34,8 @@ import com.mycompany.proyecto.service.ProductoService;
 @RequestMapping(value="/lote")
 @Controller
 public class LoteController {
-	
-	//private static final Logger log = LoggerFactory.getLogger(DepositoController.class);
-	
-	public static final int DEFAULT_LOTE_POR_PAGINA = 25;
 
-	private final LoteService loteService;
+	private LoteService loteService;
 	
 	@Autowired
 	public LoteController(LoteService is){

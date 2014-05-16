@@ -1,9 +1,6 @@
 package com.mycompany.proyecto.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.mycompany.proyecto.config.SearchCriteria;
 import com.mycompany.proyecto.model.Pais;
 import com.mycompany.proyecto.service.PaisService;
 
@@ -41,12 +36,8 @@ import com.mycompany.proyecto.service.PaisService;
 @RequestMapping(value="/pais")
 @Controller
 public class PaisController {
-	
-	//private static final Logger log = LoggerFactory.getLogger(DepositoController.class);
-	
-	public static final int DEFAULT_PAIS_POR_PAGINA = 25;
 
-	private final PaisService paisService;
+	private PaisService paisService;
 	
 	@Autowired
 	public PaisController(PaisService is){

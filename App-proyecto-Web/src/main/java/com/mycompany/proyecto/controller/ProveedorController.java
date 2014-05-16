@@ -47,7 +47,7 @@ public class ProveedorController {
 	
 	private static final Logger log = LoggerFactory.getLogger(ProveedorController.class);
 	
-	private final ProveedorService proveedorService;
+	private ProveedorService proveedorService;
 	
 	@Autowired
 	public ProveedorController(ProveedorService ps){

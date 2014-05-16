@@ -41,7 +41,7 @@ public class ClienteController {
 	
 	private static final Logger log = LoggerFactory.getLogger(ClienteController.class);
 	
-	private final ClienteService clienteService;
+	private ClienteService clienteService;
 	
 	@Autowired
 	public ClienteController(ClienteService is){

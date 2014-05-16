@@ -1,8 +1,6 @@
 package com.mycompany.proyecto.controller;
 
 import javax.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.mycompany.proyecto.model.Produccion;
 import com.mycompany.proyecto.service.ProduccionService;
-
 /**
  * Handles requests for the application home page.
  * Anotando una clase Java como @Controller se convierte en un controlador, 
@@ -35,9 +32,7 @@ import com.mycompany.proyecto.service.ProduccionService;
 @Controller
 public class ProduccionController {
 	
-	//private static final Logger log = LoggerFactory.getLogger(ProduccionController.class);
-	
-	private final ProduccionService produccionService;
+	private ProduccionService produccionService;
 	
 	@Autowired
 	public ProduccionController(ProduccionService is){

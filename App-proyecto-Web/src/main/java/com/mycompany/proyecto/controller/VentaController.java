@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mycompany.proyecto.model.Compra;
 import com.mycompany.proyecto.service.CompraService;
 
-
 /**
  * Handles requests for the application home page.
  * Anotando una clase Java como @Controller se convierte en un controlador, 
@@ -49,20 +48,11 @@ public class VentaController {
 	
 	private static final Logger log = LoggerFactory.getLogger(VentaController.class);
 	
-	private final CompraService compraService;
+	private CompraService compraService;
 	
 	@Autowired
 	public VentaController(CompraService is){
 		this.compraService = is;
-	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(Double.class, 
-				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
 	}
 	
 	/**

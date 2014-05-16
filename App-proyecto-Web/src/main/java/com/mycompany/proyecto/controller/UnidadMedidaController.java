@@ -42,8 +42,6 @@ import com.mycompany.proyecto.service.UnidadMedidaService;
 @Controller 
 public class UnidadMedidaController {
 	
-	//private static final Logger log = LoggerFactory.getLogger(UnidadMedidaController.class);
-	
 	private UnidadMedidaService umService;
 	
 	@Autowired

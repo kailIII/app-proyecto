@@ -1,25 +1,17 @@
 package com.mycompany.proyecto.controller;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
 import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.mycompany.proyecto.model.Banco;
 import com.mycompany.proyecto.service.BancoService;
-
 /**
  * Handles requests for the application home page.
  * Anotando una clase Java como @Controller se convierte en un controlador, 
@@ -42,26 +34,17 @@ import com.mycompany.proyecto.service.BancoService;
  * 
  * @author rodrigo garcete
  */
-//@RequestMapping(value="/inputs") 
-//@Controller
+@RequestMapping(value="/banco") 
+@Controller
 public class BancoController {
 	
 	private static final Logger log = LoggerFactory.getLogger(BancoController.class);
 	
-	private final BancoService bancoService;
+	private BancoService bancoService;
 	
-	//@Autowired
+	@Autowired
 	public BancoController(BancoService bs){
 		this.bancoService = bs;
-	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(Double.class, 
-				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
 	}
 	
 	/**
@@ -69,7 +52,7 @@ public class BancoController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/banco/list",method = RequestMethod.GET)
+	@RequestMapping(value="/banco/lista",method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("bancos", bancoService.getAll());
 		log.debug("Consultando en la BD y mostrando todos los bancos");

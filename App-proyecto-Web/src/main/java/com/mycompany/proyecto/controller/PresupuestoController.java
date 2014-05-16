@@ -40,12 +40,8 @@ import com.mycompany.proyecto.service.PresupuestoService;
  */
 @Controller
 public class PresupuestoController {
-	
-	//private static final Logger log = LoggerFactory.getLogger(DepositoController.class);
-	
-	public static final int DEFAULT_CIUDAD_POR_PAGINA = 25;
 
-	private final PresupuestoService preService;
+	private PresupuestoService preService;
 	
 	@Autowired
 	public PresupuestoController(PresupuestoService is){

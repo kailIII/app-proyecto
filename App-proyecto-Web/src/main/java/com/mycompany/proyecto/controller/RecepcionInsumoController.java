@@ -47,7 +47,7 @@ public class RecepcionInsumoController {
 	
 	private static final Logger log = LoggerFactory.getLogger(RecepcionInsumoController.class);
 	
-	private final RecepcionInsumoService recepcionInsumoService;
+	private RecepcionInsumoService recepcionInsumoService;
 	
 	@Autowired
 	public RecepcionInsumoController(RecepcionInsumoService is){

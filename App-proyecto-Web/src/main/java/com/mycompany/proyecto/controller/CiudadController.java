@@ -36,12 +36,8 @@ import com.mycompany.proyecto.service.PaisService;
 @RequestMapping(value="/ciudad")
 @Controller
 public class CiudadController {
-	
-	//private static final Logger log = LoggerFactory.getLogger(DepositoController.class);
-	
-	public static final int DEFAULT_CIUDAD_POR_PAGINA = 25;
 
-	private final CiudadService ciudadService;
+	private CiudadService ciudadService;
 	
 	@Autowired
 	public CiudadController(CiudadService is){

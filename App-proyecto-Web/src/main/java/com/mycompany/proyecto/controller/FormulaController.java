@@ -38,13 +38,9 @@ import com.mycompany.proyecto.service.ProductoService;
 @Controller
 public class FormulaController {
 	
-	//private static final Logger log = LoggerFactory.getLogger(DepositoController.class);
-	
-	public static final int DEFAULT_FORMULA_POR_PAGINA = 25;
-	
 	private ArrayList<FormulaDetalle> listaItems = new ArrayList<FormulaDetalle>();
 
-	private final FormulaService formulaService;
+	private FormulaService formulaService;
 	
 	@Autowired
 	public FormulaController(FormulaService is){

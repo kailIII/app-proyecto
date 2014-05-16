@@ -41,21 +41,12 @@ public class UsuarioController {
 	
 	private static final Logger log = LoggerFactory.getLogger(UsuarioController.class);
 	
-	private final UsuarioService usuarioService;
+	private UsuarioService usuarioService;
 	
 	@Autowired
 	public UsuarioController(UsuarioService us){
 		this.usuarioService = us;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").

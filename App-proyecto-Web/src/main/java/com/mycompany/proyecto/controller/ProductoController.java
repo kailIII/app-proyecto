@@ -3,18 +3,18 @@ package com.mycompany.proyecto.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.proyecto.model.Grupo;
 import com.mycompany.proyecto.model.Impuesto;
@@ -28,7 +28,6 @@ import com.mycompany.proyecto.service.MarcaService;
 import com.mycompany.proyecto.service.ProductoService;
 import com.mycompany.proyecto.service.ProveedorService;
 import com.mycompany.proyecto.service.UnidadMedidaService;
-
 
 /**
  * Handles requests for the application home page.
@@ -57,10 +56,8 @@ import com.mycompany.proyecto.service.UnidadMedidaService;
 public class ProductoController {
 	
 	private static final Logger log = LoggerFactory.getLogger(ProductoController.class);
-	
-	public static final int DEFAULT_INSUMOS_POR_PAGINA = 25;
 
-	private final ProductoService productoService;
+	private ProductoService productoService;
 	
 	@Autowired
 	public ProductoController(ProductoService is){
@@ -228,5 +225,12 @@ public class ProductoController {
 		tipos.put(4, "Servicio");
 		uiModel.addAttribute("tipos", tipos);
 	}
+	
+	@RequestMapping(value = "/json", method=RequestMethod.GET, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody 
+	public List<Producto> getProductosJSON(){
+		return productoService.getAll();
+	} 	
 	
 }

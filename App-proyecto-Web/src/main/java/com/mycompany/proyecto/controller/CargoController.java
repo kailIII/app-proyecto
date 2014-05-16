@@ -36,12 +36,8 @@ import com.mycompany.proyecto.service.CargoService;
 @RequestMapping(value="/cargo")
 @Controller
 public class CargoController {
-	
-	//private static final Logger log = LoggerFactory.getLogger(DepositoController.class);
-	
-	public static final int DEFAULT_CARGO_POR_PAGINA = 25;
 
-	private final CargoService cargoService;
+	private CargoService cargoService;
 	
 	@Autowired
 	public CargoController(CargoService cs){
