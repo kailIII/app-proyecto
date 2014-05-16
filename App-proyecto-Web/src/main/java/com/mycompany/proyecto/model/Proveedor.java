@@ -18,8 +18,10 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="Proveedor.findById", query="SELECT p FROM Proveedor p WHERE p.codigo = :codigo"),
 	@NamedQuery(name="Proveedor.findByName", query="SELECT p FROM Proveedor p WHERE p.nombre LIKE :nombre"),
-	@NamedQuery(name="Proveedor.findByCombo", query="SELECT NEW com.mycompany.proyecto.model.Proveedor(p.codigo, p.nombre) FROM Proveedor AS p ORDER BY p.codigo"),
-	@NamedQuery(name="Proveedor.findByAll", query="SELECT p FROM Proveedor p ORDER BY p.codigo")
+	@NamedQuery(name="Proveedor.findByCombo", query="SELECT NEW com.mycompany.proyecto.model.Proveedor(p.codigo, p.nombre) "
+			+ "FROM Proveedor AS p ORDER BY p.codigo"),
+	@NamedQuery(name="Proveedor.findByAll", query="SELECT NEW com.mycompany.proyecto.model.Proveedor(p.codigo, p.nombre, p.direccion, p.telefono) "
+			+ "FROM Proveedor p ORDER BY p.codigo")
 })
 public class Proveedor extends Persona {
 
@@ -57,6 +59,13 @@ public class Proveedor extends Persona {
 	public Proveedor(Long codigo, String nombre) {
 		this.codigo = codigo;
 		this.nombre = nombre;
+	}
+	
+	public Proveedor(Long codigo, String nombre, String direccion, String telefono) {
+		this.codigo = codigo;
+		this.nombre = nombre;
+		this.direccion = direccion;
+		this.telefono = telefono;
 	}
 
 	//Metodos Getters and Setters

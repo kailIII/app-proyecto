@@ -16,7 +16,7 @@ public class Persona extends NamedEntity {
 	@NotNull
 	protected String apellido;
 	
-	private String direccion;
+	protected String direccion;
 	
 	private String barrio;
 		

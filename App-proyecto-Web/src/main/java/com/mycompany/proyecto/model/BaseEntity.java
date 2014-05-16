@@ -37,10 +37,6 @@ public class BaseEntity implements Serializable {
 		this.codigo = codigo;
 	}
 	
-	public boolean isNew() {
-        return (this.codigo == null);
-    }
-	
 	//Metodo Equals de Object
 	@Override
     public boolean equals(Object o) {

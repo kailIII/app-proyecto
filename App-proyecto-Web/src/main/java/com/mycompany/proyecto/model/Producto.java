@@ -1,6 +1,7 @@
 package com.mycompany.proyecto.model;
 
 import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
+import org.codehaus.jackson.annotate.JsonIgnore;
 /**
  * @author rodrigo garcete 
  * Fecha Creacion:21-11-2013
@@ -18,22 +21,24 @@ import javax.persistence.TemporalType;
  * Validaciones con Bean Validations, mecanismo de validaciones de Java
  * basado en anotaciones, las consultas son optimizadas con JPA Projections
  */
+
 @Entity
 @Table(name = "productos") //modificar el buscador por Id
 @NamedQueries({
-	@NamedQuery(name = "Producto.findAll", query = "SELECT NEW com.mycompany.proyecto.model.Producto(p.codigo, p.nombre) "
-			+ "FROM Producto AS p ORDER BY p.codigo"),
-	@NamedQuery(name = "Producto.findById", query = "select p from Producto p where p.codigo = :codigo"),
-	@NamedQuery(name = "Producto.findByName", query ="select p from Producto p where p.nombre LIKE :nombre"),
+	@NamedQuery(name = "Producto.findByAll", query = "SELECT NEW com.mycompany.proyecto.model.Producto(p.codigo, p.nombre) "
+			+ "FROM Producto AS p WHERE p.activo=1 ORDER BY p.codigo"),
+	@NamedQuery(name = "Producto.findById", query = "select p from Producto p WHERE p.activo=1 AND p.codigo = :codigo "),
+	@NamedQuery(name = "Producto.findByName", query ="select p from Producto p WHERE p.activo=1 AND p.nombre LIKE :nombre ORDER BY p.nombre"),
 	@NamedQuery(name = "Producto.findByInsumo", query ="SELECT NEW com.mycompany.proyecto.model.Producto(p.codigo, p.nombre) "
-			+ "FROM Producto AS p WHERE p.tipo=2 ORDER BY p.codigo"),
+			+ "FROM Producto AS p WHERE p.tipo=2 AND p.activo=1 ORDER BY p.codigo"),
 	@NamedQuery(name = "Producto.findByCombo", query = "SELECT NEW com.mycompany.proyecto.model.Producto(p.codigo, p.nombre) "
-			+ "FROM Producto AS p ORDER BY p.codigo")
+			+ "FROM Producto AS p WHERE p.activo=1 ORDER BY p.codigo")
 })
+@XmlRootElement(name="producto")
 public class Producto extends NamedEntity {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private int tipo;
 
 	private String descripcion;
@@ -43,7 +48,7 @@ public class Producto extends NamedEntity {
 	//@NotNull
 	@Basic(optional=false) //columnas pueden definir una constricción de tipo non null, 
 	private UnidadMedida umedida; //la cual impide que se inserte un valor null; por tanto, con @Basic(optional=false) nos ajustaríamos a la citada constricción
-	
+
 	@OneToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "impuesto_id")
 	//@NotNull
@@ -76,7 +81,7 @@ public class Producto extends NamedEntity {
 	private Double pcu;
 	
 	private Double pcp;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date ultimaCompra;
 
@@ -96,6 +101,7 @@ public class Producto extends NamedEntity {
 	}
 	
 	//Metodos Getters and Setters
+	@JsonIgnore
 	public UnidadMedida getUmedida() {
 		return umedida;
 	}
@@ -104,6 +110,7 @@ public class Producto extends NamedEntity {
 		this.umedida = umedida;
 	}
 
+	@JsonIgnore
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -112,6 +119,7 @@ public class Producto extends NamedEntity {
 		this.descripcion = descripcion;
 	}
 
+	@JsonIgnore
 	public int getActivo() {
 		return activo;
 	}
@@ -120,6 +128,7 @@ public class Producto extends NamedEntity {
 		this.activo = activo;
 	}
 
+	@JsonIgnore
 	public Impuesto getImpuesto() {
 		return impuesto;
 	}
@@ -128,6 +137,7 @@ public class Producto extends NamedEntity {
 		this.impuesto = impuesto;
 	}
 
+	@JsonIgnore
 	public Marca getMarca() {
 		return marca;
 	}
@@ -136,6 +146,7 @@ public class Producto extends NamedEntity {
 		this.marca = marca;
 	}
 
+	@JsonIgnore
 	public Grupo getGrupo() {
 		return grupo;
 	}
@@ -144,6 +155,7 @@ public class Producto extends NamedEntity {
 		this.grupo = grupo;
 	}
 
+	@JsonIgnore
 	public Proveedor getProveedor() {
 		return proveedor;
 	}
@@ -152,6 +164,7 @@ public class Producto extends NamedEntity {
 		this.proveedor = proveedor;
 	}
 
+	@JsonIgnore
 	public int getTipo() {
 		return tipo;
 	}
@@ -160,6 +173,7 @@ public class Producto extends NamedEntity {
 		this.tipo = tipo;
 	}
 
+	@JsonIgnore
 	public String getCodigoBarra() {
 		return codigoBarra;
 	}
@@ -168,6 +182,7 @@ public class Producto extends NamedEntity {
 		this.codigoBarra = codigoBarra;
 	}
 
+	@JsonIgnore
 	public Double getPcu() {
 		return pcu;
 	}
@@ -176,6 +191,7 @@ public class Producto extends NamedEntity {
 		this.pcu = pcu;
 	}
 
+	@JsonIgnore
 	public Double getPcp() {
 		return pcp;
 	}
@@ -184,6 +200,7 @@ public class Producto extends NamedEntity {
 		this.pcp = pcp;
 	}
 
+	@JsonIgnore
 	public Date getUltimaCompra() {
 		return ultimaCompra;
 	}

@@ -14,13 +14,14 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "unidades_medidas")
 @NamedQueries({
-		@NamedQuery(name="UnidadMedida.findById", query="SELECT u FROM UnidadMedida u WHERE u.codigo = :codigo"),
-		@NamedQuery(name="UnidadMedida.findByName", query="SELECT u FROM UnidadMedida u WHERE u.nombre LIKE :nombre"),
+		@NamedQuery(name="UnidadMedida.findById", query="SELECT u FROM UnidadMedida u WHERE u.codigo = :codigo AND u.activo=1"),
+		@NamedQuery(name="UnidadMedida.findByName", query="SELECT u FROM UnidadMedida u WHERE u.nombre LIKE :nombre AND u.activo=1"),
 		@NamedQuery(name="UnidadMedida.findByCombo", query="SELECT NEW com.mycompany.proyecto.model.UnidadMedida(u.codigo, u.nombre) "
-				+ "FROM UnidadMedida AS u ORDER BY u.codigo"),
+				+ "FROM UnidadMedida AS u WHERE u.activo=1 ORDER BY u.codigo"),
 		@NamedQuery(name="UnidadMedida.findByComboEdit", query="SELECT NEW com.mycompany.proyecto.model.UnidadMedida(u.codigo, u.nombre) "
-				+ "FROM UnidadMedida AS u WHERE u.codigo = :codigo ORDER BY u.codigo"),
-		@NamedQuery(name="UnidadMedida.findByAll", query="SELECT u FROM UnidadMedida u ORDER BY u.codigo")
+				+ "FROM UnidadMedida AS u WHERE u.codigo = :codigo AND u.activo=1 ORDER BY u.codigo"),
+		@NamedQuery(name="UnidadMedida.findByAll", query="SELECT NEW com.mycompany.proyecto.model.UnidadMedida(u.codigo, u.nombre, u.abreviatura) "
+				+ "FROM UnidadMedida AS u WHERE u.activo=1 ORDER BY u.codigo")
 })
 public class UnidadMedida extends BaseEntity {
 
@@ -44,6 +45,12 @@ public class UnidadMedida extends BaseEntity {
 	public UnidadMedida(Long codigo, String nombre){
 		this.codigo = codigo;
 		this.nombre = nombre;
+	}
+	
+	public UnidadMedida(Long codigo, String nombre, String abreviatura){
+		this.codigo = codigo;
+		this.nombre = nombre;
+		this.abreviatura = abreviatura;
 	}
 	
 	public UnidadMedida(String nombre) {
