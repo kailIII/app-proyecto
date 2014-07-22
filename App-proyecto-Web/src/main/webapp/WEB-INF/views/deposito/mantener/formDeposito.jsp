@@ -28,7 +28,10 @@
 <div class="control-group form-horizontal">
 	<div class="controls">
 		<button id="guardar" class="btn btn-success">${button_guardar}</button>
-		<a href="/proyecto/deposito/listado"><button class="btn">${button_cancelar}</button></a>
+		<spring:url value="/deposito" var="crear_url" htmlEscape="true">
+			<spring:param name="list"></spring:param>
+		</spring:url>
+		<a href="${crear_url}"><button class="btn">${button_cancelar}</button></a>
 		<c:if test="${not empty param.enableRemove}">
 			<button id="excluir" class="btn btn-danger">${button_excluir}</button>
 		</c:if>

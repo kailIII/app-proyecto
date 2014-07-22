@@ -6,11 +6,9 @@
 <div>
 	<spring:message code="label.lotes" var="label_lotes" htmlEscape="false" />
 	<spring:message code="label.listado" var="label_listado" htmlEscape="false" />
-	
 	<spring:message code="label.lotes" var="label_lotes" htmlEscape="false" />
 	<spring:message code="label.lote.codigo" var="label_lote_codigo" htmlEscape="false" />
 	<spring:message code="label.lote.nombre" var="label_lote_nombre" htmlEscape="false" />
-	
 	<spring:message code="label.editar" var="label_editar" htmlEscape="false" />
 	<spring:message code="button.actualizar" var="button_actualizar" htmlEscape="false" />
 	
@@ -29,12 +27,14 @@
 		<tr>
 			<td>${m.codigo}</td>
 			<td>
-				<spring:url value="/lote/edit/${m.codigo}" var="edit_url" htmlEscape="true">
+				<spring:url value="/lote/${m.codigo}" var="edit_url" htmlEscape="true">
 				</spring:url>
 				<a href="${edit_url}" title="${label_editar} ${m.nombre}">${m.nombre}</a>
 			</td>
 		</c:forEach>
 	</table>
-	<br/>
-    <a href='<spring:url value="/lote/form/" htmlEscape="true"/>'>Registrar Lote</a>
+	<spring:url value="/lote" var="crear_url" htmlEscape="true">
+		<spring:param name="form"></spring:param>
+	</spring:url>
+    <a href="${crear_url}">Registrar Lote</a>
 </div>

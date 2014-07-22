@@ -26,12 +26,14 @@
 		<tr>
 			<td>${m.codigo}</td>
 			<td>
-				<spring:url value="/deposito/edit/${m.codigo}" var="edit_url" htmlEscape="true">
+				<spring:url value="/deposito/${m.codigo}" var="edit_url" htmlEscape="true">
 				</spring:url>
 				<a href="${edit_url}" title="${label_editar} ${m.nombre}">${m.nombre}</a>
 			</td>
 		</c:forEach>
 	</table>
-	<br/>
-    <a href='<spring:url value="/deposito/form/" htmlEscape="true"/>'>Registrar Deposito</a>
+	<spring:url value="/deposito" var="crear_url" htmlEscape="true">
+		<spring:param name="form"></spring:param>
+	</spring:url>
+    <a href="${crear_url}" class="btn btn-success">Registrar Deposito</a>
 </div>
