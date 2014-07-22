@@ -26,7 +26,7 @@
     <mvc:default-servlet-handler/>
     
     <!-- selects a static view for rendering without the need for an explicit controller -->
-	<mvc:view-controller path="/inicio/index" view-name="index"/>
+<!-- 	<mvc:view-controller path="/inicio/" view-name="index"/> -->
 	
 	<!-- Ativa o uso de anotacoes complementares ao contexto do Spring. -->
 	<context:annotation-config />

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <!--
+    	Arquivo que define no tiles quais sao as paginas, e quais templates cada uma utiliza.
+    	Repare que em nossa aplicacao, o unico atributo sobreescrito pelas paginas eh o body.
+    -->
+    
+	<definition extends="default" name="listaFormulas">
+		<put-attribute name="body" value="/WEB-INF/views/formula/mantener/listaFormulas.jsp" />
+	</definition>
+	
+	<definition extends="default" name="incluirFormula">
+		<put-attribute name="body" value="/WEB-INF/views/formula/mantener/incluirFormula.jsp" />
+	</definition>
+	
+	<definition extends="default" name="editarFormula">
+		<put-attribute name="body" value="/WEB-INF/views/formula/mantener/editarFormula.jsp" />
+	</definition>
+	
+		<definition extends="default" name="errorPage">
+		<put-attribute name="body" value="/WEB-INF/views/errorPage.jsp" />
+	</definition>
+	
+	<definition extends="default" name="sobre">
+		<put-attribute name="body" value="/WEB-INF/views/sobre.jsp" />
+	</definition>
+
+</tiles-definitions>

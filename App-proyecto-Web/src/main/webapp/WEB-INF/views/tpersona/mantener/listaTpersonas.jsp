@@ -26,13 +26,15 @@
 		<tr>
 			<td>${m.codigo}</td>
 			<td>
-				<spring:url value="/tpersona/edit/${m.codigo}" var="edit_url" htmlEscape="true">
+				<spring:url value="/tpersona/${m.codigo}" var="edit_url" htmlEscape="true">
 				</spring:url>
 				<a href="${edit_url}" title="${label_editar} ${m.nombre}">${m.nombre}</a>
 			</td>
 		</tr>
 		</c:forEach>
 	</table>
-	<br/>
-    <a href='<spring:url value="/tpersona/form/" htmlEscape="true"/>'>Registrar Tipo Persona</a>
+    <spring:url value="/tpersona" var="crear_url" htmlEscape="true">
+		<spring:param name="form"></spring:param>
+	</spring:url>
+	<a href="${crear_url}">Registrar Tipos de Persona</a>
 </div>

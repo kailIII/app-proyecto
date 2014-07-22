@@ -52,7 +52,7 @@ public class BancoController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/banco/lista",method = RequestMethod.GET)
+	@RequestMapping(params="list",method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("bancos", bancoService.getAll());
 		log.debug("Consultando en la BD y mostrando todos los bancos");
@@ -64,7 +64,7 @@ public class BancoController {
 	 * @param uiModelba
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/banco/form", method = RequestMethod.GET)
+	@RequestMapping(params="form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("banco", new Banco());
 		uiModel.addAttribute("active", "incluir");
@@ -79,7 +79,7 @@ public class BancoController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/banco/form", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String crear(@Valid Banco b, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("banco", b);
@@ -88,7 +88,7 @@ public class BancoController {
         }
 		bancoService.save(b);
 		log.debug("Banco persistido: "+ b.getCodigo());
-		return "redirect:/banco/list";
+		return "redirect:/banco?list";
 	}
 	
 	/**
@@ -97,14 +97,14 @@ public class BancoController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/banco/form/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Banco m = bancoService.findById(id);
 		if (m != null) {
 			uiModel.addAttribute("banco", m);
 			log.debug("Listo para editar Insumo");
 		}
-		return "editarInsumo";
+		return "editarBanco";
 	}
 	
 	/**
@@ -114,7 +114,7 @@ public class BancoController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/banco/form/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Banco banco, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("banco", banco);
@@ -122,7 +122,7 @@ public class BancoController {
         }
 		bancoService.save(banco);
 		log.debug("Banco actualizado: " + banco.getCodigo());
-		return "redirect:/banco/list";
+		return "redirect:/banco?list";
 	}
 	
 	/**
@@ -131,14 +131,14 @@ public class BancoController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/inputs/form/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Banco m = bancoService.findById(id);
 		if (m != null) {
 			bancoService.remove(m); 
-			log.debug("Insumo removido: "+m.getCodigo());
+			log.debug("Banco eliminado: "+m.getCodigo());
 		}
-		return "redirect:/banco/list";
+		return "redirect:/banco?list";
     }
 	
 }

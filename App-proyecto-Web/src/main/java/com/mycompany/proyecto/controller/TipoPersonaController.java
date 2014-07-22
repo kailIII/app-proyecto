@@ -75,7 +75,7 @@ public class TipoPersonaController {
         } 
 		
 		this.tpService.save(tp);
-		return "redirect:/tpersona";
+		return "redirect:/tpersona?list";
 	}
 	
 	/**
@@ -108,7 +108,7 @@ public class TipoPersonaController {
             return "editarTpersona";
         }
 		this.tpService.save(tp);
-		return "redirect:/tpersona";
+		return "redirect:/tpersona?list";
 	}
 	
 	/**
@@ -123,7 +123,7 @@ public class TipoPersonaController {
 		if (tp != null) {
 			this.tpService.remove(tp); 
 		}
-		return "redirect:/tpersona";
+		return "redirect:/tpersona?list";
     }
 	
 }

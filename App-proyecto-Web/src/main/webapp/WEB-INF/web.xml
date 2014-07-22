@@ -1,45 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" 
-	xmlns:web="http://java.sun.com/xml/ns/javaee" 
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
-	version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://java.sun.com/xml/ns/javaee" 
+xmlns:web="http://java.sun.com/xml/ns/javaee" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   
-  	<display-name>App-Proyecto-Web</display-name>
-  	<description>SISTEMA DE GESTION EMPRESARIAL</description>
+  <display-name>App-Proyecto-Web</display-name>
+  <description>SISTEMA DE GESTION EMPRESARIAL</description>
   
-  	<context-param>
-    	<param-name>contextConfigLocation</param-name>
-    	<param-value>classpath:spring/business-config.xml</param-value>
-  	</context-param>
-  	<listener>
-    	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  	</listener>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+    	classpath:spring/business-config.xml
+    	classpath:spring/dispatcher-servlet.xml
+    </param-value>
+  </context-param>
   
-  	<servlet>
-    	<servlet-name>app</servlet-name>
-    	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    	<init-param>
-      		<param-name>contextConfigLocation</param-name>
-      		<param-value>classpath:spring/dispatcher-servlet.xml</param-value>
-    	</init-param>
-    	<load-on-startup>1</load-on-startup>
-  	</servlet>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
   
-  	<servlet-mapping>
-    	<servlet-name>app</servlet-name>
-    	<url-pattern>/</url-pattern>
-  	</servlet-mapping>
+<!--   <servlet> -->
+<!--     <servlet-name>app</servlet-name> -->
+<!--     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> -->
+<!--     <init-param> -->
+<!--       <param-name>contextConfigLocation</param-name> -->
+<!--       <param-value>classpath:spring/dispatcher-servlet.xml</param-value> -->
+<!--     </init-param> -->
+<!--     <load-on-startup>1</load-on-startup> -->
+<!--   </servlet>  se sgrego abajo-->
+
+	<servlet>
+        <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value/>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
   
-   <!-- used so we can use forms of method type 'PUT' and 'DELETE'
-	see here: http://static.springsource.org/spring/docs/current/spring-framework-reference/html/view.html#rest-method-conversion
-	-->
-  	<filter>
-    	<filter-name>HttpMethodFilter</filter-name>
-    	<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
-  	</filter>
-  	<filter-mapping>
-    	<filter-name>HttpMethodFilter</filter-name>
-    	<servlet-name>app</servlet-name>
-  	</filter-mapping>
+<!--   soporte a json -->
+<!--   <servlet> -->
+<!--     <servlet-name>Jersey REST Service</servlet-name> -->
+<!--     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class> -->
+<!--     <init-param> -->
+<!--       <param-name>com.sun.jersey.config.property.packages</param-name> -->
+<!--       <param-value>com.mycompany.proyecto.controller</param-value> -->
+<!--     </init-param> -->
+<!--     <load-on-startup>2</load-on-startup> -->
+<!--   </servlet> -->
   
+  <servlet-mapping>
+    <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  <filter>
+    <filter-name>HttpMethodFilter</filter-name>
+    <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+    <filter-name>HttpMethodFilter</filter-name>
+    <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
+  </filter-mapping>
+  
+  <session-config>
+        <session-timeout>30</session-timeout>
+        <!-- Tracking mode is forced to "COOKIE" because invalid REST URL can be
+             created otherwise if jsessionid is attached.
+        -->
+<!--         <tracking-mode>COOKIE</tracking-mode> -->
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>home.jsp</welcome-file>
+    </welcome-file-list>
+
+
 </web-app>

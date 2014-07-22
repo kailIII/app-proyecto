@@ -44,12 +44,7 @@ public class CargoController {
 		this.cargoService = cs;
 	}
 
-	/**
-	 * Ponto de entrada da aplicação ("/").
-	 * @param uiModel recebe a lista de mercadorias.
-	 * @return url para a pagina de listagem de mercadorias.
-	 */
-	@RequestMapping(value="/listado", method = RequestMethod.GET) //value="/listado" , params = "lista"
+	@RequestMapping(params="list", method = RequestMethod.GET) 
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("cargos", cargoService.getAll());
 		return "listaCargos";
@@ -60,7 +55,7 @@ public class CargoController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET) //, params = "form"
+	@RequestMapping(params ="form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("cargo", new Cargo());
 		return "incluirCargo";
@@ -73,7 +68,7 @@ public class CargoController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST) //value="/form", 
+	@RequestMapping(method = RequestMethod.POST) //value="/form", 
 	public String crear(@Valid Cargo c, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("cargo", c);
@@ -81,7 +76,7 @@ public class CargoController {
         } 
 		
 		this.cargoService.save(c);
-		return "redirect:/cargo/listado";
+		return "redirect:/cargo?list";
 	}
 	
 	/**
@@ -90,7 +85,7 @@ public class CargoController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET) //value = "/edit/{id}", 
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Cargo c = cargoService.findById(id);
 		if (c != null) {
@@ -106,14 +101,14 @@ public class CargoController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT) //value = "edit/{id}", 
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT) 
 	public String editar(@Valid Cargo c, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("cargo", c);
             return "editarCargo";
         }
 		this.cargoService.save(c);
-		return "redirect:/cargo/listado";
+		return "redirect:/cargo?list";
 	}
 	
 	/**
@@ -122,13 +117,13 @@ public class CargoController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE) //value = "/edit/{id}", 
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE) 
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Cargo c = cargoService.findById(id);
 		if (c != null) {
 			this.cargoService.remove(c); 
 		}
-		return "redirect:/cargo/listado";
+		return "redirect:/cargo?list";
     }
 	
 }
