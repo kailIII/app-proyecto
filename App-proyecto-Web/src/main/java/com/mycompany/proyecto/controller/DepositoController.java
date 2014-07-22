@@ -10,19 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.mycompany.proyecto.model.Deposito;
 import com.mycompany.proyecto.service.DepositoService;
-
-/**
- * Handles requests for the application home page.
- * Anotando una clase Java como @Controller se convierte en un controlador, 
- * es decir, en una clase encargada de recibir las peticiones HttpServletRequest.
- * 
- * El objeto Model simplemente es un mapa donde guardaremos los objetos 
- * que queremos pasar a la vista (es la M de MVC)
- * 
- * @author rodrigo garcete
- * Fecha Creacion:21-11-2013
- */
-
 /**
  * Principal componente do framework <code>Spring MVC</code>, esse é o controller do cadastro de mercadorias. 
  * 
@@ -44,22 +31,13 @@ public class DepositoController {
 	public DepositoController(DepositoService is){
 		this.depositoService = is;
 	}
-	 
-	/** Configura um conversor para double em pt-BR, usado no campo de preço.
-	* @param binder
-	*/
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.registerCustomEditor(Double.class, 
-//				new CustomNumberEditor(Double.class, NumberFormat.getInstance(new Locale("es","ES")), true));
-//	}
 	
 	/**
 	 * Ponto de entrada da aplicação ("/").
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado",method = RequestMethod.GET)
+	@RequestMapping(params="list",method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("depositos", depositoService.getAll());
 		return "listaDepositos";
@@ -70,7 +48,7 @@ public class DepositoController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET)
+	@RequestMapping(params="form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("deposito", new Deposito());
 		uiModel.addAttribute("active", "incluir");
@@ -84,7 +62,7 @@ public class DepositoController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String crear(@Valid Deposito deposito, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("deposito", deposito);
@@ -93,7 +71,7 @@ public class DepositoController {
         }
 		
 		this.depositoService.save(deposito);
-		return "redirect:/deposito/listado";
+		return "redirect:/deposito?list";
 	}
 	
 	/**
@@ -102,7 +80,7 @@ public class DepositoController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Deposito m = depositoService.findById(id);
 		if (m != null) {
@@ -118,14 +96,14 @@ public class DepositoController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Deposito deposito, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("insumo", deposito);
             return "editarDeposito";
         }
 		this.depositoService.save(deposito);
-		return "redirect:/deposito/listado";
+		return "redirect:/deposito?list";
 	}
 	
 	/**
@@ -134,13 +112,13 @@ public class DepositoController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Deposito m = depositoService.findById(id);
 		if (m != null) {
 			this.depositoService.remove(m); 
 		}
-		return "redirect:/deposito/listado";
+		return "redirect:/deposito?list";
     }
 	
 }

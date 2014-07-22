@@ -50,7 +50,7 @@ public class MarcaController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado",method = RequestMethod.GET)
+	@RequestMapping(params="list",method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("marcas", marcaService.getAll());
 		return "listaMarcas";
@@ -61,7 +61,7 @@ public class MarcaController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET)
+	@RequestMapping(params="form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("marca", new Marca());
 		return "incluirMarca";
@@ -74,7 +74,7 @@ public class MarcaController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String crear(@Valid Marca marca, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("marca", marca);
@@ -82,7 +82,7 @@ public class MarcaController {
         }
 		
 		this.marcaService.save(marca);
-		return "redirect:/marca/listado";
+		return "redirect:/marca?list";
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public class MarcaController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Marca m = marcaService.findById(id);
 		if (m != null) {
@@ -108,14 +108,14 @@ public class MarcaController {
 	 * @return a url para a listado, si algun error de validacion fue encontrado,
 	 * regresa a la pagina de edicion
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Marca marca, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("marca", marca);
             return "editarMarca";
         }
 		this.marcaService.save(marca);
-		return "redirect:/marca/listado";
+		return "redirect:/marca?list";
 	}
 	
 	/**
@@ -124,13 +124,13 @@ public class MarcaController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Marca m = marcaService.findById(id);
 		if (m != null) {
 			this.marcaService.remove(m); 
 		}
-		return "redirect:/marca/listado";
+		return "redirect:/marca?list";
     }
 	
 }

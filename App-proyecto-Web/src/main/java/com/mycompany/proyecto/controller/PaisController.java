@@ -43,21 +43,13 @@ public class PaisController {
 	public PaisController(PaisService is){
 		this.paisService = is;
 	}
-	
-//	@RequestMapping(value = "/busqueda", method = RequestMethod.GET)
-//	public String list(SearchCriteria criteria, Model model) {
-//		List<Pais> paises = paisService.findPaises(criteria);
-//		model.addAttribute("paises", paises);
-//		model.addAttribute("searchCriteria", new SearchCriteria());
-//		return "listaPaises";
-//	}
 
 	/**
 	 * Ponto de entrada da aplicação ("/").
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado", method = RequestMethod.GET) //, params = "lista"
+	@RequestMapping(params="list", method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("paises", paisService.getAll());
 		return "listaPaises";
@@ -68,10 +60,9 @@ public class PaisController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET) //, params = "form" 
+	@RequestMapping(params="form", method = RequestMethod.GET) 
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("pais", new Pais());
-		//uiModel.addAttribute("active", "incluir");
 		return "incluirPais";
 	}
 	
@@ -82,16 +73,15 @@ public class PaisController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST) //value="/form", 
+	@RequestMapping(method = RequestMethod.POST) 
 	public String crear(@Valid Pais pais, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("pais", pais);
-            //uiModel.addAttribute("active", "incluir");
             return "incluirPais";
         }
 		
 		this.paisService.save(pais);
-		return "redirect:/pais/listado";
+		return "redirect:/pais?list";
 	}
 	
 	/**
@@ -100,7 +90,7 @@ public class PaisController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET) //value = "/edit/{id}", 
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET) 
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Pais m = paisService.findById(id);
 		if (m != null) {
@@ -116,14 +106,14 @@ public class PaisController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT) //value = "edit/{id}", 
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT) 
 	public String editar(@Valid Pais pais, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("pais", pais);
             return "editarPais";
         }
 		this.paisService.save(pais);
-		return "redirect:/pais/listado";
+		return "redirect:/pais?list";
 	}
 	
 	/**
@@ -132,13 +122,13 @@ public class PaisController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE) //value = "/edit/{id}", 
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE) 
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Pais m = paisService.findById(id);
 		if (m != null) {
 			this.paisService.remove(m); 
 		}
-		return "redirect:/pais/listado";
+		return "redirect:/pais?list";
     }
 	
 }

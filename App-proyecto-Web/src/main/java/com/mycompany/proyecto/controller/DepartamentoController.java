@@ -32,7 +32,7 @@ import com.mycompany.proyecto.service.PaisService;
  * @author Rodrigo Garcete
  * @since 21-11-2013
  */
-@RequestMapping(value="/departamento")
+@RequestMapping(value="/dep")
 @Controller
 public class DepartamentoController {
 	
@@ -51,7 +51,7 @@ public class DepartamentoController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado",method = RequestMethod.GET)
+	@RequestMapping(params="list",method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("departamentos", depService.getAll());
 		return "listaDepartamentos";
@@ -62,7 +62,7 @@ public class DepartamentoController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET)
+	@RequestMapping(params="form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		Departamento d = new Departamento();
 		uiModel.addAttribute("departamento", d);
@@ -77,7 +77,7 @@ public class DepartamentoController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String crear(@Valid Departamento d, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("departamento", d);
@@ -85,7 +85,7 @@ public class DepartamentoController {
         }
 		
 		this.depService.save(d);
-		return "redirect:/departamento/listado";
+		return "redirect:/dep?list";
 	}
 	
 	/**
@@ -94,7 +94,7 @@ public class DepartamentoController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Departamento d = depService.findById(id);
 		if (d != null) {
@@ -111,14 +111,14 @@ public class DepartamentoController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Departamento d, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("departamento", d);
             return "editarDepartamento";
         }
 		this.depService.save(d);
-		return "redirect:/departamento/listado";
+		return "redirect:/dep?list";
 	}
 	
 	/**
@@ -127,13 +127,13 @@ public class DepartamentoController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Departamento d = depService.findById(id);
 		if (d != null) {
 			this.depService.remove(d); 
 		}
-		return "redirect:/departamento/listado";
+		return "redirect:/dep?list";
     }
 	
 	private void cargarComboPais(Model uiModel, Departamento d){

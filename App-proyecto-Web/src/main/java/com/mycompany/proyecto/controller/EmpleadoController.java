@@ -45,7 +45,7 @@ public class EmpleadoController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado",method = RequestMethod.GET)
+	@RequestMapping(params="list",method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("empleados", empleadoService.getAll());
 		return "listaEmpleados";
@@ -56,7 +56,7 @@ public class EmpleadoController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET)
+	@RequestMapping(params="form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("empleado", new Empleado());
 		uiModel.addAttribute("active", "incluir");
@@ -70,7 +70,7 @@ public class EmpleadoController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String crear(@Valid Empleado empleado, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("empleado", empleado);
@@ -79,7 +79,7 @@ public class EmpleadoController {
         }
 		
 		this.empleadoService.save(empleado);
-		return "redirect:/empleado/listado";
+		return "redirect:/empleado?list";
 	}
 	
 	/**
@@ -88,7 +88,7 @@ public class EmpleadoController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Empleado m = empleadoService.findById(id);
 		if (m != null) {
@@ -104,14 +104,14 @@ public class EmpleadoController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Empleado empleado, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("empleado", empleado);
             return "editarEmpleado";
         }
 		this.empleadoService.save(empleado);
-		return "redirect:/empleado/listado";
+		return "redirect:/empleado?list";
 	}
 	
 	/**
@@ -120,13 +120,13 @@ public class EmpleadoController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Empleado m = empleadoService.findById(id);
 		if (m != null) {
 			this.empleadoService.remove(m); 
 		}
-		return "redirect:/empleado/listado";
+		return "redirect:/empleado?list";
     }
 	
 }

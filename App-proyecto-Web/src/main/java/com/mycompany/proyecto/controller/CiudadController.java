@@ -55,7 +55,7 @@ public class CiudadController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado", method = RequestMethod.GET) // params = "listado" 
+	@RequestMapping(params="list", method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("ciudades", ciudadService.getAll());
 		return "listaCiudades";
@@ -66,7 +66,7 @@ public class CiudadController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET) //, params = "form"
+	@RequestMapping(params="form", method = RequestMethod.GET) 
 	public String crearForm(Model uiModel) {
 		Ciudad c = new Ciudad();
 		uiModel.addAttribute("ciudad", c);
@@ -82,14 +82,14 @@ public class CiudadController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String crear(@Valid Ciudad ciudad, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("ciudad", ciudad);
             return "incluirCiudad";
         }
 		this.ciudadService.save(ciudad);
-		return "redirect:/ciudad/listado";
+		return "redirect:/ciudad?list";
 	}
 	
 	/**
@@ -98,7 +98,7 @@ public class CiudadController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Ciudad c = ciudadService.findById(id);
 		if (c != null) {
@@ -116,14 +116,14 @@ public class CiudadController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Ciudad ciudad, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("ciudad", ciudad);
             return "editarCiudad";
         }
 		this.ciudadService.save(ciudad);
-		return "redirect:/ciudad/listado";
+		return "redirect:/ciudad?list";
 	}
 	
 	/**
@@ -132,13 +132,13 @@ public class CiudadController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Ciudad m = ciudadService.findById(id);
 		if (m != null) {
 			this.ciudadService.remove(m); 
 		}
-		return "redirect:/ciudad/listado";
+		return "redirect:/ciudad?list";
     }
 	
 	private void cargarComboDepartamento(Model uiModel, Ciudad c){

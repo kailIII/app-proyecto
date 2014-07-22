@@ -50,7 +50,7 @@ public class ImpuestoController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado",method = RequestMethod.GET)
+	@RequestMapping(params="list", method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("impuestos", impuestoService.getAll());
 		return "listaImpuestos";
@@ -61,7 +61,7 @@ public class ImpuestoController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET)
+	@RequestMapping(params="form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("impuesto", new Impuesto());
 		return "incluirImpuesto";
@@ -74,7 +74,7 @@ public class ImpuestoController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String crear(@Valid Impuesto i, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("impuesto", i);
@@ -82,7 +82,7 @@ public class ImpuestoController {
         }
 		
 		this.impuestoService.save(i);
-		return "redirect:/impuesto/listado";
+		return "redirect:/impuesto?list";
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public class ImpuestoController {
 	 * @param uiModel almacena el objeto impuesto que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Impuesto i = impuestoService.findById(id);
 		if (i != null) {
@@ -107,14 +107,14 @@ public class ImpuestoController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Impuesto i, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("impuesto", i);
             return "editarImpuesto";
         }
 		this.impuestoService.save(i);
-		return "redirect:/impuesto/listado";
+		return "redirect:/impuesto?list";
 	}
 	
 	/**
@@ -123,13 +123,13 @@ public class ImpuestoController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Impuesto i = impuestoService.findById(id);
 		if (i != null) {
 			this.impuestoService.remove(i); 
 		}
-		return "redirect:/impuesto/listado";
+		return "redirect:/impuesto?list";
     }
 	
 }

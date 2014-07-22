@@ -62,7 +62,7 @@ public class ProveedorController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado", method = RequestMethod.GET)
+	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("proveedores", proveedorService.getAll());
 		return "listaProveedores";
@@ -73,7 +73,7 @@ public class ProveedorController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value = "/form", method = RequestMethod.GET)
+	@RequestMapping(params = "form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		Proveedor p = new Proveedor();
 		uiModel.addAttribute("proveedor", p);
@@ -89,15 +89,14 @@ public class ProveedorController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String crear(@Valid Proveedor proveedor, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("proveedor", proveedor);
-            //	uiModel.addAttribute("active", "incluir");
             return "incluirProveedor";
         }
 		this.proveedorService.save(proveedor);
-		return "redirect:/proveedor/listado";
+		return "redirect:/proveedor?list";
 	}
 	
 	/**
@@ -106,7 +105,7 @@ public class ProveedorController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Proveedor p = proveedorService.findById(id);
 		if (p != null) {
@@ -123,14 +122,14 @@ public class ProveedorController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value="/edit/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Proveedor proveedor, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("proveedor", proveedor);
             return "editarProveedor";
         }
 		proveedorService.save(proveedor);
-		return "redirect:/proveedor/listado";
+		return "redirect:/proveedor?list";
 	}
 	
 	/**
@@ -139,13 +138,13 @@ public class ProveedorController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Proveedor p = proveedorService.findById(id);
 		if (p != null) {
 			this.proveedorService.remove(p); 
 		}
-		return "redirect:/proveedor/listado";
+		return "redirect:/proveedor/list";
     }
 	
 	private void cargarComboCiudad(Model uiModel, Proveedor p){

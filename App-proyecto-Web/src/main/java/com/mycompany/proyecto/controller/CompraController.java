@@ -54,7 +54,7 @@ public class CompraController {
 	 * @param uiModel recibe la lista de compras
 	 * @return url para cargar el listado de compras.
 	 */
-	@RequestMapping(value="/listado",method = RequestMethod.GET)
+	@RequestMapping(params="list",method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("compras", compraService.getAll());
 		log.debug("Consultando en la BD y mostrando todos las Compras");
@@ -66,7 +66,7 @@ public class CompraController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET)
+	@RequestMapping(params="form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		Compra c = new Compra();
 		uiModel.addAttribute("compra", c);
@@ -82,7 +82,7 @@ public class CompraController {
 	 * @param uiModel
 	 * @return url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String crear(@Valid Compra c, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("compra",c);
@@ -92,7 +92,7 @@ public class CompraController {
 
 		this.compraService.save(c);
 		log.debug("Compra persistido: "+ c.getCodigo());
-		return "redirect:/compra/listado";
+		return "redirect:/compra?list";
 	}
 	
 	/**
@@ -101,7 +101,7 @@ public class CompraController {
 	 * @param uiModel almacena el objeto compra que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Compra c = compraService.findById(id);
 		if (c != null) {
@@ -119,7 +119,7 @@ public class CompraController {
 	 * @param uiModel
 	 * @return url para el listado, se algun error de validacion fue encontrado, regresa a la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Compra c, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("compra", c);
@@ -127,7 +127,7 @@ public class CompraController {
         }
 		this.compraService.save(c);
 		log.debug("Compra actualizado: " + c.getCodigo());
-		return "redirect:/compra/listado";
+		return "redirect:/compra?list";
 	}
 	
 	/**
@@ -136,14 +136,14 @@ public class CompraController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Compra m = compraService.findById(id);
 		if (m != null) {
 			this.compraService.remove(m); 
 			log.debug("Compra removido: "+m.getCodigo());
 		}
-		return "redirect:/compra/listado";
+		return "redirect:/compra?list";
     }
 	
 	/**

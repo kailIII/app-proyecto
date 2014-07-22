@@ -53,7 +53,7 @@ public class UsuarioController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value = "/listado", method = RequestMethod.GET)
+	@RequestMapping(params = "list", method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("usuarios", usuarioService.getAll());
 		return "listaUsuarios";
@@ -64,7 +64,7 @@ public class UsuarioController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value = "/form", method = RequestMethod.GET)
+	@RequestMapping(params = "form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("usuario", new Usuario());
 		//uiModel.addAttribute("active", "incluir");
@@ -79,16 +79,15 @@ public class UsuarioController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value = "/form", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String crear(@Valid Usuario usuario, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("usuario", usuario);
-            //uiModel.addAttribute("active", "incluir");
             return "incluirUsuario";
         }
 		this.usuarioService.save(usuario);
 		log.debug("Isuario persistido: "+ usuario.getCodigo());
-		return "redirect:/usuario/listado";
+		return "redirect:/usuario?list";
 	}
 	
 	/**
@@ -97,7 +96,7 @@ public class UsuarioController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Usuario m = usuarioService.findById(id);
 		if (m != null) {
@@ -114,7 +113,7 @@ public class UsuarioController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Usuario usuario, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("usuario", usuario);
@@ -122,7 +121,7 @@ public class UsuarioController {
         }
 		this.usuarioService.save(usuario);
 		log.debug("Usuario actualizado: " + usuario.getCodigo());
-		return "redirect:/usuario/listado";
+		return "redirect:/usuario?list";
 	}
 	
 	/**
@@ -131,14 +130,14 @@ public class UsuarioController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Usuario m = usuarioService.findById(id);
 		if (m != null) {
 			this.usuarioService.remove(m); 
 			log.debug("Usuario removido: "+m.getCodigo());
 		}
-		return "redirect:/usuario/listado";
+		return "redirect:/usuario?list";
     }
 	
 }

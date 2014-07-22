@@ -71,7 +71,7 @@ public class ClienteController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(method = RequestMethod.GET, params ="/form")
+	@RequestMapping(method = RequestMethod.GET, params ="form")
 	public String crearForm(Model uiModel) {
 		Cliente c = new Cliente();
 		uiModel.addAttribute("cliente", new Cliente());
@@ -92,7 +92,7 @@ public class ClienteController {
 	public String crear(@Valid Cliente c, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("cliente", c);
-            return "incluirInsumo";
+            return "incluirCliente";
         }
 		
 		this.clienteService.save(c);

@@ -63,7 +63,7 @@ public class UnidadMedidaController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value= "/listado", method = RequestMethod.GET)
+	@RequestMapping(params="list", method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("umedidas", umService.getAll());
 		return "listaUmedidas";
@@ -74,7 +74,7 @@ public class UnidadMedidaController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value = "/form", method = RequestMethod.GET)
+	@RequestMapping(params="form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		uiModel.addAttribute("umedida", new UnidadMedida() );
 		return "incluirUmedida";
@@ -87,14 +87,14 @@ public class UnidadMedidaController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value = "/form", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String crear(@Valid UnidadMedida um, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("umedida", um);
             return "incluirUmedida";
         }else {
         	this.umService.save(um);
-    		return "redirect:/umedida/listado";
+    		return "redirect:/umedida?list";
         }
 	}
 	
@@ -104,7 +104,7 @@ public class UnidadMedidaController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET) 
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET) 
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		UnidadMedida m = umService.findById(id);
 		if (m != null) {
@@ -120,16 +120,14 @@ public class UnidadMedidaController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
-	public String editar(@Valid UnidadMedida um, BindingResult bindingResult, Model uiModel) {
-		//UnidadMedida um = umService.findById(id); @PathVariable("id") Long id, 
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public String editar(@Valid UnidadMedida um, BindingResult bindingResult, Model uiModel) { 
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("umedida", um);
             return "editarUmedida";
         }
 		this.umService.save(um);
-		//log.debug("Unidad Medida actualizado: " + um.getCodigo());
-		return "redirect:/umedida/listado";
+		return "redirect:/umedida?list";
 	}
 	
 	/**
@@ -138,13 +136,13 @@ public class UnidadMedidaController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		UnidadMedida m = umService.findById(id);
 		if (m != null) {
 			this.umService.remove(m); 
 		}
-		return "redirect:/umedida/listado";
+		return "redirect:/umedida?list";
     }
 	
 }

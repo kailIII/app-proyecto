@@ -50,7 +50,7 @@ public class LoteController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado",method = RequestMethod.GET)
+	@RequestMapping(params="list",method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("lotes", loteService.getAll());
 		return "listaLotes";
@@ -61,7 +61,7 @@ public class LoteController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET)
+	@RequestMapping(params="form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		Lote l = new Lote();
 		uiModel.addAttribute("lote", l);
@@ -76,14 +76,14 @@ public class LoteController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String crear(@Valid Lote lote, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("lote", lote);
             return "incluirLote";
         }
 		this.loteService.save(lote);
-		return "redirect:/lote/listado";
+		return "redirect:/lote?list";
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public class LoteController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Lote l = loteService.findById(id);
 		if (l != null) {
@@ -109,14 +109,14 @@ public class LoteController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Lote lote, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("lote", lote);
             return "editarLote";
         }
 		this.loteService.save(lote);
-		return "redirect:/lote/listado";
+		return "redirect:/lote?list";
 	}
 	
 	/**
@@ -125,13 +125,13 @@ public class LoteController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Lote l = loteService.findById(id);
 		if (l != null) {
 			this.loteService.remove(l); 
 		}
-		return "redirect:/lote/listado";
+		return "redirect:/lote?list";
     }
 	
 	private void cargarComboProducto(Model uiModel, Lote l){
