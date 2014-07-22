@@ -48,7 +48,7 @@
 	<div class="controls">
 		<button id="guardar" class="btn btn-success">${button_guardar}</button>
 		<spring:url value="/usuario" var="crear_url" htmlEscape="true">
-			<spring:param name="form"></spring:param>
+			<spring:param name="list"></spring:param>
 		</spring:url>
 		<a href="${crear_url}"><button class="btn">${button_cancelar}</button></a>
 		<c:if test="${not empty param.enableRemove}">

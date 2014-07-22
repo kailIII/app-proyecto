@@ -88,7 +88,7 @@ public class ProductoController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/listado",method = RequestMethod.GET)
+	@RequestMapping(params="list",method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("productos", productoService.getAll());
 		log.debug("Consultando en la BD y mostrando todos los insumos");
@@ -100,7 +100,7 @@ public class ProductoController {
 	 * @param uiModel
 	 * @return url de la pagina de insercion
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.GET)
+	@RequestMapping(params="form", method = RequestMethod.GET)
 	public String crearForm(Model uiModel) {
 		Producto p = new Producto();
 		uiModel.addAttribute("producto", p);
@@ -120,17 +120,15 @@ public class ProductoController {
 	 * @param uiModel
 	 * @return a url para listado, si algun error de validacion fue encontrado, regresa para la pagina de insercion.
 	 */
-	@RequestMapping(value="/form", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String crear(@Valid Producto insumo, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("producto", insumo);
-            //uiModel.addAttribute("active", "incluir");
             return "incluirProducto";
         }
 		
 		this.productoService.save(insumo);
-		//log.debug("Producto persistido: "+ insumo.getCodigo());
-		return "redirect:/producto/listado";
+		return "redirect:/producto?list";
 	}
 	
 	/**
@@ -139,7 +137,7 @@ public class ProductoController {
 	 * @param uiModel almacena el objeto insumo que debe ser modificado.
 	 * @return url de la pagina de edicion.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String editarForm(@PathVariable("id") Long id, Model uiModel) {
 		Producto p = productoService.findById(id);
 		
@@ -164,7 +162,7 @@ public class ProductoController {
 	 * @param uiModel
 	 * @return a url para a listagem, se algum erro de validação for encontrado volta para a pagina de edição.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String editar(@Valid Producto insumo, BindingResult bindingResult, Model uiModel) {
 		if (bindingResult.hasErrors()) {
             uiModel.addAttribute("producto", insumo);
@@ -172,7 +170,7 @@ public class ProductoController {
         }
 		this.productoService.save(insumo);
 		log.debug("Producto actualizado: " + insumo.getCodigo());
-		return "redirect:/producto/listado";
+		return "redirect:/producto?list";
 	}
 	
 	/**
@@ -181,14 +179,13 @@ public class ProductoController {
 	 * @param uiModel
 	 * @return url de la pagina de listado.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String remover(@PathVariable("id") Long id, Model uiModel) {
 		Producto m = productoService.findById(id);
 		if (m != null) {
 			this.productoService.remove(m); 
-			//log.debug("Producto removido: "+m.getCodigo());
 		}
-		return "redirect:/producto/listado";
+		return "redirect:/producto?list";
     }
 	
 	private void cargarComboMarca(Model uiModel, Producto p){

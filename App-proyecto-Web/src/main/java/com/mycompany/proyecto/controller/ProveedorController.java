@@ -62,7 +62,7 @@ public class ProveedorController {
 	 * @param uiModel recebe a lista de mercadorias.
 	 * @return url para a pagina de listagem de mercadorias.
 	 */
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(params="list", method = RequestMethod.GET)
 	public String listar(Model uiModel) {
 		uiModel.addAttribute("proveedores", proveedorService.getAll());
 		return "listaProveedores";
@@ -144,7 +144,7 @@ public class ProveedorController {
 		if (p != null) {
 			this.proveedorService.remove(p); 
 		}
-		return "redirect:/proveedor/list";
+		return "redirect:/proveedor?list";
     }
 	
 	private void cargarComboCiudad(Model uiModel, Proveedor p){

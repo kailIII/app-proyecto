@@ -35,7 +35,7 @@
 		</tr>
 		</c:forEach>
 	</table>
-	<spring:url value="/tpersona" var="crear_url" htmlEscape="true">
+	<spring:url value="/ciudad" var="crear_url" htmlEscape="true">
 		<spring:param name="form"></spring:param>
 	</spring:url>
     <a href="${crear_url}">Registrar Ciudad</a>
